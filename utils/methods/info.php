@@ -2,12 +2,12 @@
 
 function base_url()
 {
-    return 'http://localhost/management/';
+    return 'http://localhost/rifaikuci.com/';
 }
 
 function firmName()
 {
-    return "Management";
+    return "rifaikuci";
 }
 
 function imageBaseUrl()

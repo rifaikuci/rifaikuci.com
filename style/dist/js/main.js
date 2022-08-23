@@ -1,2 +1,2 @@
-const  BASE_URL = "http://localhost/management/";
+const  BASE_URL = "http://localhost/rifaikuci.com/";
 
