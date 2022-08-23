@@ -1,0 +1,35 @@
+<!--
+Bu sayfayı olduğu gibi print ediyor fakat burada ek olarak sayfayı
+<script>
+    window.addEventListener("load", window.print());
+</script>
+yeni bir sayfa yüklenmesine yardımcı olur
+<section>
+    <div style=" page-break-before: always;
+  top: 100%;">
+        <LABEL>asda</LABEL>
+    </div>
+</section>
+
+
+
+!-->
+
+<!--
+
+Uygulama fonksiyon mantığında çalışır
+çalıştırabilmek için
+utils.db klasörünün altında  bulunan connect.php dosyasında db ayarları yapılandırılmalı sql 'lerde burada bulunur'
+resimelr assets klasörünün altında bulunan images kısmına kaydedilir. burada bulunan tüm klasörlerin altında bulunan
+tüm dosyalar silinebilir.
+
+server kaydetme işlemleri kusva'nın altında klasör yapısı ile kaydedilir. bunlar ana kusvanın ana dizininde buluann
+index.php'ye kaydedilir böyle olmasının nedeni form adresini sürekli değiştirmemize gerek kalmayacak.
+admin kısmının frontendi src'nin altında bulunan klasörler ile bulunur.
+
+Form  fonksiyonları utils forms altında bulunur
+method fonksiyonları utils methods altında bulunur
+base_url, firma ismi  gibi parametreler utils altında bulunan methods/info.php altında kontrol edilebilir..
+
+src altında bulunan dosya ile kusva nın altında bulunan dosyaların aynı olması işlemleri kolaylaştıracaktır.
+
