@@ -11,8 +11,7 @@
 <script src="<?php echo base_url() . "style/plugins/datatables-buttons/js/buttons.print.min.js" ?>"></script>
 <script src="<?php echo base_url() . "style/plugins/datatables-buttons/js/buttons.colVis.min.js" ?>"></script>
 <script src="<?php echo base_url() . "style/plugins/ekko-lightbox/ekko-lightbox.min.js" ?>"></script>
-<script src="<?php echo base_url() . "style/plugins/" ?>"></script>
-<script src="<?php echo base_url() . "style/plugins/" ?>"></script>
+<script src="<?php echo base_url() . "style/plugins/summernote/summernote-bs4.min.js" ?>"></script>
 <script src="<?php echo base_url() . "style/dist/js/adminlte.min.js?v=3.2.0" ?>"></script>
 <script src="https://unpkg.com/vue@3"></script>
 <script src="<?php echo base_url() . "style/dist/js/demo.js" ?>"></script>

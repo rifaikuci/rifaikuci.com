@@ -15,6 +15,7 @@ function imageUpload( $folderName, $name, $fileName)
     }
 
 
+
     if (!file_exists($path . $folderName)) {
         mkdir($path . $folderName, 0777, true);
     }

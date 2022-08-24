@@ -50,10 +50,11 @@ function getTable($data, $isVisibleColumn, $columnName,
 
         $return = $return . '<td>'.$data[$i][$isVisibleColumn[$k]].'</td>';
        }
+        $return =  $return .'<td style="text-align: center">';
+
         if($isView || $isDelete ||$isUpdate) {
             $id = $data[$i]['id'];
             if($isView) {
-                $return =  $return .'<td style="text-align: center">';
                 $return = $return . '<a style="margin-right:  15px" href="view/?id='.$id.'"
                                             class="btn btn-outline-primary"><i class="fa fa-eye"></i>
                                             </a>';

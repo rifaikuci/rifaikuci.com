@@ -8,15 +8,16 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
 
-                <?php menuTreeSubTitle("Ayarlar",
-                    "far fas fa-cog nav-icon",
-                    "src/settings",
+                <?php menuTreeSubTitle("Genel Bilgiler",
+                    "far fas fa-info nav-icon",
+                    "src/info",
                     "", ""); ?>
 
-                <?php menuTreeSubTitle("Project",
-                    "far fas fa-list nav-icon",
-                    "src/project",
+                <?php menuTreeSubTitle("Sosyal Medyalar",
+                    "far fas fa-hashtag nav-icon",
+                    "src/smedia",
                     "", ""); ?>
+
             </ul>
         </nav>
     </div>

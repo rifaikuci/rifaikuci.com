@@ -4,7 +4,7 @@ function getTextInput($size, $label, $placeholder, $name, $value, $required, $di
 {
     $size = $size ? $size : 12;
     $label = $label ? $label : "label";
-    $placeholder = $placeholder ? $placeholder : "placeholder";
+    $placeholder = $placeholder ? $placeholder : $label;
     $name = $name ? $name : "name";
     $value = $value ? $value : "";
     $required = $required ? true : false;
@@ -34,7 +34,7 @@ function getNumberInput($size, $label, $placeholder, $name, $value, $step, $min,
     $size = $size ? $size : 4;
     $label = $label ? $label : "label";
     $placeholder = $placeholder ? $placeholder : "0";
-    $name = $name ? $name : "name";
+    $name = $name ? $name : $label;
     $step = $step ? $step : "1";
     $step = $step ? $step : "1";
     $min = $min ? $min : 0;
@@ -71,11 +71,11 @@ function getTextHidden($name, $value)
     echo '<input type="hidden" name="' . $name . '" value="' . $value . '"/>';
 }
 
-function getInputFile($size, $name, $label, $isLabelAlso,$required, $disabled)
+function getInputFile($size, $name, $label, $isLabelAlso, $required, $disabled)
 {
     $size = $size ? $size : 4;
     $label = $label ? $label : "label";
-    $name = $name ? $name : "name";
+    $name = $name ? $name : $label;
     $required = $required ? $required : false;
     $disabled = $disabled ? $disabled : false;
 
@@ -104,31 +104,31 @@ function getInputFile($size, $name, $label, $isLabelAlso,$required, $disabled)
 
 }
 
-function getViewFile($size, $title, $path)
+function getViewFile($size, $label, $path)
 {
     $size = $size ? $size : 3;
-    $title = $title ? $title : 3;
+    $label = $label ? $label : 3;
 
     $path = $path ? base_url() . $path : "#";
     echo '<div class="col-sm-' . $size . '">
-                        <a href="' . $path . '" data-toggle="lightbox" data-title="' . $title . '" data-gallery="gallery">
-                            <img src="' . $path . '" class="img-fluid mb-' . $size . '" alt="' . $title . '"/>
+                        <a href="' . $path . '" data-toggle="lightbox" data-title="' . $label . '" data-gallery="gallery">
+                            <img src="' . $path . '" class="img-fluid mb-' . $size . '" alt="' . $label . '"/>
                         </a>
                     </div>';
 }
 
-function getTextArea($size, $name, $title, $placeHolder, $rows, $value, $required,$disabled)
+function getTextArea($size, $label, $placeHolder,$name, $rows, $value, $required, $disabled)
 {
     $size = $size ? $size : 12;
-    $title = $title ? $title : 3;
-    $placeHolder = $placeHolder ? $placeHolder : "Giriş Yapın";
+    $label = $label ? $label : "";
+    $placeHolder = $placeHolder ? $placeHolder : $label;
     $rows = $rows ? $rows : 3;
     $value = $value ? $value : "";
     $name = $name ? $name : "";
 
 
     $first = '<div class="col-sm-' . $size . '"><div>
-    <label>' . $title . '</label>
+    <label>' . $label . '</label>
     <textarea ';
 
     $required = $required ? " required " : "";
@@ -137,6 +137,30 @@ function getTextArea($size, $name, $title, $placeHolder, $rows, $value, $require
     $first = $first . $disabled;
 
     $first = $first . ' name="' . $name . '" class="form-control" rows="' . $rows . '" placeholder="' . $placeHolder . '">' . $value . '</textarea>
+    </div></div>';
+
+    echo $first;
+}
+
+function getCKEditor($size, $label, $placeHolder, $name, $value, $required, $disabled)
+{
+    $size = $size ? $size : 12;
+    $label = $label ? $label : "";
+    $placeHolder = $placeHolder ? $placeHolder : $label;
+    $value = $value ? $value : "";
+    $name = $name ? $name : "";
+
+
+    $first = '<div class="col-sm-' . $size . '"><div>
+    <label>' . $label . '</label>
+    <textarea class="summernote"';
+
+    $required = $required ? " required " : "";
+    $disabled = $disabled ? " disabled " : "";
+    $first = $first . $required;
+    $first = $first . $disabled;
+
+    $first = $first . ' name="' . $name . '" class="form-control" placeholder="' . $placeHolder . '">' . $value . '</textarea>
     </div></div>';
 
     echo $first;

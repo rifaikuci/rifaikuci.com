@@ -16,6 +16,18 @@ $(function () {
             alwaysShowClose: true
         });
     });
+
+    $('.summernote').summernote(
+        {
+            inheritPlaceholder: true,
+            dialogsInBody: true,
+            dialogsFade: true,  // Add fade effect on dialogs
+            tabDisable: false
+
+
+        }
+    )
+
 });
 
 
