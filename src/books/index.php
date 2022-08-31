@@ -17,7 +17,7 @@ else if (file_exists("../../../utils/index.php"))
     <meta name="description" content="">
     <link rel="shortcut icon" type="image/png" href="<?php echo base_url() . "style/dist/img/favIcon/icon.png"; ?>">
 
-    <title><?php echo function_exists('firmName') ? firmName() . " |" : "" ?> Sosyal Medya Hesapları</title>
+    <title><?php echo function_exists('firmName') ? firmName() . " |" : "" ?> Kitap Listesi</title>
     <?php
     if (file_exists("include/style.php"))
         require_once "include/style.php";
@@ -63,7 +63,7 @@ else if (file_exists("../../../utils/index.php"))
     ?>
 
     <div class="content-wrapper">
-        <?php getBreadcrumb("Sosyal Medya Hesapları", ''); ?>
+        <?php getBreadcrumb("Kitap Listesi", ''); ?>
         <?php require_once "main.php" ?>
     </div>
 

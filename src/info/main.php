@@ -69,6 +69,7 @@ $row = getDataRow(1, 'info', $db);
 
         <div class="row">
             <?php
+            getTextInput(12, "Harita Linki (iframe)", "", "maps", $row['maps'], false, false);
 
             getDatetime(2, "Doğum Tarihi", "birthdate", $row['birthdate'], false, false);
             getTextInput("2", "Telefon", "", "phone1", $row['phone1'], false, false);

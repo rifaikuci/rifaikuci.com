@@ -23,7 +23,7 @@ if (isset($_POST['infoUpdate'])) {
 
     $arrayKey = [
         "name", "nameE", "address", "addressE", "district", "districtE", "phone1", "phone2", "about", "aboutE",
-        "description","descriptionE","birthPlace","mail","city","cityE","keywords","keywordsE","birthPlaceE","title","titleE","link"
+        "description","descriptionE","birthPlace","mail","city","cityE","keywords","keywordsE","birthPlaceE","title","titleE","link","maps"
     ];
     $data = getDataForm($arrayKey);
 
