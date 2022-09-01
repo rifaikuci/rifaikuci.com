@@ -17,5 +17,8 @@ require_once "education/index.php";
 require_once "books/index.php";
 require_once "languages/index.php";
 require_once "certificate/index.php";
+require_once "skills/index.php";
+require_once "experience/index.php";
+require_once "projects/index.php";
 
 ?>

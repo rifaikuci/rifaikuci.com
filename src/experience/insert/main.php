@@ -6,21 +6,20 @@
           enctype="multipart/form-data">
 
         <?php
-        getTextHidden("booksInsert","booksInsert");
+        getTextHidden("experienceInsert","experienceInsert");
         ?>
         <div class="card card-dark">
 
             <div class="card-header">
                 <?php expandable_header(); ?>
-                <h3 class="card-title">Kitap Bilgileri (Türkçe)</h3>
+                <h3 class="card-title">Deneyim Bilgileri (Türkçe)</h3>
             </div>
             <div class="card-body">
                 <div class="row">
                     <?php
-                    getTextInput(3, "Kitap Adı", "", "name", '', false, false);
-                    getTextInput(3, "Yazar", "", "author", '', false, false);
-                    getTextInput(3, "Yayınevi", "", "publisher", '', false, false);
-                    getTextArea(12, "Özet", "", "summary", 3, '', false, false);
+                    getTextInput(3, "Unvan", "", "title", '', false, false);
+                    getTextInput(3, "Firma Adı", "", "firmName", '', false, false);
+                    getTextArea(12, "Açıklama", "", "description", 3, '', false, false);
                     ?>
 
                 </div>
@@ -34,16 +33,16 @@
 
             <div class="card-header">
                 <?php expandable_header(); ?>
-                <h3 class="card-title">Kitap Bilgileri (İngilizce)</h3>
+                <h3 class="card-title">Deneyim Bilgileri (İngilizce)</h3>
             </div>
             <div class="card-body">
                 <div class="row">
                     <?php
-                    getTextInput(3, "Kitap Adı", "", "nameE", '', false, false);
-                    getTextInput(3, "Yazar", "", "authorE", '', false, false);
-                    getTextInput(3, "Yayınevi", "", "publisherE", '', false, false);
-                    getTextArea(12, "Özet", "", "summaryE", 3, '', false, false);
+                    getTextInput(3, "Unvan", "", "titleE", '', false, false);
+                    getTextInput(3, "Firma Adı", "", "firmNameE", '', false, false);
+                    getTextArea(12, "Açıklama", "", "descriptionE", 3, '', false, false);
                     ?>
+
 
 
                 </div>
@@ -56,7 +55,6 @@
         <div class="row">
             <?php
 
-            getNumberInput(3, "Basım Yılı", "2022", "printing", '', 1, 1960,date("Y"),false,false);
             getDatetime(3,"Başlangıç","startDate","",false,false);
             getDatetime(3,"Bitiş","finishDate","",false,false);
             getInputFile(3, "image", "Resim", false, false, false);

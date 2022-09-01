@@ -11,6 +11,7 @@ function getSelect($size, $data, $label,$name, $color,$multiple, $selected,$requ
     $name = $name ? $name : "";
     $required = $required ? true : false;
     $disabled = $disabled ? true : false;
+    $data['']= "Seçiniz";
 
     $first = '<div class="col-sm-'.$size.'">
                 <div class="select2-'.$color.'">

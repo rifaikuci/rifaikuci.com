@@ -23,15 +23,22 @@ function insert($data, $table)
 function update($data, $table, $id) {
 
     $sql  =  "UPDATE $table set ";
+    $sira = 0;
     foreach ($data as $key => $value) {
         if ($value) {
+            $sira++;
             $sql = $sql. "$key = '$value',"  ;
         }
     }
     $sql = rtrim($sql,",");
     $sql = $sql . " WHERE id = ". $id;
-    return $sql;
 
+    // yapılmasının değeri eğer set 'ten sonra tamam boş geliniyorsa engellemek yoksa sql çalıştırılmaz.
+    if ($sira > 0) {
+        return  $sql;
+    }  else {
+        return "no_update";
+    }
 }
 
 function delete($id, $table) {

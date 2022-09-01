@@ -6,21 +6,19 @@
           enctype="multipart/form-data">
 
         <?php
-        getTextHidden("booksInsert","booksInsert");
+        getTextHidden("skillsInsert","skillsInsert");
         ?>
         <div class="card card-dark">
 
             <div class="card-header">
                 <?php expandable_header(); ?>
-                <h3 class="card-title">Kitap Bilgileri (Türkçe)</h3>
+                <h3 class="card-title">Yetenek Bilgileri (Türkçe)</h3>
             </div>
             <div class="card-body">
                 <div class="row">
                     <?php
-                    getTextInput(3, "Kitap Adı", "", "name", '', false, false);
-                    getTextInput(3, "Yazar", "", "author", '', false, false);
-                    getTextInput(3, "Yayınevi", "", "publisher", '', false, false);
-                    getTextArea(12, "Özet", "", "summary", 3, '', false, false);
+                    getTextInput(3, " Özellik Adı", "", "name", '', false, false);
+                    getTextArea(12, "Açıklama", "", "description", 3, '', false, false);
                     ?>
 
                 </div>
@@ -34,15 +32,13 @@
 
             <div class="card-header">
                 <?php expandable_header(); ?>
-                <h3 class="card-title">Kitap Bilgileri (İngilizce)</h3>
+                <h3 class="card-title">Yetenek Bilgileri (İngilizce)</h3>
             </div>
             <div class="card-body">
                 <div class="row">
                     <?php
-                    getTextInput(3, "Kitap Adı", "", "nameE", '', false, false);
-                    getTextInput(3, "Yazar", "", "authorE", '', false, false);
-                    getTextInput(3, "Yayınevi", "", "publisherE", '', false, false);
-                    getTextArea(12, "Özet", "", "summaryE", 3, '', false, false);
+                    getTextInput(3, " Özellik Adı", "", "nameE", '', false, false);
+                    getTextArea(12, "Açıklama", "", "descriptionE", 3, '', false, false);
                     ?>
 
 
@@ -55,11 +51,10 @@
 
         <div class="row">
             <?php
-
-            getNumberInput(3, "Basım Yılı", "2022", "printing", '', 1, 1960,date("Y"),false,false);
-            getDatetime(3,"Başlangıç","startDate","",false,false);
-            getDatetime(3,"Bitiş","finishDate","",false,false);
-            getInputFile(3, "image", "Resim", false, false, false);
+            getTextInput(3, "Seviye", "", "level", '', false, false);
+            getTextInput(3, "Class adı", "", "className", '', false, false);
+            getSelect(3,$TYPE_SKILLS,"Kategori","type","",false,"",false,false);
+            getInputFile(3, "image", "Okul Resim", false, false, false);
 
 
             ?>

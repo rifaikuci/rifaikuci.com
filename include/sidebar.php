@@ -38,6 +38,20 @@
                     "far fas fa-stamp nav-icon",
                     "src/certificate",
                     "", "");
+
+                menuTreeSubTitle("Yetenekler",
+                    "far fas fa-sitemap nav-icon",
+                    "src/skills",
+                    "", "");
+
+                menuTreeSubTitle("Deneyimler",
+                    "far fas fa-vials nav-icon",
+                    "src/experience",
+                    "", "");
+                menuTreeSubTitle("Projeler",
+                    "far fas fa-solid fa-bars nav-icon",
+                    "src/projects",
+                    "", "");
                 ?>
 
             </ul>
