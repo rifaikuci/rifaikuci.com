@@ -54,6 +54,7 @@
             <?php
 
             getTextInput(2, "Class Adı", "", "class", '', false, false);
+            getTextInput(4, "Link", "", "link", '', false, false);
             getInputFile(4, "image", "Hesap Iconu", false, false, false);
 
 

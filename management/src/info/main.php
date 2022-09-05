@@ -28,7 +28,8 @@ $row = getDataRow(1, 'info', $db);
                     getTextInput("2", "Adres", "", "address", $row['address'], false, false);
                     getTextInput("2", "İl", "", "city", $row['city'], false, false);
                     getTextInput("2", "İlçe", "", "district", $row['district'], false, false);
-                    getCKEditor(12, "Öz geçmiş", 'about', "about", $row['about'], false, false);
+                    getCKEditor(12, "Alt Açıklama", '', "subAbout", $row['subAbout'], false, false);
+                    getCKEditor(12, "Öz geçmiş", '', "about", $row['about'], false, false);
                     getTextInput(12, "Meta Anahtar Kelimeler", "", "keywords", $row['keywords'], false, false);
                     getTextArea(12, "Meta Açıklama", "Açıklama", "description", 3, $row['description'], false, false);
                     ?>
@@ -55,6 +56,7 @@ $row = getDataRow(1, 'info', $db);
                     getTextInput("2", "Adres", "", "addressE", $row['addressE'], false, false);
                     getTextInput("2", "İl", "", "cityE", $row['cityE'], false, false);
                     getTextInput("2", "İlçe", "", "districtE", $row['districtE'], false, false);
+                    getCKEditor(12, "Alt Açıklama", '', "subAboutE", $row['subAboutE'], false, false);
                     getCKEditor(12, "Öz geçmiş", 'Açıklama', "aboutE", $row['aboutE'], false, false);
                     getTextInput(12, "Meta Anahtar Kelimeler", "", "keywordsE", $row['keywordsE'], false, false);
                     getTextArea(12, "Meta Açıklama", "açıklam", "descriptionE", 3, $row['descriptionE'], false, false);

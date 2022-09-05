@@ -22,9 +22,13 @@ if (file_exists("include/lang-control.php")) {
     require_once "../../include/lang-control.php";
 }
 
+
+$about = getDataRow(1, "info", $db);
+$aboutName = getColumn($about, 'name', $lang);
+
 ?>
 <!doctype html>
-<html lang="tr">
+<html lang="<?php echo $lang;?>">
 <head>
     <meta content="Rifai Kuçi, Bilgisayar Mühendisliği" name="keywords">
     <meta content="Yazılım Tutkusu Bilgisayar Mühendisi Rifai Kuçi. Hakkımda daha fazla bilgiyi web sayfamda bulabilirsiniz."

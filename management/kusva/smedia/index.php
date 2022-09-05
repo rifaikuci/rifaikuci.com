@@ -13,7 +13,7 @@ if (isset($_POST['smediaInsert'])) {
         }
     }
 
-    $arrayKey = ["title", "titleE", "keywords", "keywordsE", "description","descriptionE","class"];
+    $arrayKey = ["title", "titleE", "keywords", "keywordsE", "description","descriptionE","class","link"];
     $data = getDataForm($arrayKey);
 
     if (isset($_FILES['image']) && $_FILES['image']['name']) $data['image'] = $file;
@@ -54,7 +54,7 @@ if (isset($_POST['smediaUpdate'])) {
     }
 
 
-    $arrayKey = ["title", "titleE", "keywords", "keywordsE", "description","descriptionE","class"];
+    $arrayKey = ["title", "titleE", "keywords", "keywordsE", "description","descriptionE","class","link"];
     $data = getDataForm($arrayKey);
 
     if (isset($_FILES['image']) && $_FILES['image']['name']) $data['image'] = $file;

@@ -62,6 +62,7 @@ if (isset($_GET['id'])) {
             <?php
 
             getTextInput(2, "Class Adı", "", "class", $row['class'], false, false);
+            getTextInput(4, "Link", "", "link", $row['link'], false, false);
             getInputFile(4, "image", "Hesap Iconu", true, false, false);
             if ($row['image'])
                 getViewFile(4, "Resim", $row['image']);

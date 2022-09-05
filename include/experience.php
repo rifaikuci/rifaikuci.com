@@ -5,7 +5,7 @@
 
     <div class="timeline">
         <section>
-            <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="0">
+            <div class="timeline-card timeline-card-teal" data-aos="fade-in" data-aos-delay="0">
                 <div class="timeline-head px-4 pt-3">
                     <div class="h5">Frontend Developer <span class="text-muted h6">at Creative Agency</span></div>
                 </div>

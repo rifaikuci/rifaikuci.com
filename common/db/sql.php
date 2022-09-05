@@ -7,10 +7,8 @@ function insert($data, $table)
     $values = "";
 
     foreach ($data as $key => $value) {
-        if ($value) {
             $keys = $keys . $key . ", ";
             $values = $values . "'$value'" . ", ";
-        }
     }
     $keys = rtrim($keys, " ,");
     $values = rtrim($values, " ,");
@@ -25,10 +23,9 @@ function update($data, $table, $id) {
     $sql  =  "UPDATE $table set ";
     $sira = 0;
     foreach ($data as $key => $value) {
-        if ($value) {
+
             $sira++;
             $sql = $sql. "$key = '$value',"  ;
-        }
     }
     $sql = rtrim($sql,",");
     $sql = $sql . " WHERE id = ". $id;
