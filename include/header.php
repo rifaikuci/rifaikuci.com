@@ -1,4 +1,6 @@
 <?php
+$info = getDataRow(1, "info", $db);
+$infoName = getColumn($info, 'name', $lang);
 
 $smedia = getAllData("smedia", $db);
 ?>
@@ -7,11 +9,11 @@ $smedia = getAllData("smedia", $db);
     <div class="container">
         <div class="ds-header-inner">
             <a href="<?php echo base_url_front(); ?>" class="ds-logo">
-                <span><?php echo substr($aboutName, 0, 1) ?></span>
-                <?php echo $aboutName ?>
+                <span><?php echo substr($infoName, 0, 1) ?></span>
+                <?php echo $infoName ?>
             </a>
 
-            <!--
+            <!-- #todo dil kısmı yapılacak
             <ul>
                 <span><a href="#">TR</a></span>
                 <span> - </span>

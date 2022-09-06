@@ -17,6 +17,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="200">
                 <div class="timeline-head px-4 pt-3">
                     <div class="h5">Graphic Designer <span class="text-muted h6">at Design Studio</span></div>
@@ -28,6 +29,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="400">
                 <div class="timeline-head px-4 pt-3">
                     <div class="h5">Junior Web Developer <span class="text-muted h6">at Indie Studio</span></div>

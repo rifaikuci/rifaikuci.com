@@ -1,5 +1,7 @@
 <?php
-$subAbout = getColumn($about, 'subAbout', $lang);
+$info = getDataRow(1, "info", $db);
+
+$subAbout = getColumn($info, 'subAbout', $lang);
 
 
 ?>
@@ -9,7 +11,7 @@ $subAbout = getColumn($about, 'subAbout', $lang);
         <div class="row">
             <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5">
                 <figure>
-                    <img src="<?php echo base_url_back() . $about['image']; ?>">
+                    <img src="<?php echo base_url_back() . $info['image']; ?>">
                 </figure>
             </div>
             <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">

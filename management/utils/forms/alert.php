@@ -40,6 +40,12 @@ function statusAlert()
         durumSuccess( "Kayıt başarılı bir şekilde Güncellendi.");
     } else if (isset($_GET['update']) && $_GET['update'] == 'no') {
         durumDanger("Kaydı Güncellerken bir hata oluştu!");
+    } else if(isset($_GET['hata']) && $_GET['hata'] == 'pdf_invalid_type') {
+        durumDanger("Pdf için yanlış Dosya Tipi !");
+    } else if (isset($_GET['hata']) && $_GET['hata'] == 'pdf_large') {
+        durumDanger("Pdf boyutu fazla büyük !");
+    } else if (isset($_GET['hata']) && $_GET['hata'] == 'pdf_not_upload') {
+        durumDanger("PDF yüklenirken bir hata oluştu !");
     }
 }
 

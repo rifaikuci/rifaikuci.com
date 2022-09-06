@@ -9,10 +9,26 @@
                 data-accordion="false">
 
                 <?php
-                menuTreeSubTitle("Genel Bilgiler",
-                    "far fas fa-info nav-icon",
-                    "src/info",
-                    "", "");
+
+                $isInfoOpen = isTreeOpen(array('info', 'about'));
+                ?>
+                <li class="nav-item <?php echo $isInfoOpen ? 'menu-open' : ''; ?>">
+                    <?php menuTreeTitle("Title", "fas fa-info"); ?>
+                    <ul class="nav nav-treeview">
+                        <?php menuTreeSubTitle("Genel Bilgiler",
+                            "far fas fa-info nav-icon",
+                            "src/info",
+                            "", "");
+                        ?>
+                        <?php menuTreeSubTitle("Hakkımda",
+                            "far fas fa-user nav-icon",
+                            "src/about",
+                            "", "");
+                        ?>
+                    </ul>
+                </li>
+                <?php
+
 
                 menuTreeSubTitle("Sosyal Medyalar",
                     "far fas fa-hashtag nav-icon",

@@ -3,15 +3,19 @@
 if (file_exists("common/db/index.php")) {
     require_once "common/db/index.php";
     require_once "common/methods/index.php";
+    require_once "common/data/index.php";
 } else if (file_exists("../common/db/index.php")) {
     require_once "../common/db/index.php";
     require_once "../common/methods/index.php";
+    require_once "../common/data/index.php";
 } else if (file_exists("../../common/db/index.php")) {
     require_once "../../common/db/index.php";
     require_once "../../common/methods/index.php";
+    require_once "../../common/data/index.php";
 } else if (file_exists("../../../../common/db/index.php")) {
     require_once "../../../../common/db/index.php";
     require_once "../../../../common/methods/index.php";
+    require_once "../../../../common/data/index.php";
 }
 
 if (file_exists("include/lang-control.php")) {
@@ -22,10 +26,6 @@ if (file_exists("include/lang-control.php")) {
     require_once "../../include/lang-control.php";
 }
 
-
-$about = getDataRow(1, "info", $db);
-$aboutName = getColumn($about, 'name', $lang);
-
 ?>
 <!doctype html>
 <html lang="<?php echo $lang;?>">
@@ -33,7 +33,7 @@ $aboutName = getColumn($about, 'name', $lang);
     <meta content="Rifai Kuçi, Bilgisayar Mühendisliği" name="keywords">
     <meta content="Yazılım Tutkusu Bilgisayar Mühendisi Rifai Kuçi. Hakkımda daha fazla bilgiyi web sayfamda bulabilirsiniz."
           name="description">
-    <title><?php echo function_exists('firmName') ? firmName() . " |" : "" ?> Anasayfa</title>
+    <title><?php echo function_exists('firmName') ? firmName() . " |" : "" ?> <?php getLabel("Anasayfa","Home",$lang); ?></title>
 
     <?php require_once "include/style.php" ?>
 </head>

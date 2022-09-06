@@ -117,7 +117,20 @@ function getViewFile($size, $label, $path)
                     </div>';
 }
 
-function getTextArea($size, $label, $placeHolder,$name, $rows, $value, $required, $disabled)
+function getPdfLink($size, $label, $path)
+{
+    $size = $size ? $size : 3;
+    $label = $label ? $label : 3;
+
+    $path = $path ? base_url_back() . $path : "#";
+    echo '<div class="col-sm-' . $size . '">
+                        <a href="' . $path . '" data-toggle="lightbox" data-title="' . $label . '" data-gallery="gallery">
+                            <img src="' . $path . '" class="img-fluid mb-' . $size . '" alt="' . $label . '"/>
+                        </a>
+                    </div>';
+}
+
+function getTextArea($size, $label, $placeHolder, $name, $rows, $value, $required, $disabled)
 {
     $size = $size ? $size : 12;
     $label = $label ? $label : "";
@@ -164,6 +177,21 @@ function getCKEditor($size, $label, $placeHolder, $name, $value, $required, $dis
     </div></div>';
 
     echo $first;
+}
+
+function getLinkView($size, $label, $link)
+{
+    $size = $size ? $size : 4;
+    $label = $label ? $label : "";
+    $link = $link ? $link : '#';
+    $fileArray = explode("/", $link);
+    $name = $fileArray[count($fileArray) - 1];
+    echo '
+     <div class="col-sm-' . $size . '">
+        <label>' . $label . '</label>
+        <br>
+        <a target="_blank" href="' . base_url_back() . $link . '">' . $name . '</a>
+    </div>';
 }
 
 ?>

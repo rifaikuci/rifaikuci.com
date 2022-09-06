@@ -20,5 +20,6 @@ require_once "certificate/index.php";
 require_once "skills/index.php";
 require_once "experience/index.php";
 require_once "projects/index.php";
+require_once "about/index.php";
 
 ?>
