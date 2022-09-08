@@ -1,58 +1,41 @@
+<?php
+$projects = getAllData("projects",$db);
+
+?>
+
 <div class="ds-work-section">
     <div class="container">
-        <h2 class="ds-heading">Latest works</h2>
+        <h2 class="ds-heading"><?php echo getLabel("Projelerim","Projects", $lang )?></h2>
         <div class="ds-work-list-section">
+            <?php
+            for($i = 0; $i<count($projects); $i++) {?>
             <div class="ds-work-list">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
                         <section>
-                            <h3 class="ds-work-tilte">Tripy mobile app</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quis sem maximus, ornare
-                                metus ut, congue enim. Sed fermentum nulla tellus, quis efficitur mauris tristique
-                                efficitur. Aliquam rhoncus sem sed ullamcorper venenatis. Aenean malesuada eu orci non
-                                sodales. </p>
-                            <a href="works-setails.html" class="ds-button">Details</a>
+                            <h3 class="ds-work-tilte">
+                                <?php
+                                echo getColumn($projects[$i],"title",$lang);
+                                ?>
+                            </h3>
+                            <?php
+                            echo wordSplice(getColumn($projects[$i],"description",$lang),100);
+                            ?>
+
+                            <a href="#" class="ds-button"><?php echo getLabel("Detay", "Detail",$lang)?></a>
                         </section>
                     </div>
                     <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5">
-                        <figure><img src="assets/images/work-1.jpg"></figure>
+                        <?php if($projects[$i]['image']) { ?>
+                        <figure><img src="<?php echo base_url_back().$projects[$i]['image']?>"></figure>
+                        <?php } else  {?>
+                            <figure><img src="<?php echo base_url_back()."assets/images/projects/default.jpg"?>"></figure>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
-            <div class="ds-work-list">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                        <section>
-                            <h3 class="ds-work-tilte">Hello mobile app</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quis sem maximus, ornare
-                                metus ut, congue enim. Sed fermentum nulla tellus, quis efficitur mauris tristique
-                                efficitur. Aliquam rhoncus sem sed ullamcorper venenatis. Aenean malesuada eu orci non
-                                sodales. </p>
-                            <a href="works-setails.html" class="ds-button">Details</a>
-                        </section>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5">
-                        <figure><img src="assets/images/work-2.jpg"></figure>
-                    </div>
-                </div>
-            </div>
-            <div class="ds-work-list">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                        <section>
-                            <h3 class="ds-work-tilte">Cute cookies app</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quis sem maximus, ornare
-                                metus ut, congue enim. Sed fermentum nulla tellus, quis efficitur mauris tristique
-                                efficitur. Aliquam rhoncus sem sed ullamcorper venenatis. Aenean malesuada eu orci non
-                                sodales. </p>
-                            <a href="works-setails.html" class="ds-button">Details</a>
-                        </section>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5">
-                        <figure><img src="assets/images/work-3.jpg"></figure>
-                    </div>
-                </div>
-            </div>
+
+            <?php }  ?>
         </div>
     </div>
 </div>

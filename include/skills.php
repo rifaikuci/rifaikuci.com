@@ -3,7 +3,6 @@
 
 $skills = getAllData("skills", $db);
 
-echo count();
 ?>
 
 <div class="ds-skills-section">

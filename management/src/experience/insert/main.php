@@ -19,7 +19,8 @@
                     <?php
                     getTextInput(3, "Unvan", "", "title", '', false, false);
                     getTextInput(3, "Firma Adı", "", "firmName", '', false, false);
-                    getTextArea(12, "Açıklama", "", "description", 3, '', false, false);
+                    getCKEditor(12,"Açıklama","","description","",false,false);
+
                     ?>
 
                 </div>
@@ -40,7 +41,8 @@
                     <?php
                     getTextInput(3, "Unvan", "", "titleE", '', false, false);
                     getTextInput(3, "Firma Adı", "", "firmNameE", '', false, false);
-                    getTextArea(12, "Açıklama", "", "descriptionE", 3, '', false, false);
+                    getCKEditor(12,"Açıklama","","descriptionE","",false,false);
+
                     ?>
 
 
@@ -54,7 +56,7 @@
 
         <div class="row">
             <?php
-
+            getTextInput(3, "Firma Linki", "", "link", '', false, false);
             getDatetime(3,"Başlangıç","startDate","",false,false);
             getDatetime(3,"Bitiş","finishDate","",false,false);
             getInputFile(3, "image", "Resim", false, false, false);

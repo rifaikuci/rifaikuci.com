@@ -1,88 +1,60 @@
+<?php
+
+$experience = getAllData("experience", $db);
+?>
+
 <div class="container" id="experience">
-
-
-    <h2 class="ds-heading">About Me</h2>
+    <h2 class="ds-heading"><?php echo getLabel("Deneyimler", "Experience", $lang) ?></h2>
 
     <div class="timeline">
         <section>
-            <div class="timeline-card timeline-card-teal" data-aos="fade-in" data-aos-delay="0">
-                <div class="timeline-head px-4 pt-3">
-                    <div class="h5">Frontend Developer <span class="text-muted h6">at Creative Agency</span></div>
-                </div>
-                <div class="timeline-body px-4 pb-4">
-                    <div class="text-muted text-small mb-3">May, 2015 - Present</div>
-                    <div>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative
-                        approaches to corporate strategy foster collaborative thinking to further the overall value
-                        proposition.
+            <?php for ($i = 0;
+                       $i < count($experience);
+                       $i++) {
+                echo $experience['link'];
+                ?>
+                <div class="timeline-card timeline-card-success" data-aos="fade-in" data-aos-delay="0">
+                    <div class="timeline-head px-4 pt-3">
+
+                        <div class="h5"><?php echo getColumn($experience[$i], "title", $lang) ?>
+
+                            <?php if ($experience[$i]['link']) { ?>
+                                <a href="<?php echo $experience[$i]['link'] ?>" target="_blank">
+                                    <span class="text-muted h6"><?php echo " - ". getColumn($experience[$i], "firmName", $lang) ?></span>
+                                </a>
+                            <?php } else { ?>
+                                <span class="text-muted h6"><?php echo " - ". getColumn($experience[$i], "firmName", $lang) ?></span>
+                            <?php } ?>
+
+                        </div>
+                    </div>
+                    <div class="timeline-body px-4 pb-4">
+                        <div class="text-muted text-small mb-3">
+                            <?php if($lang == 'tr')  {
+                                
+                                if($experience[$i]['finishDate']) {
+                                    echo  onlyDateMonthTr($experience[$i]['startDate']) . " - ".  onlyDateMonthTr($experience[$i]['finishDate']);
+                                } else {
+                                    echo   onlyDateMonthTr($experience[$i]['startDate']) . " - ".  "Devam Ediyor";
+                                }
+                            } else {
+                                if($experience[$i]['finishDate']) {
+                                    echo  onlyDateMonthEng($experience[$i]['startDate']) . " - ".  onlyDateMonthEng($experience[$i]['finishDate']);
+                                } else {
+                                    echo   onlyDateMonthEng($experience[$i]['startDate']) . " - ".  "Present";
+                                }
+
+                            }?>
+
+                        </div>
+                        <div><?php echo getColumn($experience[$i], "description", $lang) ?>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="200">
-                <div class="timeline-head px-4 pt-3">
-                    <div class="h5">Graphic Designer <span class="text-muted h6">at Design Studio</span></div>
-                </div>
-                <div class="timeline-body px-4 pb-4">
-                    <div class="text-muted text-small mb-3">June, 2013 - May, 2015</div>
-                    <div>Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion
-                        along the information highway will close the loop on focusing solely on the bottom line.
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
 
-            <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="400">
-                <div class="timeline-head px-4 pt-3">
-                    <div class="h5">Junior Web Developer <span class="text-muted h6">at Indie Studio</span></div>
-                </div>
-                <div class="timeline-body px-4 pb-4">
-                    <div class="text-muted text-small mb-3">Jan, 2011 - May, 2013</div>
-                    <div>User generated content in real-time will have multiple touchpoints for offshoring. Organically
-                        grow the holistic world view of disruptive innovation via workplace diversity and empowerment.
-                    </div>
-                </div>
-            </div>
 
-            <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="400">
-                <div class="timeline-head px-4 pt-3">
-                    <div class="h5">Junior Web Developer <span class="text-muted h6">at Indie Studio</span></div>
-                </div>
-                <div class="timeline-body px-4 pb-4">
-                    <div class="text-muted text-small mb-3">Jan, 2011 - May, 2013</div>
-                    <div>User generated content in real-time will have multiple touchpoints for offshoring. Organically
-                        grow the holistic world view of disruptive innovation via workplace diversity and empowerment.
-                    </div>
-                </div>
-            </div>
-
-            <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="400">
-                <div class="timeline-head px-4 pt-3">
-                    <div class="h5">Junior Web Developer <span class="text-muted h6">at Indie Studio</span></div>
-                </div>
-                <div class="timeline-body px-4 pb-4">
-                    <div class="text-muted text-small mb-3">Jan, 2011 - May, 2013</div>
-                    <div>User generated content in real-time will have multiple touchpoints for offshoring. Organically
-                        grow the holistic world view of disruptive innovation via workplace diversity and empowerment.
-                    </div>
-                </div>
-            </div>
-
-            <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="400">
-                <div class="timeline-head px-4 pt-3">
-                    <div class="h5">Junior Web Developer <span class="text-muted h6">at Indie Studio</span></div>
-                </div>
-                <div class="timeline-body px-4 pb-4">
-                    <div class="text-muted text-small mb-3">Jan, 2011 - May, 2013</div>
-                    <p>User generated content in real-time will have multiple touchpoints for offshoring. Organically
-                        grow the holistic world view of disruptive innovation via workplace diversity and
-                        empowerment.</p>
-                    <p>User generated content in real-time will have multiple touchpoints for offshoring. Organically
-                        grow the holistic world view of disruptive innovation via workplace diversity and
-                        empowerment.</p>
-                    <p>User generated content in real-time will have multiple touchpoints for offshoring. Organically
-                        grow the holistic world view of disruptive innovation via workplace diversity and
-                        empowerment.</p>
-                </div>
-            </div>
         </section>
 
     </div>

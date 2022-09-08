@@ -27,7 +27,7 @@ if (isset($_GET['id'])) {
                     <?php
                     getTextInput(3, "Unvan", "", "title", $row['title'], false, false);
                     getTextInput(3, "Firma Adı", "", "firmName", $row['firmName'], false, false);
-                    getTextArea(12, "Açıklama", "", "description", 3, $row['description'], false, false);
+                    getCKEditor(12,"Açıklama","","description",$row['description'],false,false);
                     ?>
 
                 </div>
@@ -46,9 +46,10 @@ if (isset($_GET['id'])) {
             <div class="card-body">
                 <div class="row">
                     <?php
+
                     getTextInput(3, "Unvan", "", "titleE", $row['titleE'], false, false);
                     getTextInput(3, "Firma Adı", "", "firmNameE", $row['firmNameE'], false, false);
-                    getTextArea(12, "Açıklama", "", "descriptionE", 3, $row['descriptionE'], false, false);
+                    getCKEditor(12,"Açıklama","","descriptionE",$row['descriptionE'],false,false);
                     ?>
 
                 </div>
@@ -60,6 +61,7 @@ if (isset($_GET['id'])) {
 
         <div class="row">
             <?php
+            getTextInput(3, "Firma Linki", "", "link", $row['link'], false, false);
             getDatetime(2,"Başlangıç","startDate",$row['startDate'],false,false);
             getDatetime(2,"Bitiş","finishDate",$row['finishDate'],false,false);
             getInputFile(3, "image", "Resim", true, false, false);

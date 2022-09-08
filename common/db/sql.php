@@ -8,7 +8,11 @@ function insert($data, $table)
 
     foreach ($data as $key => $value) {
             $keys = $keys . $key . ", ";
-            $values = $values . "'$value'" . ", ";
+            if($value != '') {
+                $values = $values . "'$value'" . ", ";
+            }else {
+                $values = $values . 'NULL' . ", ";
+            }
     }
     $keys = rtrim($keys, " ,");
     $values = rtrim($values, " ,");
