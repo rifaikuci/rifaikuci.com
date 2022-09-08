@@ -70,6 +70,7 @@ function getAllData($table, $db)
 {
     $columns = getTableColumns($table, $db);
 
+    if()
     $sql = "SELECT * FROM $table order by id ";;
 
     $result = $db->query($sql);
