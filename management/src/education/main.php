@@ -1,7 +1,7 @@
 <section class="content">
     <?php statusAlert(); ?>
 
-    <?php $data = getAllData("education", $db);
+    <?php $data = getAllData("education",'', $db);
     $isVisibleColumn = ["counter","title", "description","startDate","finishDate"];
     $columnName = [ "#", "Okul Adı", "Başlangıç T.", "Bitiş T."];
 

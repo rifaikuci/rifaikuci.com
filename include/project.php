@@ -1,5 +1,5 @@
 <?php
-$projects = getAllData("projects", $db);
+$projects = getAllData("projects","", $db);
 
 ?>
 
@@ -25,7 +25,10 @@ $projects = getAllData("projects", $db);
                                     ?>
                                 </p>
 
-                                <a href="#" class="ds-button"><?php echo getLabel("Detay", "Detail", $lang) ?></a>
+                                <a href="<?php
+                                $link = base_url_front()."detail/?seo=".getColumn($projects[$i],"seoTitle",$lang);
+                                echo $link;
+                                ?>" class="ds-button"><?php echo getLabel("Detay", "Detail", $lang) ?></a>
                             </section>
                         </div>
                         <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5">

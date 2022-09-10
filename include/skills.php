@@ -1,7 +1,7 @@
 <?php
 
 
-$skills = getAllData("skills", $db);
+$skills = getAllData("skills", '', $db);
 
 ?>
 

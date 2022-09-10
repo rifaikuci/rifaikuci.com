@@ -1,7 +1,7 @@
 <section class="content">
     <?php statusAlert(); ?>
 
-    <?php $data = getAllData("certificate", $db);
+    <?php $data = getAllData("certificate",'', $db);
     $isVisibleColumn = ["counter","title", "description",];
     $columnName = [ "#", "Sertifika Adı", "Detay"];
 

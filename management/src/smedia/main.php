@@ -1,7 +1,7 @@
 <section class="content">
     <?php statusAlert(); ?>
 
-    <?php $data = getAllData("smedia", $db);
+    <?php $data = getAllData("smedia",'', $db);
     $isVisibleColumn = ["counter", "title"];
     $columnName = [ "#", "Sosyal Medya Hesap İsmi"];
 

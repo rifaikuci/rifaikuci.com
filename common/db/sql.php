@@ -9,6 +9,7 @@ function insert($data, $table)
     foreach ($data as $key => $value) {
             $keys = $keys . $key . ", ";
             if($value != '') {
+                $value = str_replace("'","`",$value);
                 $values = $values . "'$value'" . ", ";
             }else {
                 $values = $values . 'NULL' . ", ";
@@ -29,6 +30,7 @@ function update($data, $table, $id) {
     foreach ($data as $key => $value) {
 
             $sira++;
+            $value = str_replace("'","`",$value);
             $sql = $sql. "$key = '$value',"  ;
     }
     $sql = rtrim($sql,",");
@@ -66,12 +68,18 @@ function getTableColumns($table, $db)
     return $columns;
 }
 
-function getAllData($table, $db)
+function getAllData($table, $limit, $db)
 {
     $columns = getTableColumns($table, $db);
 
-    if()
-    $sql = "SELECT * FROM $table order by id ";;
+
+    if($limit) {
+        $sql = "SELECT * FROM $table order by id LIMIT $limit ";;
+
+    } else {
+        $sql = "SELECT * FROM $table order by id ";;
+
+    }
 
     $result = $db->query($sql);
     $data = array();

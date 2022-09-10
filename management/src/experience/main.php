@@ -1,7 +1,7 @@
 <section class="content">
     <?php statusAlert(); ?>
 
-    <?php $data = getAllData("experience", $db);
+    <?php $data = getAllData("experience",'', $db);
     $isVisibleColumn = ["counter","firmName", "title"];
     $columnName = [ "#", "Firma Adı", "Unvan"];
 

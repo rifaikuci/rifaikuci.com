@@ -1,7 +1,7 @@
 <section class="content">
     <?php statusAlert(); ?>
 
-    <?php $data = getAllData("languages", $db);
+    <?php $data = getAllData("languages",'', $db);
     $isVisibleColumn = ["counter","title", "level"];
     $columnName = [ "#", "Dil", "Seviye"];
 

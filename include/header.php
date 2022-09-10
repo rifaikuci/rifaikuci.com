@@ -2,7 +2,12 @@
 $info = getDataRow(1, "info", $db);
 $infoName = getColumn($info, 'name', $lang);
 
-$smedia = getAllData("smedia", $db);
+$smedia = getAllData("smedia",'', $db);
+$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+$currentURL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$filteredURL = preg_replace('~(\?|&)'.'lang'.'=[^&]*~', '$1', $currentURL);
+$filteredURL = str_replace("?","",$filteredURL);
+
 ?>
 
 <header class="ds-header" id="site-header">
@@ -13,12 +18,13 @@ $smedia = getAllData("smedia", $db);
                 <?php echo $infoName ?>
             </a>
 
-            <!-- #todo dil kısmı yapılacak
             <ul>
-                <span><a href="#">TR</a></span>
+                <span><a href="<?php
+                    echo $filteredURL . "?lang=tr" ?>">TR</a></span>
                 <span> - </span>
-                <span><a href="#">EN</a></span>
-            </ul> -->
+                <span><a <a href="<?php echo base_url_front() . "?lang=en" ?>">EN</a></span>
+            </ul>
+
 
             <ul class="ds-social">
                 <?php

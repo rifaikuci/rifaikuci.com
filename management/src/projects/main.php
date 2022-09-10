@@ -1,7 +1,7 @@
 <section class="content">
     <?php statusAlert(); ?>
 
-    <?php $data = getAllData("projects", $db);
+    <?php $data = getAllData("projects",'', $db);
     $isVisibleColumn = ["counter","title"];
     $columnName = [ "#", "Proje Adı"];
 

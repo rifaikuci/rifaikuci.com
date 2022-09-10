@@ -1,6 +1,6 @@
 <?php
 
-$education = getAllData("education", $db);
+$education = getAllData("education", '', $db);
 ?>
 
 <div class="container" id="experience">
