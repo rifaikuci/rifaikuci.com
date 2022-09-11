@@ -157,4 +157,15 @@ span.ds-department{ color: #373737; font-weight: 500; font-size: 18px; padding-b
 
 .timeline-card-success:before {
 	border-color: var(--bs-teal); }
+.active-lang  {
+	font-size: 15px;
+	color: #0c84ff;
+	font-weight: 600
+}
+
+.passive-lang  {
+	font-size: 15px;
+	color: rgba(128,128,128,0.2);
+	font-weight: 600
+}
 

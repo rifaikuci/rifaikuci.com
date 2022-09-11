@@ -1,3 +1,12 @@
+
+<?php
+
+session_start();
+if (!isset($_SESSION['management'])) {
+    header("Location:" . base_url_back() . "/src/login/");
+}
+
+?>
 <link rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <link rel="stylesheet" href="<?php echo base_url_back() . "style/plugins/fontawesome-free/css/all.min.css" ?>">

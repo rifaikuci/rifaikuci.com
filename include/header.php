@@ -18,11 +18,14 @@ $filteredURL = str_replace("?","",$filteredURL);
                 <?php echo $infoName ?>
             </a>
 
+
             <ul>
-                <span><a href="<?php
+                <span><a class="<?php echo $lang == "tr" ? 'active-lang' : 'passive-lang'?>"
+                            href="<?php
                     echo $filteredURL . "?lang=tr" ?>">TR</a></span>
                 <span> - </span>
-                <span><a <a href="<?php echo base_url_front() . "?lang=en" ?>">EN</a></span>
+                <span><a class="<?php echo $lang == "en" ? 'active-lang' : 'passive-lang'?>"
+                            href="<?php echo base_url_front() . "?lang=en" ?>">EN</a></span>
             </ul>
 
 

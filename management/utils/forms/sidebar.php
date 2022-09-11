@@ -32,7 +32,7 @@ function menuTreeSubTitle($title, $classIcon, $link, $target,$badge)
         </li>';
 }
 
-function menuTitle($title,$color)
+function menuLabel($title,$color)
 {
     $title = $title ? $title : "Alt Title 1";
     $color = $color ? $color : "";
@@ -47,6 +47,23 @@ function badge($title, $type)
     $type = $type ? $type : "danger";
 
     return '<span class="right badge badge-'.$type.'">'.$title.'</span>';
+}
+
+
+
+function menuTitleWithDot($title,$color, $link,$pageType) {
+    $title = $title ? $title : "";
+    $color = $color ? $color : "";
+    $link = $link ? $link : "#";
+    $pageType = $pageType ? $pageType : "";
+
+
+    echo '<li class="nav-item">
+                    <a href="'.$link.'" target="'.$pageType.'" class="nav-link">
+                        <i class="nav-icon far fa-circle text-'.$color.'"></i>
+                        <p class="text">'.$title.'</p>
+                    </a>
+                </li>';
 }
 
 ?>

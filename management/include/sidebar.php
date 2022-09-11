@@ -13,16 +13,21 @@
                 $isInfoOpen = isTreeOpen(array('info', 'about'));
                 ?>
                 <li class="nav-item <?php echo $isInfoOpen ? 'menu-open' : ''; ?>">
-                    <?php menuTreeTitle("Title", "fas fa-info"); ?>
+                    <?php menuTreeTitle("Ayarlar", "fas fa-info"); ?>
                     <ul class="nav nav-treeview">
                         <?php menuTreeSubTitle("Genel Bilgiler",
                             "far fas fa-info nav-icon",
                             "src/info",
                             "", "");
-                        ?>
-                        <?php menuTreeSubTitle("Hakkımda",
+
+                        menuTreeSubTitle("Hakkımda",
                             "far fas fa-user nav-icon",
                             "src/about",
+                            "", "");
+
+                        menuTreeSubTitle("Fav Icon",
+                            "far fas fa-image nav-icon",
+                            "src/favIcon",
                             "", "");
                         ?>
                     </ul>
@@ -68,7 +73,14 @@
                     "far fas fa-solid fa-bars nav-icon",
                     "src/projects",
                     "", "");
+
+                menuLabel("Site Bilgileri","green");
+
+                menuTitleWithDot("Siteye Giriş","primary",base_url_front(),"_blank");
+                menuTitleWithDot("Çıkış Yap","danger",base_url_back()."kusva/?logout=true","")
                 ?>
+
+
 
             </ul>
         </nav>
