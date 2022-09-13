@@ -3,7 +3,7 @@
 
 function base_url_back()
 {
-    return 'http://localhost/rifaikuci.com/management/';
+    return 'https://rifaikuci.com/management/';
 }
 
 function firmName()
@@ -37,7 +37,7 @@ function isTreeOpen($array) {
 
 function base_url_front()
 {
-    return 'http://localhost/rifaikuci.com/';
+    return 'https://rifaikuci.com/';
 }
 
 function getColumn ($row,$title,$lang) {

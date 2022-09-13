@@ -34,9 +34,4 @@ if (isset($_SESSION['management'])) {
     header("Location:" . "http://localhost/rifaikuci.com/management/src/login/?session=no");
 }
 
-
-
-require_once "login/index.php";
-
-
 ?>
