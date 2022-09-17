@@ -59,16 +59,18 @@ function imageUpload( $folderName, $name, $fileName)
 
 function pdfUpload( $folderName, $name, $fileName)
 {
-    $path = pdfBaseUrl();
-    if(file_exists(pdfBaseUrl())) {
-        $path =pdfBaseUrl();
-    } else if(file_exists("../".pdfBaseUrl())){
-        $path = "../".pdfBaseUrl();
-    } else if(file_exists("../../".pdfBaseUrl())){
-        $path = "../../".pdfBaseUrl()."/";
-    } else if(file_exists("../../../".pdfBaseUrl())){
-        $path = "../../../".pdfBaseUrl()."/";
+    $path = imageBaseUrl();
+    if(file_exists(imageBaseUrl())) {
+        $path =imageBaseUrl();
+    } else if(file_exists("../".imageBaseUrl())){
+        $path = "../".imageBaseUrl();
+    } else if(file_exists("../../".imageBaseUrl())){
+        $path = "../../".imageBaseUrl();
+    } else if(file_exists("../../../".imageBaseUrl())){
+        $path = "../../../".imageBaseUrl();
     }
+    echo file_exists($path . $folderName);
+    exit();
 
 
 
@@ -85,7 +87,7 @@ function pdfUpload( $folderName, $name, $fileName)
     $imageFileType = "pdf";
 
     if ($fileName) {
-        $target_file = pdfBaseUrl() . $folderName . "/" . $fileName . "." . $imageFileType;
+        $target_file = imageBaseUrl() . $folderName . "/" . $fileName . "." . $imageFileType;
     } else {
         $uniq = uniqid();
         $target_file = pdfBaseUrl() . $folderName . "/" . $uniq. "." . $imageFileType;
