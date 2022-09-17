@@ -70,6 +70,7 @@ function pdfUpload( $folderName, $name, $fileName)
         $path = "../../../".pdfBaseUrl();
     }
 
+    echo $path;
 
 
     if (!file_exists($path . $folderName)) {
