@@ -70,6 +70,7 @@ function pdfUpload( $folderName, $name, $fileName)
         $path = "../../../".imageBaseUrl();
     }
     echo file_exists($path . $folderName);
+    echo $path.$folderName;
     exit();
 
 
