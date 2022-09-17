@@ -61,16 +61,17 @@ function pdfUpload( $folderName, $name, $fileName)
 {
     $path = pdfBaseUrl();
     if(file_exists(pdfBaseUrl())) {
-        $path =pdfBaseUrl();
+        $path =pdfBaseUrl()."1";
     } else if(file_exists("../".pdfBaseUrl())){
-        $path = "../".pdfBaseUrl();
+        $path = "../".pdfBaseUrl()."12";
     } else if(file_exists("../../".pdfBaseUrl())){
-        $path = "../../".pdfBaseUrl();
+        $path = "../../".pdfBaseUrl()."23";
     } else if(file_exists("../../../".pdfBaseUrl())){
-        $path = "../../../".pdfBaseUrl();
+        $path = "../../../".pdfBaseUrl()."1231";
     }
 
     echo $path;
+    exit();
 
 
     if (!file_exists($path . $folderName)) {
