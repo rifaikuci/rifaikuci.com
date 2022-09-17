@@ -73,22 +73,10 @@ function pdfUpload( $folderName, $name, $fileName)
 
 
     if (!file_exists($path . $folderName)) {
-        echo "dasd";
-        exit();
-        mkdir($path . $folderName, 0777, true);
-    }
-    echo "adsasd";
-    exit();
-
-
-
-    if (!file_exists($path . $folderName)) {
         mkdir($path . $folderName, 0777, true);
     }
 
     $target_dir = $path . $folderName;
-    echo $target_dir;
-    exit();
 
     $target_file = $target_dir . "/" . basename($_FILES[$name]["name"]);
     $uploadOk = 1;
@@ -112,8 +100,6 @@ function pdfUpload( $folderName, $name, $fileName)
         return "pdf_invalid_type";
         $uploadOk = 0;
     }
-    echo move_uploaded_file($_FILES[$name]["tmp_name"], "../" . $target_file);
-    exit();
 
     if ($uploadOk == 0) {
         return "pdf_not_upload";
