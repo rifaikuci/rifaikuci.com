@@ -5,14 +5,17 @@ function imageUpload( $folderName, $name, $fileName)
 {
     $path = imageBaseUrl();
     if(file_exists(imageBaseUrl())) {
-        $path =imageBaseUrl();
+        $path =imageBaseUrl()."1";
     } else if(file_exists("../".imageBaseUrl())){
-        $path = "../".imageBaseUrl();
+        $path = "../".imageBaseUrl()."12";
     } else if(file_exists("../../".imageBaseUrl())){
-        $path = "../../".imageBaseUrl()."/";
+        $path = "../../".imageBaseUrl()."23";
     } else if(file_exists("../../../".imageBaseUrl())){
-        $path = "../../../".imageBaseUrl()."/";
+        $path = "../../../".imageBaseUrl()."1231";
     }
+
+    echo $path;
+    exit();
 
 
 
