@@ -73,6 +73,8 @@ function pdfUpload( $folderName, $name, $fileName)
 
 
     if (!file_exists($path . $folderName)) {
+        echo "dasd";
+        exit();
         mkdir($path . $folderName, 0777, true);
     }
 
