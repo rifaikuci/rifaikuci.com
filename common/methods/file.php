@@ -77,6 +77,14 @@ function pdfUpload( $folderName, $name, $fileName)
         exit();
         mkdir($path . $folderName, 0777, true);
     }
+    echo "adsasd";
+    exit();
+
+
+
+    if (!file_exists($path . $folderName)) {
+        mkdir($path . $folderName, 0777, true);
+    }
 
     $target_dir = $path . $folderName;
     echo $target_dir;
