@@ -77,6 +77,8 @@ function pdfUpload( $folderName, $name, $fileName)
     }
 
     $target_dir = $path . $folderName;
+    echo $target_dir;
+    exit();
 
     $target_file = $target_dir . "/" . basename($_FILES[$name]["name"]);
     $uploadOk = 1;
