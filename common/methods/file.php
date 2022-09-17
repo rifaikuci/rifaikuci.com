@@ -5,17 +5,14 @@ function imageUpload( $folderName, $name, $fileName)
 {
     $path = imageBaseUrl();
     if(file_exists(imageBaseUrl())) {
-        $path =imageBaseUrl()."1";
+        $path =imageBaseUrl();
     } else if(file_exists("../".imageBaseUrl())){
-        $path = "../".imageBaseUrl()."12";
+        $path = "../".imageBaseUrl();
     } else if(file_exists("../../".imageBaseUrl())){
-        $path = "../../".imageBaseUrl()."23";
+        $path = "../../".imageBaseUrl()."/";
     } else if(file_exists("../../../".imageBaseUrl())){
-        $path = "../../../".imageBaseUrl()."1231";
+        $path = "../../../".imageBaseUrl()."/";
     }
-
-    echo $path;
-    exit();
 
 
 
@@ -64,17 +61,15 @@ function pdfUpload( $folderName, $name, $fileName)
 {
     $path = pdfBaseUrl();
     if(file_exists(pdfBaseUrl())) {
-        $path =pdfBaseUrl()."1";
+        $path =pdfBaseUrl();
     } else if(file_exists("../".pdfBaseUrl())){
-        $path = "../".pdfBaseUrl()."12";
+        $path = "../".pdfBaseUrl();
     } else if(file_exists("../../".pdfBaseUrl())){
-        $path = "../../".pdfBaseUrl()."23";
+        $path = "../../".pdfBaseUrl();
     } else if(file_exists("../../../".pdfBaseUrl())){
-        $path = "../../../".pdfBaseUrl()."1231";
+        $path = "../../../".pdfBaseUrl();
     }
 
-    echo $path;
-    exit();
 
 
     if (!file_exists($path . $folderName)) {
