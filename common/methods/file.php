@@ -59,15 +59,15 @@ function imageUpload( $folderName, $name, $fileName)
 
 function pdfUpload( $folderName, $name, $fileName)
 {
-    $path = imageBaseUrl();
-    if(file_exists(imageBaseUrl())) {
-        $path =imageBaseUrl();
-    } else if(file_exists("../".imageBaseUrl())){
-        $path = "../".imageBaseUrl();
-    } else if(file_exists("../../".imageBaseUrl())){
-        $path = "../../".imageBaseUrl();
-    } else if(file_exists("../../../".imageBaseUrl())){
-        $path = "../../../".imageBaseUrl();
+    $path = pdfBaseUrl();
+    if(file_exists(pdfBaseUrl())) {
+        $path =pdfBaseUrl();
+    } else if(file_exists("../".pdfBaseUrl())){
+        $path = "../".pdfBaseUrl();
+    } else if(file_exists("../../".pdfBaseUrl())){
+        $path = "../../".pdfBaseUrl();
+    } else if(file_exists("../../../".pdfBaseUrl())){
+        $path = "../../../".pdfBaseUrl();
     }
     echo file_exists($path . $folderName);
     echo $path.$folderName;
