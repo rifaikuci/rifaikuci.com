@@ -100,13 +100,13 @@ function pdfUpload( $folderName, $name, $fileName)
         return "pdf_invalid_type";
         $uploadOk = 0;
     }
-    echo move_uploaded_file($_FILES[$name]["tmp_name"], "../../" . $target_file);
+    echo move_uploaded_file($_FILES[$name]["tmp_name"], "../" . $target_file);
     exit();
 
     if ($uploadOk == 0) {
         return "pdf_not_upload";
     } else {
-        if (move_uploaded_file($_FILES[$name]["tmp_name"], "../../" . $target_file)) {
+        if (move_uploaded_file($_FILES[$name]["tmp_name"], "../" . $target_file)) {
             if ($fileName) {
                 return pdfBaseUrl() . $folderName . "/" . $fileName . "." . $imageFileType;
             } else {
