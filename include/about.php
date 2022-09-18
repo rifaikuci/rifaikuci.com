@@ -9,7 +9,7 @@
             <h2 class="ds-heading"><?php getLabel("Hakkımda","About me",$lang); ?></h2>
             <?php echo getColumn($about,'about',$lang);?>
             <div class="ds-button-sec text-center">
-                <a href="<?php echo base_url_back().getColumn($about,'link',$lang);?>" class="ds-button"><?php getLabel("CV indir3","Cv Download", $lang);?></a>
+                <a href="<?php echo base_url_back().getColumn($about,'link',$lang);?>" class="ds-button"><?php getLabel("CV indir","Cv Download", $lang);?></a>
             </div>
         </section>
     </div>
