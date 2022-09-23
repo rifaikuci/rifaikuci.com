@@ -1,7 +1,7 @@
 <?php
 
 if($lang == 'tr') {
-    $TYPE_SKILLS = ["software" => "Yazılım2", "DEVOPS"=>"Editörler"];
+    $TYPE_SKILLS = ["programming" => "Programlama Dilleri", "db"=>"Veritabanı", "editor" => "Editörler", "hobies" => "Hobiler"];
 } else if($lang == 'en') {
-    $TYPE_SKILLS = ["software" => "Yazılım", "DEVOPS"=>"Editörler3"];
+    $TYPE_SKILLS = ["programming" => "Programming Languages", "db"=>"Database", "editor" => "Editors", "hobies" => "Hobbies"];
 }
