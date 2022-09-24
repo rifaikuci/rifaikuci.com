@@ -14,7 +14,7 @@ $skills = getAllData("skills", '', $db);
                 if (count($tempArray) > 0) { ?>
 
                     <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                        <h2 class="ds-heading"><?php getLabel($value, $key, $lang); ?></h2>
+                        <h2 class="ds-heading"><?php getLabel($value, $value, $lang); ?></h2>
                         <ul class="ds-skills-list">
                             <?php for ($k = 0; $k < count($tempArray); $k++) { ?>
                                 <li><?php echo getColumn($tempArray[$k], 'name', $lang) ?></li>
