@@ -1,6 +1,6 @@
 <?php
 
-$experience = getAllData("experience", '', $db);
+$experience = getAllDataWithSort("experience", '', $db, "desc");
 ?>
 
 <div class="container" id="experience">
