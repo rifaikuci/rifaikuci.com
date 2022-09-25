@@ -97,4 +97,34 @@ function getAllData($table, $limit, $db)
     return $data;
 }
 
+function getAllDataWithSort($table, $limit, $db, $sort)
+{
+    $columns = getTableColumns($table, $db);
+    $sort = $sort ? $sort : "asc";
+
+
+    if($limit) {
+        $sql = "SELECT * FROM $table order by id $sort LIMIT $limit  ";;
+
+    } else {
+        $sql = "SELECT * FROM $table order by id $sort ";;
+
+    }
+
+    $result = $db->query($sql);
+    $data = array();
+    $counter = 0;
+    while ($row = $result->fetch_array()) {
+        $counter ++;
+        $item = null;
+        for ($i = 0; $i < count($columns); $i++) {
+            $item[$columns[$i]] = $row[$columns[$i]];
+        }
+        $item['counter'] = "#".$counter;
+        array_push($data,$item);
+    }
+
+    return $data;
+}
+
 ?>
