@@ -4,7 +4,11 @@ session_start();
 $lang = "en";
 if ($_GET['lang']) {
     $_SESSION['lang'] = $_GET['lang'];
-    $lang = $_SESSION['lang'];
+
+    $lang = $_GET['lang'];
+    $acceptLang = ['fr', 'it', 'en', 'tr'];
+    $lang = in_array($lang, $acceptLang) ? $lang : 'tr';
+
 } else {
     if ($_SESSION['lang']) {
         $lang = $_SESSION['lang'];
