@@ -8,7 +8,11 @@ if ($_GET['lang']) {
     $lang = $_GET['lang'];
     $acceptLang = ['fr', 'it', 'en', 'tr'];
     $lang = in_array($lang, $acceptLang) ? $lang : 'tr';
-    header('Location:'.base_url_front());
+    $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+    $currentURL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $filteredURL = preg_replace('~(\?|&)'.'lang'.'=[^&]*~', '$1', $currentURL);
+    $filteredURL = str_replace("?","",$filteredURL);
+    header('Location:'.$filteredURL);
 
 } else {
     if ($_SESSION['lang']) {
