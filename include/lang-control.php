@@ -8,6 +8,7 @@ if ($_GET['lang']) {
     $lang = $_GET['lang'];
     $acceptLang = ['fr', 'it', 'en', 'tr'];
     $lang = in_array($lang, $acceptLang) ? $lang : 'tr';
+    header('Location:'.base_url_front());
 
 } else {
     if ($_SESSION['lang']) {

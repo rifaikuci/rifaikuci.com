@@ -1,14 +1,5 @@
 <?php
 
-if (file_exists("include/lang-control.php")) {
-    require_once "include/lang-control.php";
-} else if (file_exists("../include/lang-control.php")) {
-    require_once "../include/lang-control.php";
-} else if (file_exists("../../include/lang-control.php")) {
-    require_once "../../include/lang-control.php";
-}
-
-
 if (file_exists("common/db/index.php")) {
     require_once "common/db/index.php";
     require_once "common/methods/index.php";
@@ -26,6 +17,17 @@ if (file_exists("common/db/index.php")) {
     require_once "../../../../common/methods/index.php";
     require_once "../../../../common/data/index.php";
 }
+
+if (file_exists("include/lang-control.php")) {
+    require_once "include/lang-control.php";
+} else if (file_exists("../include/lang-control.php")) {
+    require_once "../include/lang-control.php";
+} else if (file_exists("../../include/lang-control.php")) {
+    require_once "../../include/lang-control.php";
+}
+
+
+
 
 $info = getDataRow(1, "info", $db);
 
