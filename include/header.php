@@ -25,7 +25,7 @@ $filteredURL = str_replace("?","",$filteredURL);
                     echo $filteredURL . "?lang=tr" ?>">TR</a></span>
                 <span>-</span>
                 <span><a class="<?php echo $lang == "en" ? 'active-lang' : 'passive-lang'?>"
-                            href="<?php echo base_url_front() . "?lang=en" ?>">EN</a></span>
+                            href="<?php echo $filteredURL() . "?lang=en" ?>">EN</a></span>
             </ul>
 
 
