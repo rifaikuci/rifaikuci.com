@@ -1,15 +1,18 @@
-
 <?php
- $about = getDataRow(1,"about",$db);
+$about = getDataRow(1, "about", $db);
 ?>
 
 <div class="ds-about-section">
     <div class="container">
         <section>
-            <h2 class="ds-heading"><?php getLabel("Hakkımda","About me",$lang); ?></h2>
-            <?php echo getColumn($about,'about',$lang);?>
+            <h2 class="ds-heading"><?php getLabel("Hakkımda", "About me", $lang); ?></h2>
+            <p>
+                <?php echo getColumn($about, 'about', $lang); ?>
+            </p>
+
             <div class="ds-button-sec text-center">
-                <a target="_blank" href="<?php echo base_url_back().getColumn($about,'cv',$lang);?>" class="ds-button"><?php getLabel("CV indir","Cv Download", $lang);?></a>
+                <a href="#" class="ds-button">Download Resume</a>
+
             </div>
         </section>
     </div>
