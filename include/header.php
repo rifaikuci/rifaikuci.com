@@ -6,7 +6,12 @@ $smedia = getAllData("smedia",'', $db);
 $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 $currentURL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $filteredURL = preg_replace('~(\?|&)'.'lang'.'=[^&]*~', '$1', $currentURL);
-$filteredURL = str_replace("?","",$filteredURL);
+if($_GET['seo']) {
+    $filteredURL = $filteredURL. "&";
+} else {
+    $filteredURL = $filteredURL. "?";
+
+}
 
 ?>
 
@@ -19,13 +24,14 @@ $filteredURL = str_replace("?","",$filteredURL);
             </a>
 
 
+
             <ul>
                 <span><a class="<?php echo $lang == "tr" ? 'active-lang' : 'passive-lang'?>"
                             href="<?php
-                    echo $filteredURL . "?lang=tr" ?>">TR</a></span>
+                    echo $filteredURL . "lang=tr" ?>">TR</a></span>
                 <span>-</span>
                 <span><a class="<?php echo $lang == "en" ? 'active-lang' : 'passive-lang'?>"
-                            href="<?php echo $filteredURL . "?lang=en" ?>">EN</a></span>
+                            href="<?php echo $filteredURL . "lang=en" ?>">EN</a></span>
             </ul>
 
 

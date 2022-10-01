@@ -11,7 +11,13 @@ if ($_GET['lang']) {
     $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
     $currentURL = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     $filteredURL = preg_replace('~(\?|&)'.'lang'.'=[^&]*~', '$1', $currentURL);
-    $filteredURL = str_replace("?","",$filteredURL);
+
+    if(strpos($filteredURL, '&') !== false) {
+        $filteredURL = str_replace("&","",$filteredURL);
+    } else {
+        $filteredURL = str_replace("?","",$filteredURL);
+    }
+
     header('Location:'.$filteredURL);
 
 } else {
