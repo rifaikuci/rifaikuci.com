@@ -15,7 +15,8 @@ RewriteRule . /index.php/ [L]
 </IfModule>
 
 
-
+RewriteCond %{lang}  ^task=view$ [NC]
+RewriteRule ^(.*)$ $1? [R=301,L]
 
 
 <IfModule mod_headers.c>
