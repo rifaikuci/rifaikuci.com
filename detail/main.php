@@ -18,7 +18,13 @@
                         ?>
                         </span>
                     </header>
-                    <figure><img src="<?php echo base_url_back().$project['image']; ?>"></figure>
+                    <figure>
+                        <?php if($project['image']) { ?>
+                        <img class="img-fluid" src="<?php echo base_url_back().$project['image']; ?>">
+                        <?php } else {?>
+                            <img class="img-fluid" src="<?php echo base_url_back() . "assets/images/projects/default.jpg" ?>">
+                        <?php } ?>
+                    </figure>
                     <div class="ds-work-content-sec">
                         <div class="row justify-content-center">
                             <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
