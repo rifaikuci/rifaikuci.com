@@ -10,12 +10,23 @@
                 <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 col-xxl-10">
                     <header class="ds-work-det-hed">
                         <h1 class="ds-work-det-title"><?php echo getColumn($project,"title",$lang);?></h1>
-                        <span class="ds-work-det-dep"><?php echo $TYPE_PROJECT[$project['type']] ?> -
-                        <?php
-                        if($project['startDate']) {
-                            echo  onlyDateMonthTr($project['startDate']);
-                        }
-                        ?>
+                        <span class="ds-work-det-dep">
+                            
+                             <?php if($lang == 'tr')  {
+
+                                 if($project['finishDate']) {
+                                     echo  onlyDateMonthTr($project['startDate']) . " - ".  onlyDateMonthTr($project['finishDate']);
+                                 } else {
+                                     echo   onlyDateMonthTr($project['startDate']) . " - ".  "Devam Ediyor";
+                                 }
+                             } else {
+                                 if($project['finishDate']) {
+                                     echo  onlyDateMonthEng($project['startDate']) . " - ".  onlyDateMonthEng($project['finishDate']);
+                                 } else {
+                                     echo   onlyDateMonthEng($project['startDate']) . " - ".  "Present";
+                                 }
+
+                             }?>
                         </span>
                     </header>
                     <figure>
