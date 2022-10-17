@@ -5,7 +5,7 @@ $projects = getAllData("projects", "", $db);
 
 <div class="ds-work-section">
     <div class="container">
-        <h2 class="ds-heading"><?php echo getLabel("Projelerim", "Projects", $lang) ?></h2>
+        <h2 class="ds-heading"><?php echo getLabel("Projeler", "Projects", $lang) ?></h2>
         <div class="ds-work-list-section">
             <?php
             for ($i = 0; $i < count($projects); $i++) { ?>
