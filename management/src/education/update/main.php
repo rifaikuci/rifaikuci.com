@@ -45,7 +45,7 @@ if (isset($_GET['id'])) {
             <div class="card-body">
                 <div class="row">
                     <?php
-                    getTextInput(4, "Okul Adı", "", "title", $row['titleE'], false, false);
+                    getTextInput(4, "Okul Adı", "", "titleE", $row['titleE'], false, false);
                     getTextArea(12, "Açıklama", "", "description", 3, $row['descriptionE'], false, false);
                     ?>
 
