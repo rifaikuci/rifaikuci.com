@@ -14,18 +14,10 @@
                             
                              <?php if($lang == 'tr')  {
 
-                                 if($project['finishDate']) {
-                                     echo  onlyDateMonthTr($project['startDate']) . " - ".  onlyDateMonthTr($project['finishDate']);
-                                 } else {
-                                     echo   onlyDateMonthTr($project['startDate']) . " - ".  "Devam Ediyor";
-                                 }
+                                     echo   onlyDateMonthTr($project['startDate']) ;
                              } else {
-                                 if($project['finishDate']) {
-                                     echo  onlyDateMonthEng($project['startDate']) . " - ".  onlyDateMonthEng($project['finishDate']);
-                                 } else {
-                                     echo   onlyDateMonthEng($project['startDate']) . " - ".  "Present";
-                                 }
 
+                                     echo   onlyDateMonthEng($project['startDate']) ;
                              }?>
                         </span>
                     </header>
@@ -39,9 +31,14 @@
                     <div class="ds-work-content-sec">
                         <div class="row justify-content-center">
                             <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                                <p>
+
                               <?php
+
                               echo getColumn($project,"detail",$lang);
                               ?>
+                                </p>
+
                             </div>
                         </div>
                     </div>
