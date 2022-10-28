@@ -23,7 +23,6 @@ $(function () {
 // aynı sayfadan birden fazla kullanıldığı için
 let editorler = document.querySelectorAll('.editorler');
 for (let i = 0; i < editorler.length; i++) {
-    console.log(editorler[i].id);
     CKEDITOR.replace(editorler[i].id);
 }
 
