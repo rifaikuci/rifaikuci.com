@@ -17,4 +17,5 @@
 <script src="<?php echo base_url_back() . "style/dist/js/demo.js" ?>"></script>
 <script src="<?php echo base_url_back() . "style/dist/js/main.js" ?>"></script>
 <script src="<?php echo base_url_back() . "style/dist/js/index.js" ?>"></script>
+<script src="<?php echo base_url_back() . "style/dist/js/ckeditor/ckeditor.js" ?>"></script>
 <script src="<?php echo base_url_back() . "style/dist/js/last_script.js" ?>"></script>

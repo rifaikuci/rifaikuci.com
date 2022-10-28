@@ -166,7 +166,7 @@ function getCKEditor($size, $label, $placeHolder, $name, $value, $required, $dis
 
     $first = '<div class="col-sm-' . $size . '"><div>
     <label>' . $label . '</label>
-    <textarea class="summernote"';
+    <textarea class="editorler" id="'.uniqid().'"';
 
     $required = $required ? " required " : "";
     $disabled = $disabled ? " disabled " : "";
