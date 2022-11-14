@@ -14,11 +14,11 @@ $about = getDataRow(1, "about", $db);
             <?php
             if ($lang == 'tr') { ?>
                 <div class="ds-button-sec text-center">
-                    <a href="<?php echo base_url_front(). $about['cv'] ?>" class="ds-button">Özgeçmişi İndir</a>
+                    <a href="<?php echo base_url_back(). $about['cv'] ?>" class="ds-button">Özgeçmişi İndir</a>
                 </div>
             <?php } else { ?>
                 <div class="ds-button-sec text-center">
-                    <a href="<?php echo base_url_front(). $about['cvE'] ?>" class="ds-button">Download  CV</a>
+                    <a href="<?php echo base_url_back(). $about['cvE'] ?>" class="ds-button">Download  CV</a>
                 </div>
             <?php } ?>
         </section>
