@@ -10,10 +10,17 @@ $about = getDataRow(1, "about", $db);
                 <?php echo getColumn($about, 'about', $lang); ?>
             </p>
 
-            <div class="ds-button-sec text-center">
-                <a href="#" class="ds-button">Download Resume</a>
 
-            </div>
+            <?php
+            if ($lang == 'tr') { ?>
+                <div class="ds-button-sec text-center">
+                    <a href="<?php echo base_url_front(). $about['cv'] ?>" class="ds-button">Özgeçmişi İndir</a>
+                </div>
+            <?php } else { ?>
+                <div class="ds-button-sec text-center">
+                    <a href="<?php echo base_url_front(). $about['cvE'] ?>" class="ds-button">Download  CV</a>
+                </div>
+            <?php } ?>
         </section>
     </div>
 </div>
