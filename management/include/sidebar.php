@@ -10,7 +10,7 @@
 
                 <?php
 
-                $isInfoOpen = isTreeOpen(array('info', 'about'));
+                $isInfoOpen = isTreeOpen(array('info', 'about', 'favIcon'));
                 ?>
                 <li class="nav-item <?php echo $isInfoOpen ? 'menu-open' : ''; ?>">
                     <?php menuTreeTitle("Ayarlar", "fas fa-info"); ?>
@@ -74,6 +74,27 @@
                     "src/projects",
                     "", "");
 
+                $isInfoOpen2 = isTreeOpen(array('calculate/plus', 'calculate/percent'));
+                ?>
+                <li class="nav-item <?php echo $isInfoOpen2 ? 'menu-open' : ''; ?>">
+                    <?php menuTreeTitle("Hesaplamalar", "fas fa-calculator"); ?>
+                    <ul class="nav nav-treeview">
+                        <?php
+                        menuTreeSubTitle("Toplama Göre",
+                            "far fas fa-plus nav-icon",
+                            "src/calculate/plus",
+                            "", "");
+
+                        menuTreeSubTitle("Yüzdeye Göre",
+                            "far fas fa-percent nav-icon",
+                            "src/calculate/percent",
+                            "", "");
+                        ?>
+                    </ul>
+                </li>
+
+
+                <?php
                 menuLabel("Site Bilgileri","green");
 
                 menuTitleWithDot("Siteye Giriş","primary",base_url_front(),"_blank");
