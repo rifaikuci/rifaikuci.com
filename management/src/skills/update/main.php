@@ -15,6 +15,7 @@ if (isset($_GET['id'])) {
 
         <?php
         getTextHidden("skillsUpdate", $id);
+        getTextHidden("deleteFile", $row['image']);
         ?>
         <div class="card card-dark">
 

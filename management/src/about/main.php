@@ -12,6 +12,8 @@ $row = getDataRow(1, 'about', $db);
 
         <?php
         getTextHidden("aboutUpdate", 1);
+        getTextHidden("deleteFile", $row['cv']);
+        getTextHidden("deleteFileE", $row['cvE']);
         ?>
         <div class="card card-dark">
 

@@ -15,6 +15,7 @@ if (isset($_GET['id'])) {
 
         <?php
         getTextHidden("smediaUpdate", $id);
+        getTextHidden("deleteFile", $row['image']);
         ?>
         <div class="card card-dark">
 

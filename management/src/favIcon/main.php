@@ -12,6 +12,7 @@ $row = getDataRow(1, 'favIcon', $db);
 
         <?php
         getTextHidden("favIconUpdate", 1);
+        getTextHidden("deleteFile", $row['image']);
         ?>
         <div class="card card-dark">
 

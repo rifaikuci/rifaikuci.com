@@ -28,9 +28,9 @@ if (isset($_POST['aboutUpdate'])) {
             exit();
         }
 
-        if (isset($_POST['deleteFile']) && $_POST['deleteFile']) {
-            if (file_exists("../" . $_POST['deleteFile'])) {
-                unlink("../" . $_POST['deleteFile']);
+        if (isset($_POST['deleteFileE']) && $_POST['deleteFileE']) {
+            if (file_exists("../" . $_POST['deleteFileE'])) {
+                unlink("../" . $_POST['deleteFileE']);
             }
         }
     }

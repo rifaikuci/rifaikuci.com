@@ -28,6 +28,8 @@ if (isset($_GET['id'])) {
                     getInputFile(3, "image", "Proje Resmi", false, false, false);
                     getViewFile(3, "Resim", $row['image']);
                     getTextHidden("projectUpdate",$row['id']);
+                    getTextHidden("deleteFile", $row['image']);
+
                     ?>
                 </div>
 
