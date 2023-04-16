@@ -8,31 +8,38 @@ if (isset($_POST['aboutUpdate'])) {
     $data = array();
 
     if (isset($_FILES['cv']) && $_FILES['cv']['name']) {
-        $file = pdfUpload("about", 'cv', 'rifaikuci_cv_tr');
-        if ($file == "pdf_large" || $file == "pdf_invalid_type" || $file == "pdf_not_upload") {
-            header("Location:" . $path . "/index.php?hata=" . $file);
-            exit();
-        }
 
         if (isset($_POST['deleteFile']) && $_POST['deleteFile']) {
             if (file_exists("../" . $_POST['deleteFile'])) {
                 unlink("../" . $_POST['deleteFile']);
             }
         }
+
+
+        $file = pdfUpload("about", 'cv', 'rifaikuci_cv_tr');
+        if ($file == "pdf_large" || $file == "pdf_invalid_type" || $file == "pdf_not_upload") {
+            header("Location:" . $path . "/index.php?hata=" . $file);
+            exit();
+        }
+
+
     }
 
     if (isset($_FILES['cvE']) && $_FILES['cvE']['name']) {
-        $file2 = pdfUpload("about", 'cvE', 'rifaikuci_cv_eng');
-        if ($file2 == "pdf_large" || $file2 == "pdf_invalid_type" || $file2 == "pdf_not_upload") {
-            header("Location:" . $path . "/index.php?hata=" . $file2);
-            exit();
-        }
 
         if (isset($_POST['deleteFileE']) && $_POST['deleteFileE']) {
             if (file_exists("../" . $_POST['deleteFileE'])) {
                 unlink("../" . $_POST['deleteFileE']);
             }
         }
+
+        $file2 = pdfUpload("about", 'cvE', 'rifaikuci_cv_eng');
+        if ($file2 == "pdf_large" || $file2 == "pdf_invalid_type" || $file2 == "pdf_not_upload") {
+            header("Location:" . $path . "/index.php?hata=" . $file2);
+            exit();
+        }
+
+
     }
 
     $arrayKey = [

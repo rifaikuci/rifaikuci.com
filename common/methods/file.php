@@ -73,7 +73,7 @@ function pdfUpload( $folderName, $name, $fileName)
 
 
     if (!file_exists($path . $folderName)) {
-        mkdir($path . $folderName, 0777, true);
+        mkdir($path . $folderName, 777, true);
     }
 
     $target_dir = $path . $folderName;
