@@ -25,3 +25,13 @@ $favIcon = getDataRow(1,"favIcon",$db);
         }
     </style>
 </noscript>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-98YED43H10"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-98YED43H10');
+</script>
