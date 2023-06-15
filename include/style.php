@@ -2,6 +2,11 @@
 <?php
 $favIcon = getDataRow(1,"favIcon",$db);
 
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && realpath(__FILE__) === realpath($_SERVER['SCRIPT_FILENAME'])) {
+    echo "asd";
+    exit();
+}
+
 ?>
 <meta charset="utf-8">
 <link rel="shortcut icon" type="image/png" href="<?php echo base_url_back() . $favIcon['image']; ?>">
@@ -17,6 +22,8 @@ $favIcon = getDataRow(1,"favIcon",$db);
 <link href="<?php echo base_url_front() ."assets/css/mdb.min.css?ver=1.2.1" ?>" rel="stylesheet">
 <link href="<?php echo base_url_front() ."assets/css/aos.css?ver=1.2.1" ?>" rel="stylesheet">
 <link href="<?php echo base_url_front() ."assets/css/main.css?ver=1.2.1" ?>" rel="stylesheet">
+
+
 <noscript>
     <style type="text/css">
         [data-aos] {
