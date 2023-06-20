@@ -27,15 +27,22 @@ if (file_exists("include/lang-control.php")) {
 }
 
 
-
-
 $info = getDataRow(1, "info", $db);
 
 ?>
 <!doctype html>
 <html lang="<?php echo $lang;?>">
 <head>
-    <meta content="<?php echo getColumn($info,'keywords',$lang)?>" name="keywords">
+    <?php
+       $variations =  generateKeywordVariations("Rifai Kuçi");
+        $metaKeywords = "";
+    foreach ($variations as $variation) {
+        echo $metaKeywords . ",";
+    }
+    $metaKeywords = rtrim($metaKeywords,",");
+
+    ?>
+    <meta content="<?php echo $metaKeywords?>" name="keywords">
     <meta content="<?php echo getColumn($info,'description',$lang)?>"
           name="description">
     <title><?php echo function_exists('firmName') ? firmName() . " | " : "" ?> <?php getLabel("Anasayfa","Home",$lang); ?></title>

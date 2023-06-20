@@ -37,4 +37,36 @@ function wordCharacter($metin, $sayi ){
     }
 }
 
+function generateKeywordVariations($companyName) {
+    $variations = array();
+    $companyName = strtolower($companyName);
+    $length = strlen($companyName);
+
+    for ($i = 0; $i < $length; $i++) {
+        $char = $companyName[$i];
+        $variations[] = substr_replace($companyName, $char, $i, 1);
+
+        for ($j = ord('a'); $j <= ord('z'); $j++) {
+            $newChar = chr($j);
+
+            if ($newChar !== $char) {
+                $variations[] = substr_replace($companyName, $newChar, $i, 1);
+            }
+        }
+    }
+
+    for ($i = 0; $i <= $length; $i++) {
+        for ($j = ord('a'); $j <= ord('z'); $j++) {
+            $char = chr($j);
+            $variations[] = substr_replace($companyName, $char, $i, 0);
+        }
+    }
+
+    for ($i = 0; $i < $length; $i++) {
+        $variations[] = substr_replace($companyName, '', $i, 1);
+    }
+
+    return $variations;
+}
+
 ?>
