@@ -37,7 +37,7 @@ $info = getDataRow(1, "info", $db);
        $variations =  generateKeywordVariations("Rifai Kuçi");
         $metaKeywords = "";
     foreach ($variations as $variation) {
-        echo $metaKeywords . ",";
+         $metaKeywords = $metaKeywords.$variation.",";
     }
     $metaKeywords = rtrim($metaKeywords,",");
 
