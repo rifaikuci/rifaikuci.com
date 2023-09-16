@@ -11,8 +11,7 @@ $projects = getAllData("projects", "", $db);
             for ($i = 0; $i < count($projects); $i++) { ?>
                 <div class="ds-work-list">
                     <div class="row">
-                        <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                            <section>
+                        <div class="col-lg-7 col-xl-7 col-xxl-7">
                                 <h3 class="ds-work-tilte">
                                     <?php echo getColumn($projects[$i], "title", $lang); ?>
                                 </h3>
@@ -29,9 +28,8 @@ $projects = getAllData("projects", "", $db);
                                 ?>" class="ds-button"><?php echo getLabel("Detay", "Detail", $lang) ?></a>
                                 </p>
 
-                            </section>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5">
+                        <div class="col-md-12 col-lg-5 col-xl-5 col-xxl-5">
                             <?php if ($projects[$i]['image']) { ?>
                                 <figure><img class="img-fluid" src="<?php echo base_url_back() . $projects[$i]['image'] ?>"></figure>
                             <?php } else { ?>
