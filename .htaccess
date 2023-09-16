@@ -1,24 +1,28 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
 
-#<IfModule mod_rewrite.c>
-#RewriteEngine On
-#RewriteBase /
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteRule ^sitemap.xml$ sitemap.php [L,NC]
 
-#RewriteCond %{HTTPS} !=on
-#RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-#RewriteRule ^sitemap.xml$ sitemap.php [L,NC]
+# BEGIN WordPress
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php/ [L]
 
-#RewriteRule ^index\.php$ - [L]
-#RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteCond %{REQUEST_FILENAME} !-d
-#RewriteRule . /index.php/ [L]
-
-#</IfModule>
-
-
+</IfModule>
 
 
-#<IfModule mod_headers.c>
-#<FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2|font.css)$">
-#Header set Access-Control-Allow-Origin "*"
-#</FilesMatch>
-#</IfModule>
+RewriteCond %{lang=tr}  ^task=view$ [NC]
+RewriteRule ^(.*)$ $1? [R=301,L]
+
+RewriteCond %{lang=en}  ^task=view$ [NC]
+RewriteRule ^(.*)$ $1? [R=301,L]
+
+<IfModule mod_headers.c>
+<FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2|font.css)$">
+Header set Access-Control-Allow-Origin "*"
+</FilesMatch>
+</IfModule>
