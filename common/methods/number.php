@@ -13,5 +13,13 @@ function sayiFormatla ($sayi, $delimiter) {
         return number_format($sayi, $delimiter, ',', '.');
     }
 }
+
+function stockDailyClear($bValue,$cValue,$totalLot, $month) {
+    $day  =$month * 30;
+    $result = $bValue - $cValue ;
+
+    return ($result / $totalLot ) / $day;
+
+}
 ?>
 

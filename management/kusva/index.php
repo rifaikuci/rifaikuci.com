@@ -29,6 +29,7 @@ if (isset($_SESSION['management'])) {
     require_once "projects/index.php";
     require_once "about/index.php";
     require_once "favIcon/index.php";
+    require_once "stock/index.php";
 } else{
     session_destroy();
     header("Location:" . "http://localhost/rifaikuci.com/management/src/login/?session=no");

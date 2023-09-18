@@ -74,7 +74,7 @@
                     "src/projects",
                     "", "");
 
-                $isInfoOpen2 = isTreeOpen(array('calculate/plus', 'calculate/percent'));
+                $isInfoOpen2 = isTreeOpen(array('calculate/plus', 'calculate/percent', 'stock/'));
                 ?>
                 <li class="nav-item <?php echo $isInfoOpen2 ? 'menu-open' : ''; ?>">
                     <?php menuTreeTitle("Hesaplamalar", "fas fa-calculator"); ?>
@@ -89,7 +89,14 @@
                             "far fas fa-percent nav-icon",
                             "src/calculate/percent",
                             "", "");
+
+                        menuTreeSubTitle("Hisse Senetleri",
+                            "far fas fa-percent nav-icon",
+                            "src/stock",
+                            "", "");
                         ?>
+
+
                     </ul>
                 </li>
 
