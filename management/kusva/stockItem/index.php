@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_POST['stockInsert'])) {
+if (isset($_POST['stockItemInsert'])) {
 
     $dirName = basename(__DIR__);
     $path = base_url_back() . "src/" . $dirName;
@@ -10,7 +10,7 @@ if (isset($_POST['stockInsert'])) {
     $arrayKey = ["bValue", "cValue", "totalLot", "link", "shortName","fullName","month"];
     $data = getDataForm($arrayKey);
 
-    $sql = insert($data, "stock");
+    $sql = insert($data, "stockItem");
     if (mysqli_query($db, $sql)) {
         
         header("Location:" . $path . "/?insert=ok");
@@ -24,9 +24,9 @@ if (isset($_POST['stockInsert'])) {
     }
 }
 
-if (isset($_POST['stockUpdate'])) {
+if (isset($_POST['stockItemUpdate'])) {
 
-    $id = $_POST['stockUpdate'];
+    $id = $_POST['stockItemUpdate'];
     $dirName = basename(__DIR__);
     $path = base_url_back() . "src/" . $dirName;
     $data = array();
@@ -36,7 +36,7 @@ if (isset($_POST['stockUpdate'])) {
     $arrayKey = ["bValue", "cValue", "totalLot", "link", "shortName","fullName","month"];
     $data = getDataForm($arrayKey);
 
-    $sql = update($data, "stock", $id);
+    $sql = update($data, "stockItem", $id);
     if (mysqli_query($db, $sql)) {
         header("Location:" . $path . "/?update=ok");
         exit();
@@ -49,10 +49,10 @@ if (isset($_POST['stockUpdate'])) {
     }
 }
 
-if (isset($_GET['stockDelete'])) {
-    $id = $_GET['stockDelete'];
-    $row = getDataRow("$id", "stock", $db);
-    $sql = delete($id, 'stock');
+if (isset($_GET['stockItemDelete'])) {
+    $id = $_GET['stockItemDelete'];
+    $row = getDataRow("$id", "stockItem", $db);
+    $sql = delete($id, 'stockItem');
     $dirName = basename(__DIR__);
     $path = base_url_back() . "src/" . $dirName;
 

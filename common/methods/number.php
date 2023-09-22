@@ -14,11 +14,19 @@ function sayiFormatla ($sayi, $delimiter) {
     }
 }
 
-function stockDailyClear($bValue,$cValue,$totalLot, $month) {
-    $day  =$month * 30;
+function stockDailyClear($stockId, $db) {
+    $row = getDataRow($stockId, 'stockItem',$db);
+
+    $month = $row['month'];
+    $bValue =  $row['bValue'];
+    $cValue =  $row['cValue'];
+    $totalLot =  $row['totalLot'];
+
+    $day  = $month * 30;
     $result = $bValue - $cValue ;
 
     return ($result / $totalLot ) / $day;
+
 
 }
 ?>

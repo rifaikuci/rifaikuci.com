@@ -2,7 +2,7 @@
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $row = getDataRow($id, 'stock', $db);
+    $row = getDataRow($id, 'stockItem', $db);
 
 }
 ?>
@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
           enctype="multipart/form-data">
 
         <?php
-        getTextHidden("stockUpdate", $id);
+        getTextHidden("stockItemUpdate", $id);
 
         ?>
         <div class="card card-dark">
@@ -26,7 +26,7 @@ if (isset($_GET['id'])) {
             <div class="card-body">
                 <div class="row">
                     <?php
-                    getTextHidden("stockUpdate", $id);
+                    getTextHidden("stockItemUpdate", $id);
 
                     getTextInput(3, "Kısa Adı", "", "shortName", $row['shortName'], false, false);
                     getTextInput(6, "Uzun Adı", "", "fullName", $row['fullName'], false, false);

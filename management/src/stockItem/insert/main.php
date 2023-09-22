@@ -6,7 +6,7 @@
           enctype="multipart/form-data">
 
         <?php
-        getTextHidden("stockInsert","stockInsert");
+        getTextHidden("stockItemInsert","stockItemInsert");
         ?>
         <div class="card card-dark">
 

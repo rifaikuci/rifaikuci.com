@@ -1,12 +1,12 @@
 <section class="content">
     <?php statusAlert(); ?>
 
-    <?php $data = getAllData("stock",'', $db);
+    <?php $data = getAllData("stockItem",'', $db);
 
     for ($i = 0; $i < count($data); $i++) {
         $data[$i]['avarage'] =
             number_format(
-            stockDailyClear($data[$i]['bValue'], $data[$i]['cValue'], $data[$i]['totalLot'], $data[$i]['month']), 6 );
+            stockDailyClear($data[$i]['id'], $db), 6 );
 
     }
     $isVisibleColumn = ["counter", "shortName","fullName","avarage"];
