@@ -16,18 +16,28 @@
 
         <div class="card-body">
 
-            <div class="row">
 
+            <div class="row">
 
 
                 <div class="col-sm-2">
                     <div class="form-group">
-                        <label> Toplam  </label>
+                        <label> Toplam </label>
 
                         <input class="form-control"
-                               :value="sum"
                                v-model="sum"
                                type="number">
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-group">
+                    <label> --- </label>
+
+                    <button style="margin-left: 12px" type="submit"
+                            v-on:click="calculateForSum"
+                            class="btn btn-outline-success float-right">
+                        Hesapla
+                    </button>
                     </div>
                 </div>
             </div>
@@ -35,6 +45,26 @@
 
             <div class="row" v-for="(item,index) in items">
 
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label> Kişi İsmi </label>
+                        <input class="form-control"
+                               v-model="item.name"
+                               type="text">
+                    </div>
+                </div>
+
+
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label> {{index+1}}. Tutar </label>
+
+                        <input class="form-control"
+                               v-model="item.value"
+                        >
+
+                    </div>
+                </div>
 
                 <div class="col-sm-2">
                     <div class="form-group">
@@ -42,20 +72,43 @@
                         <input class="form-control"
                                max="100"
                                min="0"
+                               disabled
                                v-model="item.percent"
-                               :value="item.percent"
                                type="number">
+                    </div>
+                </div>
+
+
+                <div class="col-sm-1">
+
+                    <label> ---</label>
+
+                    <div class="form-group">
+                        <button class="btn btn-outline-danger" v-on:click="percentDelete(index)">X</button>
                     </div>
                 </div>
 
                 <div class="col-sm-2">
                     <div class="form-group">
-                        <label> {{index+1}}. Tutar </label>
+                        <label> Ekle Çıkar </label>
 
                         <input class="form-control"
-                               disabled
-                               v-model="item.valueLabel"
-                               :value="item.valueLabel">
+                               type="number"
+                               v-model="item.tempValue"
+                        >
+                    </div>
+                </div>
+
+                <div class="col-sm-1">
+                    <div class="form-group">
+                        <label> --- </label>
+
+                        <div>
+                            <button class="btn btn-outline-primary" v-on:click="processAmount(index)">Ekle-Çıkar
+                            </button>
+
+                        </div>
+
                     </div>
                 </div>
 
@@ -74,7 +127,7 @@
                     <button type="submit"
                             v-on:click="handleAddItems"
                             class="btn btn-primary float-right">
-                        Kayıt  Ekle
+                        Kayıt Ekle
                     </button>
 
 
@@ -90,7 +143,17 @@
                 </div>
             </div>
         </div>
+
+        <div class="card-footer">
+            <div>
+                <button v-on:click="submit" class="btn btn-dark float-right">Kaydet</button>
+
+            </div>
+        </div>
+
     </div>
+
+
 </section>
 
 

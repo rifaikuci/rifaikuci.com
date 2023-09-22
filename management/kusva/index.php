@@ -32,6 +32,7 @@ if (isset($_SESSION['management'])) {
     require_once "stockItem/index.php";
     require_once "myStockList/index.php";
     require_once "stockListHistory/index.php";
+    require_once "calculate/index.php";
 } else{
     session_destroy();
     header("Location:" . "http://localhost/rifaikuci.com/management/src/login/?session=no");

@@ -13,6 +13,7 @@
 <script src="<?php echo base_url_back() . "style/plugins/ekko-lightbox/ekko-lightbox.min.js" ?>"></script>
 <script src="<?php echo base_url_back() . "style/plugins/summernote/summernote-bs4.min.js" ?>"></script>
 <script src="<?php echo base_url_back() . "style/dist/js/adminlte.min.js?v=3.2.0" ?>"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="<?php echo base_url_back() . "style/dist/js/demo.js" ?>"></script>
 <script src="<?php echo base_url_back() . "style/dist/js/main.js" ?>"></script>

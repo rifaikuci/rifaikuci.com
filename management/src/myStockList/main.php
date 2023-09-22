@@ -30,7 +30,34 @@
     $isVisibleColumn = ["counter", "shortName", "buyDate", "count"];
     $columnName = ["#", "Kısa Adı", "Alış Tarihi", "Adet"];
 
+    $sqlSumStock = "SELECT stockItemId, shortName, sum(count) as count FROM myStockList m
+                        inner join stockItem s on s.id = m.stockItemId
+                        group by stockItemId";
+    $sumGroupResult =  mysqli_query($db, $sqlSumStock);
+
     ?>
+
+    <div class="row" style="margin-bottom: 30px">
+        <?php
+        while ($item = $sumGroupResult->fetch_array()) { ?>
+            <div class="col-2" style="margin:15px">
+                <button class="btn" style="background-color: #0c84ff; padding: 15px; color: white"><?php echo $item['shortName']  ." <br> ". $item['count']  ?></button>
+            </div>
+
+            <div class="col-2" style="margin:15px">
+                <button class="btn" style="background-color: #0c84ff; padding: 15px; color: white"><?php echo $item['shortName']  ." <br> ". $item['count']  ?></button>
+            </div>
+
+            <div class="col-2" style="margin:15px">
+                <button class="btn" style="background-color: #0c84ff; padding: 15px; color: white"><?php echo $item['shortName']  ." <br> ". $item['count']  ?></button>
+            </div>
+
+        <?php } ?>
+
+
+
+        </div>
+
     <?php getTable($data, $isVisibleColumn, $columnName,
         true, false, false, true,
         "Senetler",
