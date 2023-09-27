@@ -60,6 +60,7 @@
                         <label> {{index+1}}. Tutar </label>
 
                         <input class="form-control"
+                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                v-model="item.value"
                         >
 
