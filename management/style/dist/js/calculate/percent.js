@@ -33,7 +33,6 @@ var percentCalculate = new Vue({
                     name :  arrayStockPerson[i],
                     value :  arrayStockItemAmount[i],
                 })
-                debugger;
 
             }
                 this.calculate();
@@ -109,7 +108,7 @@ var percentCalculate = new Vue({
         processAmount (i) {
             this.items.find((x,index) => index === i).value =
                 Number(this.items.find((x,index) => index === i).value) + Number(this.items.find((x,index) => index === i).tempValue)
-
+            this.items.find((x,index) => index === i).value =  (this.items.find((x,index) => index === i).value).toFixed(3)
             this.items.find((x,index) => index === i).tempValue= ''
             this.calculate();
         },
