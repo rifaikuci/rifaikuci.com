@@ -59,7 +59,7 @@ var percentCalculate = new Vue({
                 if(x.value && x.value > 0 && this.sum >0 ) {
 
                     x.percent = (100 * x.value) / this.sum
-                    x.percent = x.percent.toFixed(2);
+                    x.percent = x.percent.toFixed(4);
                     x.valueLabel =x.value;
                     sumTemp = Number(sumTemp) + Number(x.value);
                 }
@@ -119,7 +119,7 @@ var percentCalculate = new Vue({
 
             this.items.forEach(x=> {
                 if(x.percent && x.percent > 0) {
-                    x.value = (this.sum / 100) * x.percent;
+                    x.value = ((this.sum / 100) * x.percent).toFixed(3);
                     sumTemp = Number(sumTemp) + Number(x.value);
 
                 }
