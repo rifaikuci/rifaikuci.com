@@ -44,14 +44,6 @@
                 <button class="btn" style="background-color: #0c84ff; padding: 15px; color: white"><?php echo $item['shortName']  ." <br> ". $item['count']  ?></button>
             </div>
 
-            <div class="col-2" style="margin:15px">
-                <button class="btn" style="background-color: #0c84ff; padding: 15px; color: white"><?php echo $item['shortName']  ." <br> ". $item['count']  ?></button>
-            </div>
-
-            <div class="col-2" style="margin:15px">
-                <button class="btn" style="background-color: #0c84ff; padding: 15px; color: white"><?php echo $item['shortName']  ." <br> ". $item['count']  ?></button>
-            </div>
-
         <?php } ?>
 
 
