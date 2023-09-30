@@ -16,6 +16,14 @@
 
         <div class="card-body">
 
+            <div v-if="lastUpdate" class="row" style="text-align: right">
+                <div class="col-sm-10">
+                    <h3 style="color: #0b3d91">
+                        Son Güncelleme : {{lastUpdate}}
+                    </h3>
+
+                </div>
+            </div>
 
             <div class="row">
 

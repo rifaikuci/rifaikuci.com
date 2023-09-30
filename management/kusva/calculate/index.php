@@ -34,14 +34,15 @@ if ($received_data->action == 'stockCalculateSubmit') {
 
 
     $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
+    $sql2 = "SELECT * FROM info where id = '1'";
+    $result2 = mysqli_query($db, $sql2);
+    $row = $result2->fetch_assoc();
 
-    foreach ($result as $row) {
         $data['stockAmount'] = $row['stockAmount'];
         $data['stockPerson'] = $row['stockPerson'];
         $data['stockPercent'] = $row['stockPercent'];
         $data['stockItemAmount'] = $row['stockItemAmount'];
-    }
+        $data['lastUpdate'] = $row['lastUpdate'];
 
     echo json_encode($data);
 

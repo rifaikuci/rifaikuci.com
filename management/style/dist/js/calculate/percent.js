@@ -9,6 +9,7 @@ var percentCalculate = new Vue({
     data: {
         items : [{value : null, percent: null, valueLabel: null, name: null, temoValue: ''}],
         sum : null,
+        lastUpdate : null
     },
 
 
@@ -93,7 +94,7 @@ var percentCalculate = new Vue({
 
 
 
-            degerler = await axios.post(BASE_URL+'/kusva/index.php', {
+            response = await axios.post(BASE_URL+'/kusva/index.php', {
                 action: 'stockCalculateSubmit',
                 stockAmount: stockAmount,
                 stockPerson: stockPerson,
@@ -103,6 +104,7 @@ var percentCalculate = new Vue({
                 return response.data
             });
 
+            this.lastUpdate = response.lastUpdate
         },
 
         processAmount (i) {
