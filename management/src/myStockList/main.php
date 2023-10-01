@@ -31,7 +31,7 @@
     $columnName = ["#", "Kısa Adı", "Alış Tarihi", "Adet"];
 
     $sqlSumStock = "SELECT stockItemId, shortName, sum(count) as count FROM myStockList m
-                        inner join stockItem s on s.id = m.stockItemId
+                        inner join stockItem s on s.id = m.stockItemId where count > 0
                         group by stockItemId";
     $sumGroupResult =  mysqli_query($db, $sqlSumStock);
 
