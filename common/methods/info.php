@@ -4,6 +4,13 @@
 function base_url_back()
 {
     return 'https://rifaikuci.com/management/';
+   // return 'http://localhost/rifaikuci.com/management/';
+}
+
+function base_url_front()
+{
+    return 'https://rifaikuci.com/';
+    //return 'http://localhost/rifaikuci.com/';
 }
 
 function firmName()
@@ -33,11 +40,6 @@ function isTreeOpen($array) {
         }
     }
     return $isOpen;
-}
-
-function base_url_front()
-{
-    return 'https://rifaikuci.com/';
 }
 
 function getColumn ($row,$title,$lang) {
