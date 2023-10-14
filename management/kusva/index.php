@@ -1,4 +1,4 @@
-<?
+<?php
  session_start();
 
 if (file_exists("utils/index.php")) {
