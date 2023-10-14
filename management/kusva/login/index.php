@@ -1,6 +1,4 @@
 <?php
-
-
 if (isset($_POST['loginControl'])) {
 
     $name = $_POST['name'];
@@ -23,6 +21,9 @@ if (isset($_POST['loginControl'])) {
 }
 
 if (isset($_GET['logout'])) {
+
     session_destroy();
-    header("Location:" . "http://localhost/rifaikuci.com/management/src/login");
+    header("Location:" . base_url_back() ."/src/login");
 }
+
+?>
