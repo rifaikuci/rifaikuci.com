@@ -7,8 +7,7 @@ if (isset($_POST['loginControl'])) {
     $sql = "SELECT * FROM info WHERE mail = '$name'  AND password = '$password' ";
     $sonuc = mysqli_query($db, $sql);
     $row = $sonuc->fetch_assoc();
-
-    if (count($row) > 0) {
+    if ($row && count($row) > 0) {
         $_SESSION['management'] = uniqid();
         header("Location:" . base_url_back());
         exit();

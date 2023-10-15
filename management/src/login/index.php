@@ -42,10 +42,14 @@ else if (file_exists("../../../utils/index.php"))
                     <form method="post" action="<?php echo base_url_back() . 'kusva/index.php' ?>" class="login-form">
                         <?php getTextHidden("loginControl","loginControl"); ?>
                         <div class="form-group">
-                            <input name="name" type="text" class="form-control rounded-left" placeholder="Username" required>
+                            <input name="name" type="text" class="form-control rounded-left"
+                                   oninput="this.value = this.value.replace(/[^0-9a-zA-Z@.?!+^()/=%&]/g, '').replace(/(\..*)\./g, '$1');"
+                                   placeholder="Username" required>
                         </div>
                         <div class="form-group d-flex">
-                            <input type="password" name="password" class="form-control rounded-left" placeholder="Password" required>
+                            <input type="password"
+                                   oninput="this.value = this.value.replace(/[^0-9a-zA-Z@.?!+^()/=%&]/g, '').replace(/(\..*)\./g, '$1');"
+                                   name="password" class="form-control rounded-left" placeholder="Password" required>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="form-control btn btn-primary rounded submit px-3">
