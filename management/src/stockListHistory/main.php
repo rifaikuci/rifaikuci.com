@@ -25,6 +25,8 @@ FROM stockListHistory mH
         $tempItem['diffDay'] = $row['diffDay'];
         $tempItem['counter'] = $counter;
 
+
+        $tempItem['clearAmount'] = $tempItem['clearAmount'] * $tempItem['diffDay']* $tempItem['count'];
         array_push($data, $tempItem);
         $sumClearAmount = $sumClearAmount + $tempItem['clearAmount'];
         $counter++;
