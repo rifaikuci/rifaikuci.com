@@ -33,22 +33,26 @@
     $sqlSumStock = "SELECT stockItemId, shortName, sum(count) as count FROM myStockList m
                         inner join stockItem s on s.id = m.stockItemId where count > 0
                         group by stockItemId";
-    $sumGroupResult =  mysqli_query($db, $sqlSumStock);
+    $sumGroupResult = mysqli_query($db, $sqlSumStock);
 
     ?>
 
     <div class="row" style="margin-bottom: 30px">
         <?php
-        while ($item = $sumGroupResult->fetch_array()) { ?>
+        while ($item = $sumGroupResult->fetch_array()) {
+            $shortName = $item['shortName'];
+            $stockItemId = $item['stockItemId'];
+            $count = $item['count'];
+            ?>
             <div class="col-2" style="margin:15px">
-                <button class="btn" style="background-color: #0c84ff; padding: 15px; color: white"><?php echo $item['shortName']  ." <br> ". $item['count']  ?></button>
+                <a href="<?php echo 'updateTotal?itemId=' . $stockItemId . '&count=' . $count ?>" class="btn"
+                   style="background-color: #0c84ff; padding: 15px; color: white"><?php echo $shortName . " <br> " . $count ?></a>
             </div>
 
         <?php } ?>
 
 
-
-        </div>
+    </div>
 
     <?php getTable($data, $isVisibleColumn, $columnName,
         true, false, false, true,

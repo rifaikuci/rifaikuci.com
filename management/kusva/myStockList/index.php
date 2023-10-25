@@ -43,15 +43,13 @@ if (isset($_POST['myStockListUpdate'])) {
     if (mysqli_query($db, $sql)) {
 
         $sqlMyStockListHistory = "INSERT INTO stockListHistory (myStockListId, count) VALUES ('$id', '$countSell')";
-        echo $sqlMyStockListHistory;
+        $sqlMyStockListHistory;
         mysqli_query($db, $sqlMyStockListHistory);
 
         header("Location:" . $path . "/?update=ok");
         exit();
     } else {
-        if (file_exists("../" . $file)) {
-            unlink("../" . $file);
-        }
+
         header("Location:" . $path . "/?update=no");
         exit();
     }
@@ -72,6 +70,50 @@ if (isset($_GET['myStockListDelete'])) {
         header("Location:" . $path . "/?delete=no");
         exit();
     }
+}
+
+if(isset($_POST['myStockListUpdateTotal'])) {
+    $id = $_POST['myStockListUpdateTotal'];
+    $substract= $_POST['substract'];
+
+    $itemSql = "Select * from myStockList where stockItemId = '$id'";
+
+    $result = $db->query($itemSql);
+    while ($row = $result->fetch_array()) {
+        $tempId  = $row['id'];
+        $count = $row['count'];
+
+        if($substract > 0 ) {
+
+            if (($substract - $count) > 0) {
+                $substract = $substract - $count;
+                $insertCount = $count;
+                $newCount = 0;
+            } else {
+                $count = $count - $substract;
+                $insertCount = $substract;
+                $newCount = $count;
+                $substract = $substract - $count;
+            }
+
+                $stockItemId = $row['id'];
+
+                $data['count'] = $newCount;
+                $sql = update($data, "myStockList", $stockItemId);
+                 mysqli_query($db, $sql);
+
+                $sqlMyStockListHistory = "INSERT INTO stockListHistory (myStockListId, count) VALUES ('$tempId', '$insertCount')";
+                $sqlMyStockListHistory;
+                mysqli_query($db, $sqlMyStockListHistory);
+
+        }
+
+    }
+
+    $dirName = basename(__DIR__);
+    $path = base_url_back() . "src/" . $dirName;
+    header("Location:" . $path . "/?update=ok");
+
 }
 
 ?>
