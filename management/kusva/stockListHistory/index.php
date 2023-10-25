@@ -68,4 +68,19 @@ if (isset($_GET['stockListHistoryDelete'])) {
     }
 }
 
+if (isset($_GET['fullDeleteStockListHistory'])) {
+
+    $sql = "TRUNCATE table stockListHistory";
+    $dirName = basename(__DIR__);
+    $path = base_url_back() . "src/" . $dirName;
+
+    if (mysqli_query($db, $sql)) {
+        header("Location:" . $path . "/?delete=ok");
+        exit();
+    } else {
+        header("Location:" . $path . "/?delete=no");
+        exit();
+    }
+}
+
 ?>

@@ -44,6 +44,16 @@ FROM stockListHistory mH
             </h3>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-12" style="text-align: center">
+    <div style="text-align: right; margin-bottom: 5px; margin-left: 30px;">
+        <a href="<?php echo base_url_back()."kusva/index.php?fullDeleteStockListHistory"?>" class="btn btn-danger"><i class="fa fa-trash">
+                Tümünü Sil</i></a>
+    </div>
+        </div>
+    </div>
+
     <?php getTable($data, $isVisibleColumn, $columnName,
         false, false, true, false,
         "Arıdndırmalar",
