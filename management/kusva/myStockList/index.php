@@ -75,7 +75,6 @@ if (isset($_GET['myStockListDelete'])) {
 if(isset($_POST['myStockListUpdateTotal'])) {
     $id = $_POST['myStockListUpdateTotal'];
     $substract= $_POST['substract'];
-
     $itemSql = "Select * from myStockList where stockItemId = '$id'";
 
     $result = $db->query($itemSql);
@@ -93,7 +92,7 @@ if(isset($_POST['myStockListUpdateTotal'])) {
                 $count = $count - $substract;
                 $insertCount = $substract;
                 $newCount = $count;
-                $substract = $substract - $count;
+                $substract = 0;
             }
 
                 $stockItemId = $row['id'];
@@ -103,7 +102,7 @@ if(isset($_POST['myStockListUpdateTotal'])) {
                  mysqli_query($db, $sql);
 
                 $sqlMyStockListHistory = "INSERT INTO stockListHistory (myStockListId, count) VALUES ('$tempId', '$insertCount')";
-                $sqlMyStockListHistory;
+
                 mysqli_query($db, $sqlMyStockListHistory);
 
         }
