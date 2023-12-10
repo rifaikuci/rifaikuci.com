@@ -4,7 +4,11 @@ if (isset($_POST['aboutUpdate'])) {
 
     $id = $_POST['aboutUpdate'];
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = $path ."/" . $fileName;
+
     $data = array();
 
     if (isset($_FILES['cv']) && $_FILES['cv']['name']) {

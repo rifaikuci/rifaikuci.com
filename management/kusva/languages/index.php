@@ -3,7 +3,10 @@
 if (isset($_POST['languagesInsert'])) {
 
     $dirName = basename(__DIR__);
-    $path = base_url_back() . "src/" . $dirName;
+    $fileName = basename(__FILE__, ".php");
+    if($fileName != "index")
+        $path = base_url_back() . "src/" . $dirName ."/" . $fileName;
+
     $data = array();
     if (isset($_FILES['image']) && $_FILES['image']['name']) {
         $file = imageUpload("languages", 'image', '');
@@ -35,8 +38,14 @@ if (isset($_POST['languagesInsert'])) {
 if (isset($_POST['languagesUpdate'])) {
 
     $id = $_POST['languagesUpdate'];
+
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
+
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = $path ."/" . $fileName;
+
     $data = array();
 
     if (isset($_FILES['image']) && $_FILES['image']['name']) {
@@ -76,8 +85,13 @@ if (isset($_GET['languagesDelete'])) {
     $id = $_GET['languagesDelete'];
     $row = getDataRow("$id", "languages", $db);
     $sql = delete($id, 'languages');
+
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
+
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = $path ."/" . $fileName;
 
 
     if (isset($row['image']) && $row['image']) {

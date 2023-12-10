@@ -2,8 +2,13 @@
 
 if (isset($_POST['stockListHistoryInsert'])) {
 
+
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = base_url_back() . "src/" . $dirName ."/" . $fileName;
+
     $data = array();
 
     $arrayKey = ["count", "stockItemId"];
@@ -27,8 +32,13 @@ if (isset($_POST['stockListHistoryInsert'])) {
 if (isset($_POST['stockListHistoryUpdate'])) {
 
     $id = $_POST['stockListHistoryUpdate'];
+
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = base_url_back() . "src/" . $dirName ."/" . $fileName;
+
     $data = array();
 
 
@@ -56,8 +66,13 @@ if (isset($_GET['stockListHistoryDelete'])) {
     $id = $_GET['stockListHistoryDelete'];
     $row = getDataRow("$id", "stockListHistory", $db);
     $sql = delete($id, 'stockListHistory');
+
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = base_url_back() . "src/" . $dirName ."/" . $fileName;
+
 
     if (mysqli_query($db, $sql)) {
         header("Location:" . $path . "/?delete=ok");
@@ -71,8 +86,12 @@ if (isset($_GET['stockListHistoryDelete'])) {
 if (isset($_GET['fullDeleteStockListHistory'])) {
 
     $sql = "TRUNCATE table stockListHistory";
+
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = base_url_back() . "src/" . $dirName ."/" . $fileName;
 
     if (mysqli_query($db, $sql)) {
         header("Location:" . $path . "/?delete=ok");

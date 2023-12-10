@@ -55,7 +55,7 @@ FROM stockListHistory mH
     </div>
 
     <?php getTable($data, $isVisibleColumn, $columnName,
-        false, false, true, false,
+        false, false, true, false, false,
         "Arıdndırmalar",
         "",
         "",

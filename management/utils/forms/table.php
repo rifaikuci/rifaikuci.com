@@ -1,7 +1,7 @@
 <?php
 
 function getTable($data, $isVisibleColumn, $columnName,
-                  $isInsert,$isView, $isDelete,$isUpdate,
+                  $isInsert,$isView, $isDelete,$isUpdate, $isMultipleImage,
                   $title, $titleBackground, $titleText, $rowBackground, $rowText, $tableHeaderBackground, $tableHeaderText)
 {
     $title = $title ? $title : "";
@@ -45,15 +45,22 @@ function getTable($data, $isVisibleColumn, $columnName,
                <tbody>';
 
     for ($i = 0; $i < count($data); $i++) {
-       $return = $return. ' <tr>';
-       for($k = 0; $k < count($isVisibleColumn) ; $k++) {
+        $return = $return. ' <tr>';
+        for($k = 0; $k < count($isVisibleColumn) ; $k++) {
 
-        $return = $return . '<td>'.$data[$i][$isVisibleColumn[$k]].'</td>';
-       }
+            $return = $return . '<td>'. wordSplice( $data[$i][$isVisibleColumn[$k]],10).'</td>';
+        }
         $return =  $return .'<td style="text-align: center">';
 
-        if($isView || $isDelete ||$isUpdate) {
+        if($isView || $isDelete ||$isUpdate || $isMultipleImage) {
             $id = $data[$i]['id'];
+
+            if($isMultipleImage) {
+                $return = $return . '<a style="margin-right:  15px" href="uploadImages/?id='.$id.'"
+                                            class="btn btn-outline-secondary"><i class="fa fa-images"></i>
+                                            </a>';
+            }
+
             if($isView) {
                 $return = $return . '<a style="margin-right:  15px" href="view/?id='.$id.'"
                                             class="btn btn-outline-primary"><i class="fa fa-eye"></i>
@@ -67,23 +74,31 @@ function getTable($data, $isVisibleColumn, $columnName,
             }
 
 
+
             if($isDelete) {
 
                 $cur_dir = getcwd();
                 $cur_dir = explode("/",$cur_dir);
                 $tempKeyword = $cur_dir[count($cur_dir)-1]."Delete";
+                if (file_exists("../../kusva"))
+                    $path  ="../../kusva/?";
+                else if (file_exists("../../../kusva"))
+                    $path = "../../../kusva/?";
 
-                $return = $return . '<a style="margin-right:  15px" href="../../kusva/?'.$tempKeyword.'='.$id.'"
-                                            class="btn btn-outline-danger"><i class="fa fa-trash"></i>
-                                            </a>';
+                $return = $return . '<a style="margin-right:  15px" href="'.$path.$tempKeyword.'='.$id.'"
+                        class="btn btn-outline-danger"><i class="fa fa-trash"></i>
+                        </a>';
+             
             }
+
+
             $return = $return . '</td>';
         }
-       $return = $return. '</tr>';
+        $return = $return. '</tr>';
 
     }
 
-                $return = $return . '</tbody>
+    $return = $return . '</tbody>
             </table>
         </div>
     </div>';

@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
 
         <?php
         getTextHidden("certificateUpdate", $id);
-        getTextHidden("deleteFile", $row['image']);
+        getTextHidden("deleteFile", isset($row['image']) ? $row['image'] : "");
 
         ?>
         <div class="card card-dark">

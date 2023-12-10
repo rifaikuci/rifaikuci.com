@@ -1,34 +1,34 @@
 <?php
 
-if (isset($_POST['projectsInsert'])) {
+
+if (isset($_POST['matchingGameInsert'])) {
 
     $dirName = basename(__DIR__);
     $fileName = basename(__FILE__, ".php");
-
     $path = base_url_back() . "src/" . $dirName;
-    if($fileName != "index")
-        $path = $path ."/" . $fileName;
+    if ($fileName != "index")
+        $path = base_url_back() . "src/" . $dirName . "/" . $fileName;
 
-        $data = array();
+    $data = array();
     if (isset($_FILES['image']) && $_FILES['image']['name']) {
-        $file = imageUpload("projects", 'image', '');
+        $file = imageUpload("matchingGame", 'image', '');
         if ($file == "image_large" || $file == "image_invalid_type" || $file == "image_not_upload") {
             header("Location:" . $path . "/index.php?hata=" . $file);
             exit();
         }
     }
 
-    $arrayKey = ["title", "titleE", "detail","detailE","description","descriptionE", "startDate","finishDate","keywords","keywordsE","link","type"];
+    $arrayKey = ["title"];
     $data = getDataForm($arrayKey);
+
 
     if (isset($_FILES['image']) && $_FILES['image']['name']) $data['image'] = $file;
 
     $data['seoTitle'] = seo($data['title']);
-    $data['seoTitleE'] = seo($data['titleE']);
 
-    $sql = insert($data, "projects");
+    $sql = insert($data, "sabishMatchingGameCategory");
     if (mysqli_query($db, $sql)) {
-        
+
         header("Location:" . $path . "/?insert=ok");
         exit();
     } else {
@@ -40,20 +40,20 @@ if (isset($_POST['projectsInsert'])) {
     }
 }
 
-if (isset($_POST['projectsUpdate'])) {
+if (isset($_POST['matchingGameUpdate'])) {
 
-    $id = $_POST['projectsUpdate'];
+    $id = $_POST['matchingGameUpdate'];
 
     $dirName = basename(__DIR__);
     $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
-    if($fileName != "index")
-        $path = base_url_back() . "src/" . $dirName ."/" . $fileName;
+    if ($fileName != "index")
+        $path = base_url_back() . "src/" . $dirName . "/" . $fileName;
 
     $data = array();
 
     if (isset($_FILES['image']) && $_FILES['image']['name']) {
-        $file = imageUpload("projects", 'image', '');
+        $file = imageUpload("matchingGame", 'image', '');
         if ($file == "image_large" || $file == "image_invalid_type" || $file == "image_not_upload") {
             header("Location:" . $path . "/index.php?hata=" . $file);
             exit();
@@ -67,17 +67,14 @@ if (isset($_POST['projectsUpdate'])) {
     }
 
 
-    $arrayKey = ["title", "titleE", "detail","detailE","description","descriptionE", "startDate","finishDate","keywords","keywordsE","link","type"];
+    $arrayKey = ["title"];
     $data = getDataForm($arrayKey);
-
 
     if (isset($_FILES['image']) && $_FILES['image']['name']) $data['image'] = $file;
 
-
     $data['seoTitle'] = seo($data['title']);
-    $data['seoTitleE'] = seo($data['titleE']);
 
-    $sql = update($data, "projects", $id);
+    $sql = update($data, "sabishMatchingGameCategory", $id);
     if (mysqli_query($db, $sql)) {
         header("Location:" . $path . "/?update=ok");
         exit();
@@ -90,23 +87,19 @@ if (isset($_POST['projectsUpdate'])) {
     }
 }
 
-if (isset($_GET['projectsDelete'])) {
-    $id = $_GET['projectsDelete'];
-    $row = getDataRow("$id", "projects", $db);
-    $sql = delete($id, 'projects');
+if (isset($_GET['matchingGameDelete'])) {
+    $id = $_GET['matchingGameDelete'];
+    $tableName = "sabishMatchingGameCategory";
+    $row = getDataRow("$id", $tableName, $db);
+    $sql = delete($id, $tableName);
 
     $dirName = basename(__DIR__);
     $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
-    if($fileName != "index")
-        $path = base_url_back() . "src/" . $dirName ."/" . $fileName;
+    if ($fileName != "index")
+        $path = base_url_back() . "src/" . $dirName . "/" . $fileName;
 
-
-    if (isset($row['image']) && $row['image']) {
-        if (file_exists("../" . $row['image'])) {
-            unlink("../" . $row['image']);
-        }
-    }
+    imageDeleteByProductId($tableName, $id, $db);
 
     if (mysqli_query($db, $sql)) {
         header("Location:" . $path . "/?delete=ok");
@@ -117,4 +110,3 @@ if (isset($_GET['projectsDelete'])) {
     }
 }
 
-?>

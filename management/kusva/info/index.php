@@ -3,8 +3,14 @@
 if (isset($_POST['infoUpdate'])) {
 
     $id = $_POST['infoUpdate'];
+
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
+
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = $path ."/" . $fileName;
+
     $data = array();
 
     if (isset($_FILES['image']) && $_FILES['image']['name']) {

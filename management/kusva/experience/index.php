@@ -3,7 +3,12 @@
 if (isset($_POST['experienceInsert'])) {
 
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
+
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = $path ."/" . $fileName;
+
     $data = array();
     if (isset($_FILES['image']) && $_FILES['image']['name']) {
         $file = imageUpload("experience", 'image', '');
@@ -35,8 +40,14 @@ if (isset($_POST['experienceInsert'])) {
 if (isset($_POST['experienceUpdate'])) {
 
     $id = $_POST['experienceUpdate'];
+
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
+
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = $path ."/" . $fileName;
+
     $data = array();
 
     if (isset($_FILES['image']) && $_FILES['image']['name']) {
@@ -76,8 +87,13 @@ if (isset($_GET['experienceDelete'])) {
     $id = $_GET['experienceDelete'];
     $row = getDataRow("$id", "experience", $db);
     $sql = delete($id, 'experience');
+
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
+
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = $path ."/" . $fileName;
 
 
     if (isset($row['image']) && $row['image']) {

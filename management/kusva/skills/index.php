@@ -3,7 +3,11 @@
 if (isset($_POST['skillsInsert'])) {
 
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = base_url_back() . "src/" . $dirName ."/" . $fileName;
+
     $data = array();
     if (isset($_FILES['image']) && $_FILES['image']['name']) {
         $file = imageUpload("skills", 'image', '');
@@ -35,8 +39,15 @@ if (isset($_POST['skillsInsert'])) {
 if (isset($_POST['skillsUpdate'])) {
 
     $id = $_POST['skillsUpdate'];
+
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = base_url_back() . "src/" . $dirName ."/" . $fileName;
+
+
+
     $data = array();
 
     if (isset($_FILES['image']) && $_FILES['image']['name']) {
@@ -81,8 +92,13 @@ if (isset($_GET['skillsDelete'])) {
     $id = $_GET['skillsDelete'];
     $row = getDataRow("$id", "skills", $db);
     $sql = delete($id, 'skills');
+
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = base_url_back() . "src/" . $dirName ."/" . $fileName;
+
 
 
     if (isset($row['image']) && $row['image']) {
