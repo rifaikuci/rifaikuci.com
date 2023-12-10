@@ -1,7 +1,7 @@
 <footer class="main-footer">
 
     <strong>Copyright &copy; <?php echo date("Y") ?>
-        <a href="https://rifaikuci.com">Rifai  Kuçi</a></strong> Tüm Hakları
+        <a href="https://rifaikuci.com">Rifai  Kuçi</a></strong> Tüm Hakları2
     Saklıdır.
 </footer>
 
