@@ -14,7 +14,7 @@
 
     ?>
     <?php getTable($data, $isVisibleColumn, $columnName,
-        true,false, true, true,
+        true,false, true, true, false,
         "Hisse Senetleri Listesi",
         "",
         "",

@@ -3,7 +3,12 @@
 if (isset($_POST['myStockListInsert'])) {
 
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
+
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = $path ."/" . $fileName;
+
     $data = array();
 
     $arrayKey = ["count", "stockItemId"];
@@ -27,8 +32,14 @@ if (isset($_POST['myStockListInsert'])) {
 if (isset($_POST['myStockListUpdate'])) {
 
     $id = $_POST['myStockListUpdate'];
+
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
+
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = $path ."/" . $fileName;
+
     $data = array();
 
 
@@ -60,8 +71,14 @@ if (isset($_GET['myStockListDelete'])) {
     $id = $_GET['myStockListDelete'];
     $row = getDataRow("$id", "myStockList", $db);
     $sql = delete($id, 'myStockList');
+
+
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
+
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = $path ."/" . $fileName;
 
     if (mysqli_query($db, $sql)) {
         header("Location:" . $path . "/?delete=ok");
@@ -110,7 +127,12 @@ if(isset($_POST['myStockListUpdateTotal'])) {
     }
 
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
+
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = $path ."/" . $fileName;
+
     header("Location:" . $path . "/?update=ok");
 
 }

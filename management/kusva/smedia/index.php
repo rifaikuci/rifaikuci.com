@@ -3,7 +3,13 @@
 if (isset($_POST['smediaInsert'])) {
 
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
+
+
+    if($fileName != "index")
+        $path = base_url_back() . "src/" . $dirName ."/" . $fileName;
+    
     $data = array();
     if (isset($_FILES['image']) && $_FILES['image']['name']) {
         $file = imageUpload("smedia", 'image', '');
@@ -35,8 +41,13 @@ if (isset($_POST['smediaInsert'])) {
 if (isset($_POST['smediaUpdate'])) {
 
     $id = $_POST['smediaUpdate'];
+
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = base_url_back() . "src/" . $dirName ."/" . $fileName;
+
     $data = array();
 
     if (isset($_FILES['image']) && $_FILES['image']['name']) {
@@ -76,8 +87,13 @@ if (isset($_GET['smediaDelete'])) {
     $id = $_GET['smediaDelete'];
     $row = getDataRow("$id", "smedia", $db);
     $sql = delete($id, 'smedia');
+
     $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
+    if($fileName != "index")
+        $path = base_url_back() . "src/" . $dirName ."/" . $fileName;
+
 
 
     if (isset($row['image']) && $row['image']) {

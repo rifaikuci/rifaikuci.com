@@ -74,19 +74,19 @@
                     "src/projects",
                     "", "");
 
-                $isInfoOpen2 = isTreeOpen(array('calculate/plus', 'calculate/percent', 'stockItem/', 'myStockList/','stockListHistory/'));
+                $isInfoOpen2 = isTreeOpen(array('calculate/plus', 'calculate/percent', 'stockItem/', 'myStockList/', 'stockListHistory/'));
                 ?>
                 <li class="nav-item <?php echo $isInfoOpen2 ? 'menu-open' : ''; ?>">
                     <?php menuTreeTitle("Hesaplamalar", "fas fa-calculator"); ?>
                     <ul class="nav nav-treeview">
 
                         <?php
-                       /* menuTreeSubTitle("Toplama Göre",
-                            "far fas fa-plus nav-icon",
-                            "src/calculate/plus",
-                            "", "");
+                        /* menuTreeSubTitle("Toplama Göre",
+                             "far fas fa-plus nav-icon",
+                             "src/calculate/plus",
+                             "", "");
 
-                       */
+                        */
                         menuTreeSubTitle("Yüzdeye Göre",
                             "far fas fa-percent nav-icon",
                             "src/calculate/percent",
@@ -112,14 +112,32 @@
                     </ul>
                 </li>
 
+                <?php
+
+                $isInfoOpen3 = isTreeOpen(array('sabish/matchingGame'));
+                ?>
+                <li class="nav-item <?php echo $isInfoOpen3 ? 'menu-open' : ''; ?>">
+                    <?php menuTreeTitle("Sabish", "fas fa-building"); ?>
+                    <ul class="nav nav-treeview">
+
+                        <?php
+                        menuTreeSubTitle("Eşleştirme Kategorileri",
+                            "far fas fa-gamepad nav-icon",
+                            "src/sabish/matchingGame",
+                            "", "");
+                        ?>
+
+
+                    </ul>
+                </li>
+
 
                 <?php
-                menuLabel("Site Bilgileri","green");
+                menuLabel("Site Bilgileri", "green");
 
-                menuTitleWithDot("Siteye Giriş","primary",base_url_front(),"_blank");
-                menuTitleWithDot("Çıkış Yap","danger",base_url_back()."kusva/?logout=true","")
+                menuTitleWithDot("Siteye Giriş", "primary", base_url_front(), "_blank");
+                menuTitleWithDot("Çıkış Yap", "danger", base_url_back() . "kusva/?logout=true", "")
                 ?>
-
 
 
             </ul>

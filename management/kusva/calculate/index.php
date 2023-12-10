@@ -4,7 +4,7 @@ $received_data = json_decode(file_get_contents("php://input"));
 $data = array();
 
 
-if ($received_data->action == 'stockCalculate') {
+if (isset($received_data) && $received_data->action == 'stockCalculate') {
 
     $sql = "select stockAmount, stockPerson, stockPercent, stockItemAmount from info where id = 1";
 
@@ -22,7 +22,7 @@ if ($received_data->action == 'stockCalculate') {
 
 }
 
-if ($received_data->action == 'stockCalculateSubmit') {
+if ( isset($received_data) && $received_data->action == 'stockCalculateSubmit') {
 
     $stockAmount = $received_data->stockAmount;
     $stockPerson = $received_data->stockPerson;

@@ -11,6 +11,8 @@ if (file_exists("utils/index.php")) {
     require_once "../../../utils/index.php";
 } else if (file_exists("../../../../utils/index.php")) {
     require_once "../../../../utils/index.php";
+} else if (file_exists("../../../../../utils/index.php")) {
+    require_once "../../../../../utils/index.php";
 }
 
 require_once "login/index.php";
@@ -33,6 +35,9 @@ if (isset($_SESSION['management'])) {
     require_once "myStockList/index.php";
     require_once "stockListHistory/index.php";
     require_once "calculate/index.php";
+    require_once "common/index.php";
+    require_once "galeria/index.php";
+    require_once "sabish/index.php";
 } else{
     session_destroy();
     header("Location:" . "http://localhost/rifaikuci.com/management/src/login/?session=no");

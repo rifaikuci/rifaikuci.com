@@ -11,7 +11,7 @@
     }
     ?>
     <?php getTable($data, $isVisibleColumn, $columnName,
-        true,true, true, true,
+        true,true, true, true, false,
         "Projelerim",
         "",
         "",

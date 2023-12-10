@@ -12,7 +12,7 @@ $row = getDataRow(1, 'info', $db);
 
         <?php
         getTextHidden("infoUpdate",1);
-        getTextHidden("deleteFile", $row['image']);
+        getTextHidden("deleteFile", isset($row['image']) ? $row['image'] : "");
 
         ?>
         <div class="card card-dark">
