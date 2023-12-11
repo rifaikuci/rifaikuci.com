@@ -37,7 +37,7 @@ if (isset($data) && isset($data['method']) && $data['method'] == "categoryImages
 
     $categoryId = $data['categoryId'] ? $data['categoryId'] : 0;
     $limit = $data['limit'] ? $data['limit'] : 4;
-    $sql = "SELECT * FROM " . $tableGaleria . " where productId = " . $categoryId. " and tblName= " . $tableNameSabishName. "  ORDER BY RAND() LIMIT " . $limit;
+    $sql = "SELECT * FROM " . $tableGaleria . " where productId = " . $categoryId. " and tblName= '" . $tableNameSabishName. "'  ORDER BY RAND() LIMIT " . $limit;
 
     $result = $db->query($sql);
 
