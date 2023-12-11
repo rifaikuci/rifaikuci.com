@@ -45,7 +45,7 @@ if (isset($data) && isset($data['method']) && $data['method'] == "categoryImages
         $image = null;
         $image['image'] = base_url_back() . $row['image'];
 
-        array_push($imageList, $category);
+        array_push($imageList, $image);
     }
 
     echo json_encode($imageList);
