@@ -13,9 +13,7 @@ $tableGaleria = "galeria";
 if (isset($data) && isset($data['method']) && $data['method'] == "categoryList") {
     $categoryList = array();
 
-    $sql = "SELECT * FROM  '$tableNameSabishName' where active = 1";echo  $sql;
-    echo $sql;
-    exit();
+    $sql = "SELECT * FROM " .  $tableNameSabishName ." where active = 1";
     $result = $db->query($sql);
 
 
