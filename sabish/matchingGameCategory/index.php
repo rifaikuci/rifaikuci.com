@@ -32,7 +32,7 @@ if (isset($data) && isset($data['method']) && $data['method'] == "categoryList")
 
 
 //Seçilen kategorilere ait resimlerin getirilmesi
-if (isset($data) && isset($data['method']) && $data['method'] == "categoryList") {
+if (isset($data) && isset($data['method']) && $data['method'] == "categoryImages") {
     $imageList = array();
 
     $categoryId = $data['categoryId'];
