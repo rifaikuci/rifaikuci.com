@@ -13,7 +13,9 @@ $tableGaleria = "galeria";
 if (isset($data) && isset($data['method']) && $data['method'] == "categoryList") {
     $categoryList = array();
 
-    $sql = "SELECT * FROM  '$tableNameSabishName' where active = 1";
+    $sql = "SELECT * FROM  '$tableNameSabishName' where active = 1";echo  $sql;
+    echo $sql;
+    exit();
     $result = $db->query($sql);
 
 
@@ -32,7 +34,7 @@ if (isset($data) && isset($data['method']) && $data['method'] == "categoryList")
 
 
 //Seçilen kategorilere ait resimlerin getirilmesi
-if (isset($data) && isset($data['method']) && $data['method'] == "categoryImages") {
+if (isset($data) && isset($data['method']) && $data['method'] == "categoryList") {
     $imageList = array();
 
     $categoryId = $data['categoryId'];
