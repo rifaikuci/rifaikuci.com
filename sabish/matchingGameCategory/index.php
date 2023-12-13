@@ -45,12 +45,15 @@ if (isset($_GET['method']) && isset($_GET['method']) && $_GET['method'] == "cate
         $sql = "SELECT * FROM " . $tableGaleria . " where productId = " . $categoryId. " and tblName= '" . $tableNameSabishName. "'  ORDER BY RAND()";
     }
 
+    $category = getDataRow($categoryId, $tableNameSabishName, $db);
+
     $result = $db->query($sql);
 
     while ($row = $result->fetch_array()) {
         $image = null;
         $image['imageUrl'] = base_url_back() . $row['image'];
         $image['guid'] =  uniqid();
+        $image['coverUrl'] = base_url_back() . $category['image'];
 
         array_push($imageList, $image);
     }

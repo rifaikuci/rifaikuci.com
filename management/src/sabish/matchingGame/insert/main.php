@@ -16,6 +16,9 @@
                 </div>
                 <div class="row">
 
+                    <?php
+                    getInputFile(4, "image", "Cover-Image", false, false, false);
+                    ?>
                 </div>
             </div>
         </div>

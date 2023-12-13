@@ -15,6 +15,8 @@ if (isset($_GET['id'])) {
 
         <?php
         getTextHidden("matchingGameUpdate", $id);
+        getTextHidden("deleteFile", isset($row['image']) ? $row['image'] : "");
+
         ?>
 
         <div class="card card-dark">
@@ -26,6 +28,14 @@ if (isset($_GET['id'])) {
 
                 </div>
                 <div class="row">
+
+                    <?php
+                    getInputFile(4, "image", "Cover-Image", true, false, false);
+
+                    if (isset($row['image']) && $row['image'])
+                        getViewFile(4, "Cover-Image", $row['image']);
+
+                    ?>
 
                 </div>
             </div>
