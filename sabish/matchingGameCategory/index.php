@@ -49,7 +49,7 @@ if (isset($_GET['method']) && isset($_GET['method']) && $_GET['method'] == "cate
 
     while ($row = $result->fetch_array()) {
         $image = null;
-        $image['image'] = base_url_back() . $row['image'];
+        $image['imageUrl'] = base_url_back() . $row['image'];
         $image['guid'] =  uniqid();
 
         array_push($imageList, $image);
