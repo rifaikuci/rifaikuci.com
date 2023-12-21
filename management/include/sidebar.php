@@ -114,16 +114,21 @@
 
                 <?php
 
-                $isInfoOpen3 = isTreeOpen(array('sabish/matchingGame'));
+                $isInfoOpen3 = isTreeOpen(array('sabish/matchingGameCategory', 'sabish/matchingGamePr'));
                 ?>
                 <li class="nav-item <?php echo $isInfoOpen3 ? 'menu-open' : ''; ?>">
                     <?php menuTreeTitle("Sabish", "fas fa-building"); ?>
                     <ul class="nav nav-treeview">
 
                         <?php
+                        menuTreeSubTitle("Eşleştirme Kategori Pr",
+                            "far fas fa-list nav-icon",
+                            "src/sabish/matchingGamePr",
+                            "", "");
+
                         menuTreeSubTitle("Eşleştirme Kategorileri",
                             "far fas fa-gamepad nav-icon",
-                            "src/sabish/matchingGame",
+                            "src/sabish/matchingGameCategory",
                             "", "");
                         ?>
 

@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
           enctype="multipart/form-data">
 
         <?php
-        getTextHidden("matchingGameUpdate", $id);
+        getTextHidden("matchingGameCategoryUpdate", $id);
         getTextHidden("deleteFile", isset($row['image']) ? $row['image'] : "");
 
         ?>

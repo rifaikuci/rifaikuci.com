@@ -57,7 +57,7 @@ while ($row = $result->fetch_array()) {
                         </a>
                         <div style="bottom 0 ; margin-top: 10px">
 
-                            <a href="<?php echo base_url_back()."kusva/?imageSil=".$data[$k]['id']."&dirName=sabish/matchingGame&productId=".$id; ?> "
+                            <a href="<?php echo base_url_back()."kusva/?imageSil=".$data[$k]['id']."&dirName=sabish/matchingGameCategory&productId=".$id; ?> "
                                class="btn btn-outline-danger">Sil</a>
                         </div>
                     </div>

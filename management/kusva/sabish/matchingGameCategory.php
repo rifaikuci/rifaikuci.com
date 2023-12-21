@@ -1,7 +1,7 @@
 <?php
+$SABISH_MATCHING_GAME_CATEGORY = "sabishMatchingGameCategory";
 
-
-if (isset($_POST['matchingGameInsert'])) {
+if (isset($_POST['matchingGameCategoryInsert'])) {
 
     $dirName = basename(__DIR__);
     $fileName = basename(__FILE__, ".php");
@@ -11,12 +11,14 @@ if (isset($_POST['matchingGameInsert'])) {
 
     $data = array();
     if (isset($_FILES['image']) && $_FILES['image']['name']) {
-        $file = imageUpload("matchingGame", 'image', '');
+        $file = imageUpload("matchingGameCategory", 'image', '');
         if ($file == "image_large" || $file == "image_invalid_type" || $file == "image_not_upload") {
             header("Location:" . $path . "/index.php?hata=" . $file);
             exit();
         }
     }
+
+
 
     $arrayKey = ["title"];
     $data = getDataForm($arrayKey);
@@ -26,7 +28,7 @@ if (isset($_POST['matchingGameInsert'])) {
 
     $data['seoTitle'] = seo($data['title']);
 
-    $sql = insert($data, "sabishMatchingGameCategory");
+    $sql = insert($data, $SABISH_MATCHING_GAME_CATEGORY);
     if (mysqli_query($db, $sql)) {
 
         header("Location:" . $path . "/?insert=ok");
@@ -40,9 +42,9 @@ if (isset($_POST['matchingGameInsert'])) {
     }
 }
 
-if (isset($_POST['matchingGameUpdate'])) {
+if (isset($_POST['matchingGameCategoryUpdate'])) {
 
-    $id = $_POST['matchingGameUpdate'];
+    $id = $_POST['matchingGameCategoryUpdate'];
 
     $dirName = basename(__DIR__);
     $fileName = basename(__FILE__, ".php");
@@ -53,7 +55,7 @@ if (isset($_POST['matchingGameUpdate'])) {
     $data = array();
 
     if (isset($_FILES['image']) && $_FILES['image']['name']) {
-        $file = imageUpload("matchingGame", 'image', '');
+        $file = imageUpload("matchingGameCategory", 'image', '');
         if ($file == "image_large" || $file == "image_invalid_type" || $file == "image_not_upload") {
             header("Location:" . $path . "/index.php?hata=" . $file);
             exit();
@@ -74,7 +76,7 @@ if (isset($_POST['matchingGameUpdate'])) {
 
     $data['seoTitle'] = seo($data['title']);
 
-    $sql = update($data, "sabishMatchingGameCategory", $id);
+    $sql = update($data, $SABISH_MATCHING_GAME_CATEGORY, $id);
     if (mysqli_query($db, $sql)) {
         header("Location:" . $path . "/?update=ok");
         exit();
@@ -87,19 +89,24 @@ if (isset($_POST['matchingGameUpdate'])) {
     }
 }
 
-if (isset($_GET['matchingGameDelete'])) {
-    $id = $_GET['matchingGameDelete'];
-    $tableName = "sabishMatchingGameCategory";
-    $row = getDataRow("$id", $tableName, $db);
-    $sql = delete($id, $tableName);
+if (isset($_GET['matchingGameCategoryDelete'])) {
+    $id = $_GET['matchingGameCategoryDelete'];
+    $row = getDataRow("$id", $SABISH_MATCHING_GAME_CATEGORY, $db);
+    $sql = delete($id, $SABISH_MATCHING_GAME_CATEGORY);
 
+    $fileDelete =  $row['image'];
     $dirName = basename(__DIR__);
     $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
     if ($fileName != "index")
         $path = base_url_back() . "src/" . $dirName . "/" . $fileName;
 
-    imageDeleteByProductId($tableName, $id, $db);
+
+    if (file_exists("../" . $fileDelete)) {
+        unlink("../" . $fileDelete);
+    }
+
+    imageDeleteByProductId($SABISH_MATCHING_GAME_CATEGORY, $id, $db);
 
     if (mysqli_query($db, $sql)) {
         header("Location:" . $path . "/?delete=ok");

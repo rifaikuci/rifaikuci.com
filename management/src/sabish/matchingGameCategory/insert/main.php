@@ -4,7 +4,7 @@
           enctype="multipart/form-data">
 
         <?php
-        getTextHidden("matchingGameInsert", "matchingGameInsert");
+        getTextHidden("matchingGameCategoryInsert", "matchingGameCategoryInsert");
         ?>
         <div class="card card-dark">
             <div class="card-body">
