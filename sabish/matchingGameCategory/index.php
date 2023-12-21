@@ -55,7 +55,11 @@ if (isset($_GET['method']) && isset($_GET['method']) && $_GET['method'] == "cate
         $image = null;
         $image['imageUrl'] = base_url_back() . $row['image'];
         $image['guid'] =  uniqid();
-        $image['coverUrl'] = base_url_back() . $category['image'] ? $category['image'] : $gamePr['image'];
+        if($category['image']) {
+            $image['coverUrl'] = base_url_back() . $category['image'];
+        } else {
+            $image['coverUrl'] = base_url_back() . $gamePr['image'];
+        }
 
         array_push($imageList, $image);
     }
