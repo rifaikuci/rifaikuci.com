@@ -55,7 +55,7 @@
     </div>
 
     <?php getTable($data, $isVisibleColumn, $columnName,
-        true, false, false, true, false,
+        true, false, false, false, false,
         "Senetler",
         "",
         "",

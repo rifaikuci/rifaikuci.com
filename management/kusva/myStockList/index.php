@@ -11,7 +11,7 @@ if (isset($_POST['myStockListInsert'])) {
 
     $data = array();
 
-    $arrayKey = ["count", "stockItemId"];
+    $arrayKey = ["count", "stockItemId","buyDate"];
     $data = getDataForm($arrayKey);
 
 
@@ -92,6 +92,7 @@ if (isset($_GET['myStockListDelete'])) {
 if(isset($_POST['myStockListUpdateTotal'])) {
     $id = $_POST['myStockListUpdateTotal'];
     $substract= $_POST['substract'];
+    $sellDate = $_POST['sellDate'];
     $itemSql = "Select * from myStockList where stockItemId = '$id'";
 
     $result = $db->query($itemSql);
@@ -118,7 +119,7 @@ if(isset($_POST['myStockListUpdateTotal'])) {
                 $sql = update($data, "myStockList", $stockItemId);
                  mysqli_query($db, $sql);
 
-                $sqlMyStockListHistory = "INSERT INTO stockListHistory (myStockListId, count) VALUES ('$tempId', '$insertCount')";
+                $sqlMyStockListHistory = "INSERT INTO stockListHistory (myStockListId, count, sellDate) VALUES ('$tempId', '$insertCount', '$sellDate')";
 
                 mysqli_query($db, $sqlMyStockListHistory);
 

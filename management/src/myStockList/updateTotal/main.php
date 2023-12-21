@@ -35,6 +35,7 @@ if (isset($_GET['itemId'])) {
                     getTextHidden("myStockListUpdateTotal", $itemId);
                     getSelect(3,$dataStock, "Hisse","myStockListUpdateTotal","blue",false,$itemId,true,true);
                     getNumberInput(3, "Satılan Adet", "0", "substract", $count, 1, 0,$count,false,false);
+                    getDatetime(3,"İşlem Zamanı","sellDate","",false,false);
 
 
                     ?>

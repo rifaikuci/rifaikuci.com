@@ -26,6 +26,8 @@
                     <?php
                     getSelect(3,$dataStock, "Hisseler","stockItemId","blue",false,false,true,false);
                     getNumberInput(3, "Adet", "0", "count", '', 1, 0,"",false,false);
+                    getDatetime(3,"İşlem Zamanı","buyDate","",false,false);
+
                     ?>
 
                 </div>
