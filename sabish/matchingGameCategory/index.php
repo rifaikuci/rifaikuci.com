@@ -43,7 +43,7 @@ if (isset($_GET['method']) && isset($_GET['method']) && $_GET['method'] == "cate
 
 
     if ($categoryId > 0) {
-        $sql = "SELECT * FROM $tableGaleria WHERE productId = $categoryId AND tblName = '$tableMatchingGameCategory' ORDER BY RAND()";
+        $sql = "SELECT * FROM $tableGaleria WHERE tblName = '$tableMatchingGameCategory' ORDER BY RAND()";
 
         if ($limit > 0) {
             $sql .= " LIMIT $limit";
