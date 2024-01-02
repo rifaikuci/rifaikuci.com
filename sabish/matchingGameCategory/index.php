@@ -40,6 +40,8 @@ if (isset($_GET['method']) && isset($_GET['method']) && $_GET['method'] == "cate
 
     $categoryId = $_GET['categoryId'] ? $_GET['categoryId'] : 0;
     $limit = $_GET['limit'] ? $_GET['limit'] : 0;
+
+
     if ($categoryId > 0) {
         $sql = "SELECT * FROM $tableGaleria WHERE productId = $categoryId AND tblName = '$tableMatchingGameCategory' ORDER BY RAND()";
 
@@ -53,6 +55,7 @@ if (isset($_GET['method']) && isset($_GET['method']) && $_GET['method'] == "cate
             $sql .= " LIMIT $limit";
         }
     }
+
 
     $category = getDataRow($categoryId, $tableMatchingGameCategory, $db);
     $gamePr = getDataRow(1, $tableMatchingGamePr, $db);
