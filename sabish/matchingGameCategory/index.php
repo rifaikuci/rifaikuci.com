@@ -57,7 +57,6 @@ if (isset($_GET['method']) && isset($_GET['method']) && $_GET['method'] == "cate
     }
 
 
-    $category = getDataRow($categoryId, $tableMatchingGameCategory, $db);
     $gamePr = getDataRow(1, $tableMatchingGamePr, $db);
 
     $result = $db->query($sql);
@@ -66,11 +65,7 @@ if (isset($_GET['method']) && isset($_GET['method']) && $_GET['method'] == "cate
         $image = null;
         $image['imageUrl'] = base_url_back() . $row['image'];
         $image['guid'] =  uniqid();
-        if($category['image']) {
-            $image['coverUrl'] = base_url_back() . $category['image'];
-        } else {
-            $image['coverUrl'] = base_url_back() . $gamePr['image'];
-        }
+        $image['coverUrl'] = base_url_back() . $gamePr['image'];
 
         array_push($imageList, $image);
     }
