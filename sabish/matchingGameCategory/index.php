@@ -25,6 +25,7 @@ if (isset($_GET['method']) && isset($_GET['method']) && $_GET['method'] == "cate
         $category['title'] = $row['title'];
         $category['insertDate'] = $row['insertDate'];
         $category['updateDate'] = $row['updateDate'];
+        $category['imageUrl'] = base_url_back() . $row['image'];
 
         array_push($categoryList, $category);
     }
