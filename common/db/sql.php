@@ -127,4 +127,12 @@ function getAllDataWithSort($table, $limit, $db, $sort)
     return $data;
 }
 
+function getDataRowByColumn ($id, $table, $db, $columnName = 'id') {
+    $sql = "SELECT * FROM $table where ". $columnName ." = '$id'";
+
+    $result = mysqli_query($db, $sql)->fetch_assoc();
+
+    return $result;
+}
+
 ?>
