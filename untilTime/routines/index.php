@@ -160,3 +160,35 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "upda
         }
     }
 }
+
+if (isset($data['method']) && isset($data['method']) && $data['method'] == "getRoutines") {
+
+    if ($deviceKey) {
+
+        try {
+            $deviceId = isset($data['deviceId']) ? $data['deviceId'] : null;
+
+            $sql = "select * from ". $tableUntilTimeRoutines ." where deviceId = '$deviceId' and isDeleted = 0";
+            $result = $db->query($sql);
+
+            $routines = array();
+            while ($row = $result->fetch_array()) {
+                $routine = null;
+                $routine['id'] = $row['id'];
+                $routine['title'] = $row['title'];
+                $routine['isMainPage'] = $row['isMainPage'];
+                $routine['isDeleted'] = $row['isDeleted'];
+                $routine['insertDate'] = dateWithTime($row['insertDate']);
+                $routine['updateDate'] = dateWithTime($row['updateDate']);
+
+                array_push($routines, $routine);
+            }
+
+            echo json_encode($routines);
+
+
+        } catch (Exception $exception) {
+            echo  json_encode(['success' => false]);
+        }
+    }
+}
