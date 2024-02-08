@@ -6,6 +6,7 @@ $data = json_decode($json_data, true);
 
 $tableUntilTimeRoutines = "untilTimeRoutines";
 $tableUntilTimeDevices = "untilTimeDevices";
+$tableUntilTimeRoutineTimes = "untilTimeRoutineTimes";
 
 $DEVICE_KEY = 'device-key';
 $DEVICE_BRAND = 'brand-model';
@@ -27,7 +28,7 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "save
     if ($deviceKey) {
 
         try {
-            if(isset($data['title'])) {
+            if (isset($data['title'])) {
                 $title = isset($data['title']) ? $data['title'] : null;
                 $isMainPage = isset($data['isMainPage']) ? $data['isMainPage'] : 1;
                 $deviceId = getDataRowByColumn($deviceKey, $tableUntilTimeDevices, $db, "deviceKey")['id'];
@@ -35,11 +36,11 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "save
 
                 echo $db->query($sqlInsert) ? json_encode(['success' => true]) : json_encode(['success' => false]);
             } else {
-                echo json_encode(['success' => false, 'message'=> "rutin Adı giriniz1"]);
+                echo json_encode(['success' => false, 'message' => "rutin Adı giriniz1"]);
             }
 
         } catch (Exception $exception) {
-            echo  json_encode(['success' => false]);
+            echo json_encode(['success' => false]);
         }
     }
 }
@@ -49,20 +50,39 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "getR
     if ($deviceKey) {
 
         try {
-            $deviceId = isset($data['deviceId']) ? $data['deviceId'] : null;
+            $deviceId = getDataRowByColumn($deviceKey, $tableUntilTimeDevices, $db, "deviceKey")['id'];
 
-            $sql = "select * from ". $tableUntilTimeRoutines ." where deviceId = '$deviceId' and isMainPage = 1 and isDeleted = 0";
+            $sql = "select * from " . $tableUntilTimeRoutines . " where deviceId = '$deviceId' and isMainPage = 1 and isDeleted = 0";
             $result = $db->query($sql);
 
             $routines = array();
             while ($row = $result->fetch_array()) {
+                $now = new DateTime();
+
                 $routine = null;
-                $routine['id'] = $row['id'];
+                $routineId = $row['id'];
+                $sqlRoutineTimes = "SELECT * FROM $tableUntilTimeRoutineTimes WHERE routineId = '$routineId' ORDER BY startDate DESC LIMIT 1";
+                $times = mysqli_query($db, $sqlRoutineTimes)->fetch_assoc();
+
+                $nowSeconds = $now->getTimestamp();
+                $startDateSeconds = 0;
+
+                if ($times && !$times['finishDate']) {
+                    $startDateSeconds = (new DateTime($times['startDate']))->getTimestamp();
+                }
+
+                $routine['active'] = $times && !$times['finishDate'] ? true : false;
+                $routine['id'] = $routineId;
                 $routine['title'] = $row['title'];
                 $routine['isMainPage'] = $row['isMainPage'];
                 $routine['isDeleted'] = $row['isDeleted'];
+
+                // Mutlak değeri kullanarak farkı hesapla
+                $routine['totalSeconds'] = $times && !$times['finishDate'] ? abs($startDateSeconds - $nowSeconds) : 0;
+
                 $routine['insertDate'] = dateWithTime($row['insertDate']);
                 $routine['updateDate'] = dateWithTime($row['updateDate']);
+                $routine['routineTimesId'] = $times ? $times['id'] : 0;
 
                 array_push($routines, $routine);
             }
@@ -71,7 +91,7 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "getR
 
 
         } catch (Exception $exception) {
-            echo  json_encode(['success' => false]);
+            echo json_encode(['success' => false]);
         }
     }
 }
@@ -84,12 +104,12 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "upda
             $deviceId = isset($data['deviceId']) ? $data['deviceId'] : null;
             $routineId = isset($data['routineId']) ? $data['routineId'] : null;
 
-            $sqlUpdate = "UPDATE ". $tableUntilTimeRoutines . " SET isMainPage = 0 WHERE deviceId = '$deviceId' AND id = '$routineId'";
+            $sqlUpdate = "UPDATE " . $tableUntilTimeRoutines . " SET isMainPage = 0 WHERE deviceId = '$deviceId' AND id = '$routineId'";
 
             echo $db->query($sqlUpdate) ? json_encode(['success' => true]) : json_encode(['success' => false]);
 
         } catch (Exception $exception) {
-            echo  json_encode(['success' => false]);
+            echo json_encode(['success' => false]);
         }
     }
 }
@@ -102,13 +122,13 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "dele
             $deviceId = isset($data['deviceId']) ? $data['deviceId'] : null;
             $routineId = isset($data['routineId']) ? $data['routineId'] : null;
 
-            $sqlUpdate = "UPDATE ". $tableUntilTimeRoutines . " SET isDeleted = 1,isMainPage = 0  WHERE deviceId = '$deviceId' AND id = '$routineId'";
+            $sqlUpdate = "UPDATE " . $tableUntilTimeRoutines . " SET isDeleted = 1,isMainPage = 0  WHERE deviceId = '$deviceId' AND id = '$routineId'";
 
 
             echo $db->query($sqlUpdate) ? json_encode(['success' => true]) : json_encode(['success' => false]);
 
         } catch (Exception $exception) {
-            echo  json_encode(['success' => false]);
+            echo json_encode(['success' => false]);
         }
     }
 }
@@ -121,19 +141,19 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "getR
             $deviceId = isset($data['deviceId']) ? $data['deviceId'] : null;
             $routineId = isset($data['routineId']) ? $data['routineId'] : null;
 
-            $sql = "select * from ". $tableUntilTimeRoutines ." where deviceId = '$deviceId' and id = '$routineId'";
+            $sql = "select * from " . $tableUntilTimeRoutines . " where deviceId = '$deviceId' and id = '$routineId'";
 
-            $routine = getDataRow($routineId,$tableUntilTimeRoutines, $db);
+            $routine = getDataRow($routineId, $tableUntilTimeRoutines, $db);
 
             echo json_encode([
                 'id' => $routine['id'],
-                'insertDate'=>  dateWithTime($routine['insertDate']) ,
-                'updateDate'=>  dateWithTime($routine['updateDate']) ,
-                'title'=>  $routine['title'],
-                'isMainPage'=>  $routine['isMainPage'],
-                ]);
+                'insertDate' => dateWithTime($routine['insertDate']),
+                'updateDate' => dateWithTime($routine['updateDate']),
+                'title' => $routine['title'],
+                'isMainPage' => $routine['isMainPage'],
+            ]);
         } catch (Exception $exception) {
-            echo  json_encode(['success' => false]);
+            echo json_encode(['success' => false]);
         }
     }
 }
@@ -151,12 +171,12 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "upda
             $deviceId = getDataRowByColumn($deviceKey, $tableUntilTimeDevices, $db, "deviceKey")['id'];
 
 
-            $sqlUpdate = "UPDATE ". $tableUntilTimeRoutines . " SET title = '$title' , isMainPage = '$isMainPage'  WHERE id = '$routineId'";
+            $sqlUpdate = "UPDATE " . $tableUntilTimeRoutines . " SET title = '$title' , isMainPage = '$isMainPage'  WHERE id = '$routineId'";
 
             echo $db->query($sqlUpdate) ? json_encode(['success' => true]) : json_encode(['success' => false]);
 
         } catch (Exception $exception) {
-            echo  json_encode(['success' => false]);
+            echo json_encode(['success' => false]);
         }
     }
 }
@@ -168,7 +188,7 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "getR
         try {
             $deviceId = isset($data['deviceId']) ? $data['deviceId'] : null;
 
-            $sql = "select * from ". $tableUntilTimeRoutines ." where deviceId = '$deviceId' and isDeleted = 0";
+            $sql = "select * from " . $tableUntilTimeRoutines . " where deviceId = '$deviceId' and isDeleted = 0";
             $result = $db->query($sql);
 
             $routines = array();
@@ -188,7 +208,7 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "getR
 
 
         } catch (Exception $exception) {
-            echo  json_encode(['success' => false]);
+            echo json_encode(['success' => false]);
         }
     }
 }
