@@ -16,6 +16,7 @@ if (file_exists("../common/db/index.php")) {
     require_once "../../../../common/methods/index.php";
 }
 
+require_once "untilTimeCommon/index.php";
 require_once "devices/index.php";
 require_once "routines/index.php";
 require_once "routineTimes/index.php";

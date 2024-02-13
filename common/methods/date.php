@@ -160,4 +160,26 @@ function onlyDateMonthEng($tarih) {
     return  $monthString . " " . $year;
 }
 
+function calculateTimeDifferenceSecond($startDateTime, $endDateTime) {
+    $startTimestamp = strtotime($startDateTime);
+    $endTimestamp = strtotime($endDateTime);
+
+    return $endTimestamp - $startTimestamp;
+}
+
+function isPastDate($date1, $date2) {
+
+
+    $dateTime1 = date_create($date1);
+    $dateTime2 = date_create($date2);
+
+// Saat, dakika ve saniyeyi sıfırla
+    $dateTime1->setTime(0, 0, 0);
+    $dateTime2->setTime(0, 0, 0);
+
+
+
+    return $dateTime1 <= $dateTime2;
+}
+
 ?>
