@@ -24,7 +24,7 @@ if (isset($headers[$DEVICE_BRAND])) {
 if (isset($data['method']) && isset($data['method']) && $data['method'] == "deviceControl") {
 
     if ($deviceKey) {
-        $query = "SELECT * FROM $tableUntilTimeDevices WHERE deviceKey = '$deviceKey'";
+        $query = "SELECT id, deviceKey, deviceBrand FROM $tableUntilTimeDevices WHERE deviceKey = '$deviceKey'";
         $result = $db->query($query);
 
         if ($result->num_rows > 0) {

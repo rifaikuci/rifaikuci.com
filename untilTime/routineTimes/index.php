@@ -27,6 +27,11 @@ if (isset($headers[$DEVICE_BRAND])) {
 
 
 
+
+
+
+
+
 if (isset($data['method']) && isset($data['method']) && $data['method'] == "startRoutineTimes") {
 
     if ($deviceKey) {
@@ -80,12 +85,10 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "getR
     if ($deviceKey) {
 
         try {
-            $deviceId = isset($data['deviceId']) ? $data['deviceId'] : null;
-            $routineId = isset($data['routineId']) ? $data['routineId'] : 47;
-            $timeType = isset($data['timeType']) ? $data['timeType'] : "DAILY";
+            $routineId = isset($data['routineId']) ? $data['routineId'] : 51;
+            $timeType = isset($data['timeType']) ? $data['timeType'] : "ALL";
 
-
-
+            $active = 0;
             $now =  date("Y-m-d H:i:s");
 
             $selectSQL = "select u.id as id, r.title as title, r.insertDate as insertDate, u.finishDate as finishDate, u.startDate as startDate
@@ -93,17 +96,17 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "getR
             inner join untilTimeRoutines r on u.routineId = r.id
                 where u.routineId = '$routineId' and u.isDeleted = 0";
 
-
             $result = $db->query($selectSQL);
 
-
-
             $items = array();
+            $arrayRecords = array();
             $totalSeconds = 0;
+            $recordItem = null;
+            $title = "";
             while ($item = $result->fetch_array()) {
 
-                $tempItem['id'] = $item['id'];
-                $tempItem['title'] = $item['title'];
+                $title = $item['title'];
+                $id = $item['id'];
                 $tempItem['insertDate'] = $item['insertDate'];
                 $tempItem['active'] =  $item['finishDate'] ? 0 : 1 ;
                 $finishDate= $item['finishDate'] ? $item['finishDate'] : $now ;
@@ -128,7 +131,13 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "getR
                     if(isPastDate($threeDaysAgo, $startDate)) {} else { $startDate = $threeDaysAgo;}
                 }
 
-                $tempItem['records'] = generateRecords( $startDate , $finishDate);
+
+                if(!$item['finishDate']) {
+                    $active = 1;
+                }
+
+                $arrayRecords =array_merge( $arrayRecords, generateRecords( $startDate , $finishDate, $id));
+                $tempItem['records'] =  $arrayRecords;
                 $totalSeconds = $totalSeconds + calculateTimeDifferenceSecond( $startDate , $finishDate);
                 $tempItem['totalSeconds'] = $totalSeconds;
                 array_push($items,$tempItem);
@@ -136,12 +145,54 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "getR
 
             }
 
-            echo  json_encode($items);
+            $recordItem['title'] = $title;
+            $data = $arrayRecords;
+
+
+            $groupedData = array();
+
+            foreach ($data as $item) {
+                $date = $item['date'];
+                $totalSeconds = $item['totalSeconds'];
+
+                if (!isset($groupedData[$date])) {
+                    $groupedData[$date] = array(
+                        'date' => $date,
+                        'totalSeconds' => 0, // Başlangıçta sıfır olarak ayarla
+                        'items' => array() // Gruba ait öğeleri saklamak için bir dizi oluştur
+                    );
+                }
+
+                $groupedData[$date]['items'][] = array(
+                    'id' => $item['id'],
+                    'date' => $item['date'],
+                    'startDate' => $item['startDate'],
+                    'finishDate' => $item['finishDate'],
+                    'totalSeconds' => $item['totalSeconds']
+                );
+
+                $groupedData[$date]['totalSeconds'] += $totalSeconds;
+            }
+
+
+            $recordItem['active'] = $active;
+
+            $recordItem['records'] = array_values($groupedData);
+
+            $records  =  $recordItem['records'] ;
+
+            $tempSeconds = 0;
+            for($k = 0; $k <count($records); $k++) {
+
+                $tempSeconds = $tempSeconds + $records[$k]['totalSeconds'];
+            }
+
+            $recordItem['totalSeconds'] =$tempSeconds;
+            echo  json_encode($recordItem);
 
         } catch (Exception $exception) {
             echo json_encode(['success' => false, 'message' => "data getirilirken bir hata oluştu"]);
         }
-
     }
 }
 

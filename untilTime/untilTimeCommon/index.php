@@ -1,6 +1,6 @@
 <?php
 
-function generateRecords( $startDateTime, $endDateTime) {
+function generateRecords( $startDateTime, $endDateTime, $id) {
     $records = array();
     $endDateTime = $endDateTime ? $endDateTime :  date("Y-m-d H:i:s");
     $currentDate = date("Y-m-d", strtotime($startDateTime));
@@ -21,6 +21,7 @@ function generateRecords( $startDateTime, $endDateTime) {
         }
 
         $records[] = array(
+            'id' => (int) $id,
             'date' => onlyDate($currentDate),
             'startDate' => dateWithTime($startOfDay),
             'finishDate' => dateWithTime($endOfDay),
