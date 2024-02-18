@@ -186,20 +186,39 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "getR
     if ($deviceKey) {
 
         try {
-            $deviceId = isset($data['deviceId']) ? $data['deviceId'] : null;
+            $deviceId = getDataRowByColumn($deviceKey, $tableUntilTimeDevices, $db, "deviceKey")['id'];
 
             $sql = "select * from " . $tableUntilTimeRoutines . " where deviceId = '$deviceId' and isDeleted = 0";
             $result = $db->query($sql);
 
             $routines = array();
             while ($row = $result->fetch_array()) {
+                $now = new DateTime();
+
                 $routine = null;
-                $routine['id'] = $row['id'];
+                $routineId = $row['id'];
+                $sqlRoutineTimes = "SELECT * FROM $tableUntilTimeRoutineTimes WHERE routineId = '$routineId' ORDER BY startDate DESC LIMIT 1";
+                $times = mysqli_query($db, $sqlRoutineTimes)->fetch_assoc();
+
+                $nowSeconds = $now->getTimestamp();
+                $startDateSeconds = 0;
+
+                if ($times && !$times['finishDate']) {
+                    $startDateSeconds = (new DateTime($times['startDate']))->getTimestamp();
+                }
+
+                $routine['active'] = $times && !$times['finishDate'] ? true : false;
+                $routine['id'] = $routineId;
                 $routine['title'] = $row['title'];
                 $routine['isMainPage'] = $row['isMainPage'];
                 $routine['isDeleted'] = $row['isDeleted'];
+
+                // Mutlak değeri kullanarak farkı hesapla
+                $routine['totalSeconds'] = $times && !$times['finishDate'] ? abs($startDateSeconds - $nowSeconds) : 0;
+
                 $routine['insertDate'] = dateWithTime($row['insertDate']);
                 $routine['updateDate'] = dateWithTime($row['updateDate']);
+                $routine['routineTimesId'] = $times ? $times['id'] : 0;
 
                 array_push($routines, $routine);
             }
