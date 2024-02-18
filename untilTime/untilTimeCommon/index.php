@@ -23,8 +23,8 @@ function generateRecords( $startDateTime, $endDateTime, $id) {
         $records[] = array(
             'id' => (int) $id,
             'date' => onlyDate($currentDate),
-            'startDate' => dateWithTime($startOfDay),
-            'finishDate' => dateWithTime($endOfDay),
+            'startDate' => dateWithTimeSeconds($startOfDay),
+            'finishDate' => dateWithTimeSeconds($endOfDay),
             'totalSeconds' => calculateTimeDifferenceSecond($startOfDay, $endOfDay)
         );
 
