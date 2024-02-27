@@ -79,8 +79,6 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "fini
 
     }
 }
-echo  "asda";
-exit();
 if (isset($data['method']) && isset($data['method']) && $data['method'] == "getRoutineTimes") {
 
     if ($deviceKey) {
