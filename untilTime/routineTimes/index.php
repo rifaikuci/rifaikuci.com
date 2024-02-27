@@ -79,7 +79,8 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "fini
 
     }
 }
-
+echo  "asda";
+exit();
 if (isset($data['method']) && isset($data['method']) && $data['method'] == "getRoutineTimes") {
 
     if ($deviceKey) {
@@ -89,7 +90,8 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "getR
             $timeType = isset($data['timeType']) ? $data['timeType'] : "ALL";
 
             $active = 0;
-            $now =  date("Y-m-d H:i:s");
+            $now =  date("Y-m-d H:i");
+
 
             $selectSQL = "select u.id as id, r.title as title, r.insertDate as insertDate, u.finishDate as finishDate, u.startDate as startDate
                 from untilTimeRoutineTimes u
