@@ -15,6 +15,14 @@ function dateWithTime($tarih)
     return $tarih;
 }
 
+function dateWithTimeSeconds($tarih)
+{
+    $tarih = date_create($tarih);
+    $tarih = date_format($tarih, "d.m.Y H:i:s");
+
+    return $tarih;
+}
+
 function dateString($tarih) {
     $date = onlyDate($tarih);
     $month = date("m",strtotime($date));
