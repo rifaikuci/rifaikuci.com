@@ -84,11 +84,11 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "getR
     if ($deviceKey) {
 
         try {
-            $routineId = isset($data['routineId']) ? $data['routineId'] : 51;
+            $routineId = isset($data['routineId']) ? $data['routineId'] : 0;
             $timeType = isset($data['timeType']) ? $data['timeType'] : "ALL";
 
             $active = 0;
-            $now =  date("Y-m-d H:i");
+            $now =  date("Y-m-d H:i:s");
 
 
             $selectSQL = "select u.id as id, r.title as title, r.insertDate as insertDate, u.finishDate as finishDate, u.startDate as startDate
