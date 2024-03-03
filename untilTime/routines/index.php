@@ -30,6 +30,7 @@ if (isset($data['method']) && isset($data['method']) && $data['method'] == "save
         try {
             if (isset($data['title'])) {
                 $title = isset($data['title']) ? $data['title'] : null;
+                $title = addslashes($title);
                 $isMainPage = isset($data['isMainPage']) ? $data['isMainPage'] : 1;
                 $deviceId = getDataRowByColumn($deviceKey, $tableUntilTimeDevices, $db, "deviceKey")['id'];
                 $sqlInsert = "INSERT INTO $tableUntilTimeRoutines (title, isMainPage, deviceId) VALUES ('$title', '$isMainPage', '$deviceId')";
