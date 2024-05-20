@@ -1,5 +1,5 @@
 <?php
-$projects = getAllData("projects", "", $db);
+$projects = getAllDataWithSort("projects", "", $db, "desc");
 
 ?>
 
