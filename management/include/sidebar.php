@@ -136,6 +136,25 @@
                     </ul>
                 </li>
 
+                <?php
+                $isInfoOpen4 = isTreeOpen(array('learnDriver'));
+                ?>
+                <li class="nav-item <?php echo $isInfoOpen3 ? 'menu-open' : ''; ?>">
+                    <?php menuTreeTitle("Sürücü Kursu", "fa fa-id-card"); ?>
+                    <ul class="nav nav-treeview">
+
+                        <?php
+                        menuTreeSubTitle("Sürücü Adayları",
+                            "far fas fa-list nav-icon",
+                            "src/learnerDriver",
+                            "", "");
+
+                        ?>
+
+
+                    </ul>
+                </li>
+
 
                 <?php
                 menuLabel("Site Bilgileri", "green");
