@@ -58,6 +58,7 @@ $result = $db->query($sql);
                                         <a href="<?php echo "update/?id=" . $row['id']; ?>" class="btn btn-primary">Görüntüle</a>
                                         <a href="<?php echo "payment/?id=" . $row['id']; ?>" class="btn btn-success">Ödeme Yap</a>
                                         <a href="<?php echo base_url_back() . "kusva/index.php?learnerDriverDelete=" . $row['id']; ?>"
+                                           onclick="return confirm('Silmek istediğinizden emin misiniz?')"
                                            class="btn btn-danger">Sil</a>
 
                                     </td>
