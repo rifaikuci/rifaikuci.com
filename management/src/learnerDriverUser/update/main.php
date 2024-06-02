@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
           enctype="multipart/form-data">
 
         <?php
-        getTextHidden("learnerDriverUpdate", $id);
+        getTextHidden("learnerDriverUserUpdate", $id);
 
         ?>
         <div class="card card-dark">

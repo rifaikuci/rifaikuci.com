@@ -12,7 +12,7 @@ $birthDateDefault = $today->format('Y-m-d');
           enctype="multipart/form-data">
 
         <?php
-        getTextHidden("learnerDriverInsert", "learnerDriverInsert");
+        getTextHidden("learnerDriverUserInsert", "learnerDriverUserInsert");
         ?>
         <div class="card card-dark">
 

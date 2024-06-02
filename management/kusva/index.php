@@ -38,7 +38,8 @@ if (isset($_SESSION['management'])) {
     require_once "common/index.php";
     require_once "galeria/index.php";
     require_once "sabish/index.php";
-    require_once "learnerDriver/index.php";
+    require_once "learnerDriverUser/index.php";
+    require_once "learnerDriverPayment/index.php";
 } else{
     session_destroy();
     header("Location:" . "http://localhost/rifaikuci.com/management/src/login/?session=no");

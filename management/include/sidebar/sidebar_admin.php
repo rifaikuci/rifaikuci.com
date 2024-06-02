@@ -131,16 +131,21 @@
         </li>
 
         <?php
-        $isInfoOpen4 = isTreeOpen(array('learnDriver'));
+        $isInfoOpen4 = isTreeOpen(array('learnerDriverUser', 'learnerDriverPayment'));
         ?>
-        <li class="nav-item <?php echo $isInfoOpen3 ? 'menu-open' : ''; ?>">
+        <li class="nav-item <?php echo $isInfoOpen4 ? 'menu-open' : ''; ?>">
             <?php menuTreeTitle("Sürücü Kursu", "fa fa-id-card"); ?>
             <ul class="nav nav-treeview">
 
                 <?php
                 menuTreeSubTitle("Sürücü Adayları",
                     "far fas fa-list nav-icon",
-                    "src/learnerDriver",
+                    "src/learnerDriverUser",
+                    "", "");
+
+                menuTreeSubTitle("Ödeme Geçmişi",
+                    "far fas fa-list nav-icon",
+                    "src/learnerDriverPayment",
                     "", "");
 
                 ?>

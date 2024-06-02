@@ -1,13 +1,16 @@
 <?php
 
 
-$sql = "SELECT * FROM learnerDriver";
+$sql = "SELECT * FROM learnerDriver order by id desc ";
 $result = $db->query($sql);
 
 
 ?>
 
 <section class="content">
+
+    <?php statusAlert(); ?>
+
 
     <div style="text-align: center">
         <h4 style="color: #0b93d5">Sürücü Adayları Listesi</h4>
@@ -47,8 +50,8 @@ $result = $db->query($sql);
                                 <tr>
                                     <td><?php echo $row['shortName']; ?></td>
                                     <td><?php echo onlyDate($row['registerDate']); ?></td>
-                                    <td><?php echo sayiFormatla($kalan,0) . " TL"; ?></td>
-                                    <td><?php echo sayiFormatla($odenen,0) . " TL"; ?></td>
+                                    <td><?php echo sayiFormatla($kalan,0) . " ₺"; ?></td>
+                                    <td><?php echo sayiFormatla($odenen,0) . " ₺"; ?></td>
                                     <td style="text-align: center">
                                         <button type="button" v-on:click="paymentDetail($event)"
                                                 class="btn btn-dark"
@@ -57,7 +60,7 @@ $result = $db->query($sql);
                                         </button>
                                         <a href="<?php echo "update/?id=" . $row['id']; ?>" class="btn btn-primary">Görüntüle</a>
                                         <a href="<?php echo "payment/?id=" . $row['id']; ?>" class="btn btn-success">Ödeme Yap</a>
-                                        <a href="<?php echo base_url_back() . "kusva/index.php?learnerDriverDelete=" . $row['id']; ?>"
+                                        <a href="<?php echo base_url_back() . "kusva/index.php?learnerDriverUserDelete=" . $row['id']; ?>"
                                            onclick="return confirm('Silmek istediğinizden emin misiniz?')"
                                            class="btn btn-danger">Sil</a>
 

@@ -4,7 +4,7 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $row = getDataRow($id, 'learnerDriver', $db);
 
-    $sqlPayment  = "SELECT SUM(paymentPrice) as toplam FROM `learnerDriverPayment` WHERE learnerDriverID = $id";
+    $sqlPayment  = "SELECT SUM(paymentPrice) as toplam FROM `learnerDriverPayment` WHERE learnerDriverId = $id";
     $result = mysqli_query($db, $sqlPayment)->fetch_assoc();
     $toplam = $result['toplam'];
 

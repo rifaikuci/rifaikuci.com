@@ -1,8 +1,11 @@
 <?php
 
-require_once  'paymentDetail.php';
+if(isset($_POST['driverHistoryShow'] )) {
 
-if (isset($_POST['learnerDriverInsert'])) {
+    require_once  'paymentDetail.php';
+}
+
+if (isset($_POST['learnerDriverUserInsert'])) {
 
     $dirName = basename(__DIR__);
     $fileName = basename(__FILE__, ".php");
@@ -28,13 +31,14 @@ if (isset($_POST['learnerDriverInsert'])) {
     }
 }
 
-if (isset($_POST['learnerDriverUpdate'])) {
+if (isset($_POST['learnerDriverUserUpdate'])) {
 
     $dirName = basename(__DIR__);
     $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
 
-    $id = $_POST['learnerDriverUpdate'];
+
+    $id = $_POST['learnerDriverUserUpdate'];
     $data = array();
     $arrayKey = ["shortName", "phone", "identityNo", "birthDate", "registerDate","debit"];
     $data = getDataForm($arrayKey);
@@ -50,15 +54,15 @@ if (isset($_POST['learnerDriverUpdate'])) {
     }
 }
 
-if (isset($_GET['learnerDriverDelete'])) {
+if (isset($_GET['learnerDriverUserDelete'])) {
     $dirName = basename(__DIR__);
     $fileName = basename(__FILE__, ".php");
     $path = base_url_back() . "src/" . $dirName;
 
-    $id = $_GET['learnerDriverDelete'];
+    $id = $_GET['learnerDriverUserDelete'];
+
     $row = getDataRow("$id", "learnerDriver", $db);
     $sql = delete($id, 'learnerDriver');
-
     if (mysqli_query($db, $sql)) {
         header("Location:" . $path . "/?delete=ok");
         exit();
@@ -77,7 +81,7 @@ if (isset($_POST['learnerDriverPayment'])) {
     $data = array();
     $arrayKey = ["paymentType", "transactionDate", "paymentPrice", "description","learnerDriverId"];
     $data = getDataForm($arrayKey);
-
+    $arrayKey['learnerDriverId'] =
     $sql = insert($data, "learnerDriverPayment");
     if (mysqli_query($db, $sql)) {
         header("Location:" . $path . "/?update=ok");

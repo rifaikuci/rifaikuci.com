@@ -15,7 +15,7 @@ if (file_exists("utils/index.php")) {
     require_once "../../../../../utils/index.php";
 }
 
-$learenerDriverId = $_POST['driverId'];
+$learenerDriverId = $_POST['driverHistoryShow'];
 
 $sql = "SELECT * FROM learnerDriverPayment where learnerDriverId = '$learenerDriverId'";
 $result = $db->query($sql);
@@ -84,7 +84,7 @@ $kalan  = $driver['debit'] -  $rowToplam['toplam'];
                 <td><?php  echo $PAYMENT_TYPE[$row['paymentType']];?></td>
                 <td><?php  echo onlyDate($row['transactionDate']);?></td>
                 <td><?php  echo $row['description'];?></td>
-                <td><?php  echo sayiFormatla($row['paymentPrice'], 2) .  " TL";?></td>
+                <td><?php  echo sayiFormatla($row['paymentPrice'], 2) .  " ₺";?></td>
             </tr>
         <?php } ?>
 

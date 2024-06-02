@@ -5,7 +5,8 @@ function getDatetime( $size, $label, $name, $value, $required, $disabled)
     $size = $size ? $size : 4;
     $name = $name ? $name : "name23";
     $label = $label ? $label : "label2";
-    $value = $value ? dateValue($value) : date("Y-m-d");;
+
+    $value = $value ? dateValue($value) : '';
     $required = $required ? true : false;
     $disabled = $disabled ? true : false;
 
