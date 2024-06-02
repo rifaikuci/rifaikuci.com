@@ -17,6 +17,7 @@ $favIcon = getDataRow(1,"favIcon",$db);
 <link href="<?php echo base_url_front() ."assets/css/mdb.min.css?ver=1.2.1" ?>" rel="stylesheet">
 <link href="<?php echo base_url_front() ."assets/css/aos.css?ver=1.2.1" ?>" rel="stylesheet">
 <link href="<?php echo base_url_front() ."assets/css/main.css?ver=1.2.1" ?>" rel="stylesheet">
+<link href="<?php echo base_url_front() ."style/plugins/ekko-lightbox/ekko-lightbox.css" ?>" rel="stylesheet">
 <noscript>
     <style type="text/css">
         [data-aos] {

@@ -1,6 +1,6 @@
 const {createApp} = Vue
 
-var balyalamaGiris = createApp({
+var deneme = createApp({
     data() {
         return {
             message: 'Hello Vue!',

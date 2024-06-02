@@ -8,6 +8,7 @@ else if (file_exists("../../utils/index.php"))
 else if (file_exists("../../../utils/index.php"))
     require_once "../../../utils/index.php";
 ?>
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -17,7 +18,7 @@ else if (file_exists("../../../utils/index.php"))
     <meta name="description" content="">
     <link rel="shortcut icon" type="image/png" href="<?php echo base_url_back() . "style/dist/img/favIcon/icon.png"; ?>">
 
-    <title><?php echo function_exists('firmName') ? firmName() . " | " : "" ?> Sürücü Adayları</title>
+    <title><?php echo function_exists('firmName') ? firmName() . " | " : "" ?> Sürücü Bilgi Güncelleme</title>
     <?php
     if (file_exists("include/style.php"))
         require_once "include/style.php";
@@ -63,7 +64,7 @@ else if (file_exists("../../../utils/index.php"))
     ?>
 
     <div class="content-wrapper">
-        <?php getBreadcrumb("Sürücü Aday Listesi", ''); ?>
+        <?php getBreadcrumb("Sürücü Adayı Listesi", 'Güncelle '); ?>
         <?php require_once "main.php" ?>
     </div>
 
@@ -90,7 +91,5 @@ else if (file_exists("../../include/script.php"))
 else if (file_exists("../../../include/script.php"))
     require_once "../../../include/script.php";
 ?>
-<script src="<?php echo base_url_back() . "style/dist/js/learnerDriver/index.js" ?>"></script>
-
 </body>
 </html>

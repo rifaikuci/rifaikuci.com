@@ -26,7 +26,7 @@ if (isset($_GET['id'])) {
             <div class="card-body">
                 <div class="row">
                     <?php
-                    getTextHidden("learnerDriverUpdate", $id);
+                    getTextHidden("learnerDriverPayment", $id);
                     getTextInput(4, "Ad Soyad", "", "shortName", $row['shortName'], false, false);
                     getDatetime(3, "Doğum Tarihi", "birthDate", $row['birthDate'], false, false);
                     getTextInput(4, "Telefon No", "05555555555", "phone", $row['phone'], false, false);

@@ -1,5 +1,7 @@
 <?php
 
+require_once  'paymentDetail.php';
+
 if (isset($_POST['learnerDriverInsert'])) {
 
     $dirName = basename(__DIR__);
@@ -62,6 +64,26 @@ if (isset($_GET['learnerDriverDelete'])) {
         exit();
     } else {
         header("Location:" . $path . "/?delete=no");
+        exit();
+    }
+}
+
+if (isset($_POST['learnerDriverPayment'])) {
+
+    $dirName = basename(__DIR__);
+    $fileName = basename(__FILE__, ".php");
+    $path = base_url_back() . "src/" . $dirName;
+
+    $data = array();
+    $arrayKey = ["paymentType", "transactionDate", "paymentPrice", "description","learnerDriverId"];
+    $data = getDataForm($arrayKey);
+
+    $sql = insert($data, "learnerDriverPayment");
+    if (mysqli_query($db, $sql)) {
+        header("Location:" . $path . "/?update=ok");
+        exit();
+    } else {
+        header("Location:" . $path . "/?update=no");
         exit();
     }
 }

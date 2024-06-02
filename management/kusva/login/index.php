@@ -4,11 +4,12 @@ if (isset($_POST['loginControl'])) {
     $name = $_POST['name'];
     $password = md5($_POST['password']);
 
-    $sql = "SELECT * FROM info WHERE mail = '$name'  AND password = '$password' ";
+    $sql = "SELECT * FROM user WHERE userName = '$name'  AND password = '$password' ";
     $sonuc = mysqli_query($db, $sql);
     $row = $sonuc->fetch_assoc();
     if ($row && count($row) > 0) {
         $_SESSION['management'] = uniqid();
+        $_SESSION['userName'] = $name;
         header("Location:" . base_url_back());
         exit();
     } else {
