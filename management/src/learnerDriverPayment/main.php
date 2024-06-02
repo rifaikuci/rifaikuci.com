@@ -155,7 +155,7 @@ $result = $db->query($sql);
 
                             <h3 style="color: #0BD7FAFF; text-align: center">
                                 GENEL
-                                TOPLAM <?php echo sayiFormatla($toplamIban + $toplamKart + $toplamIban, 2) . " ₺" ?> </h3>
+                                TOPLAM <?php echo sayiFormatla($toplamIban + $toplamKart + $toplamNakit, 2) . " ₺" ?> </h3>
                         </div>
 
                     </div>
