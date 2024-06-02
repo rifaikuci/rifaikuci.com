@@ -15,7 +15,7 @@ $sql = "SELECT p.id              as id,
        p.paymentType     as paymentType,
        ld.shortName as shortName
 FROM learnerDriverPayment p
-         inner join learnerDriver ld on p.learnerDriverId = lD.id where 1=1 ";
+         inner join learnerDriver ld on p.learnerDriverId = ld.id where 1=1 ";
 
 $paymentType = "";
 $learnerDriverId = "";
@@ -70,8 +70,8 @@ $result = $db->query($sql);
             <?php
             getSelect(5, $learnerDriverList, "Sürücü Adayları", "learnerDriverId", '', false, $learnerDriverId, false, false);
             getSelect(5, $PAYMENT_TYPE, "Ödeme Türü", "paymentType", '', false, $paymentType, false, false);
-            getDatetime(5, "Baş Tar.", "transactionDateBegin", $transactionDateBegin, false, false);
-            getDatetime(5, "Bit Tar.", "transactionDateEnd", $transactionDateEnd, false, false);
+            getDatetime(5, "Baş Tar.", "transactionDateBegin", $transactionDateBegin  ? $transactionDateBegin : 'notToday', false, false);
+            getDatetime(5, "Bit Tar.", "transactionDateEnd", $transactionDateEnd ? $transactionDateEnd : 'notToday' , false, false);
 
             ?>
 
