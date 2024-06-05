@@ -30,7 +30,7 @@ $group = getDataRow($groupId, 'learnerDriverGroup', $db);
 
 <div style="text-align: center">
     <h4 style="color: #0e84b5">
-        Grup Detaı
+        Grup Detayı
     </h4>
 </div>
 
