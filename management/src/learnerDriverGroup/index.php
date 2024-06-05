@@ -90,5 +90,8 @@ else if (file_exists("../../include/script.php"))
 else if (file_exists("../../../include/script.php"))
     require_once "../../../include/script.php";
 ?>
+
+<script src="<?php echo base_url_back() . "style/dist/js/learnerDriverGroup/index.js" ?>"></script>
+
 </body>
 </html>

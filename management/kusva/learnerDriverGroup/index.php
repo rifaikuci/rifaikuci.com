@@ -1,6 +1,10 @@
 <?php
 
 
+if(isset($_POST['groupDetailShow'] )) {
+
+    require_once  'detail.php';
+}
 
 if (isset($_POST['learnerDriverGroupInsert'])) {
 
