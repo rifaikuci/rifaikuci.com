@@ -40,6 +40,7 @@ if (isset($_SESSION['management'])) {
     require_once "sabish/index.php";
     require_once "learnerDriverUser/index.php";
     require_once "learnerDriverPayment/index.php";
+    require_once "learnerDriverGroup/index.php";
 } else{
     session_destroy();
     header("Location:" . "http://localhost/rifaikuci.com/management/src/login/?session=no");

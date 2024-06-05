@@ -3,7 +3,7 @@
         data-accordion="false">
 
         <?php
-        $isInfoOpen4 = isTreeOpen(array('learnerDriver/', 'learnerDriverPayment'));
+        $isInfoOpen4 = isTreeOpen(array('learnerDriver/', 'learnerDriverPayment', 'learnerDriverGroup'));
         ?>
         <li class="nav-item <?php echo $isInfoOpen4 ? 'menu-open' : ''; ?>">
             <?php menuTreeTitle("Sürücü Kursu", "fa fa-id-card"); ?>
@@ -18,6 +18,11 @@
                 menuTreeSubTitle("Ödeme Geçmişi",
                     "far fas fa-list nav-icon",
                     "src/learnerDriverPayment",
+                    "", "");
+
+                menuTreeSubTitle("Grup Bilgisi",
+                    "far fas fa-list nav-icon",
+                    "src/learnerDriverGroup",
                     "", "");
 
                 ?>
