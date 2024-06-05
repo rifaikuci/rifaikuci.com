@@ -8,7 +8,7 @@ if (isset($_GET['id'])) {
     $result = mysqli_query($db, $sqlPayment)->fetch_assoc();
     $toplam = $result['toplam'];
 
-    $kalan = $row['debit'] - $toplam;
+    $kalan = $row['debit'] - $toplam + 5000;
 
 }
 ?>
@@ -37,7 +37,7 @@ if (isset($_GET['id'])) {
                     getSelect(5, $PAYMENT_TYPE, "Ödeme Türü", "paymentType", '', false, false,true,false);
 
                     getDatetime(5, "Ödeme Tarihi", "transactionDate", "", true, false);
-                    getNumberInput(5, "Ödenecek Tutar", "", "paymentPrice", $kalan, 1, 0, $kalan, true, false);
+                    getNumberInput(5, "Ödenecek Tutar", "", "paymentPrice", $kalan , 1, 0, $kalan, true, false);
                     getTextInput(10, "Açıklama", "", "description", "", false, false);
 
 
