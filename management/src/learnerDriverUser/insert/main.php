@@ -4,6 +4,13 @@ $today = new DateTime();
 $today->modify('-18 years');
 $birthDateDefault = $today->format('Y-m-d');
 
+
+$groupList =   getAllData("learnerDriverGroup","",$db);
+
+$groupData = array();
+for($k = 0 ; $k < count($groupList); $k++) {
+    $groupData[$groupList[$k]['id']] = $groupList[$k]['groupName'];
+}
 ?>
 
 <section class="content">
@@ -23,6 +30,7 @@ $birthDateDefault = $today->format('Y-m-d');
                 <div class="row">
                     <?php
                     getTextInput(4, "Ad Soyad", "", "shortName", "", false, false);
+                    getSelect(8,$groupData, "Grup Listesi","groupId","blue",false,false,true,false);
                     getDatetime(3, "Doğum Tarihi", "birthDate", $birthDateDefault, false, false);
                     getTextInput(4, "Telefon No", "05555555555", "phone", "", false, false);
                     getTextInput(4, "T.C. Kimlik No", "11111111110", "identityNo", "", false, false);

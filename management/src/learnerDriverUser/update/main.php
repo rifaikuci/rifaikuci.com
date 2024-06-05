@@ -4,6 +4,12 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $row = getDataRow($id, 'learnerDriver', $db);
 
+    $groupList =   getAllData("learnerDriverGroup","",$db);
+
+    $groupData = array();
+    for($k = 0 ; $k < count($groupList); $k++) {
+        $groupData[$groupList[$k]['id']] = $groupList[$k]['groupName'];
+    }
 }
 ?>
 
@@ -28,6 +34,7 @@ if (isset($_GET['id'])) {
                     <?php
                     getTextHidden("learnerDriverPayment", $id);
                     getTextInput(4, "Ad Soyad", "", "shortName", $row['shortName'], false, false);
+                    getSelect(8,$groupData, "Grup Listesi","groupId","blue",false,$row['groupId'],true,false);
                     getDatetime(3, "Doğum Tarihi", "birthDate", $row['birthDate'], false, false);
                     getTextInput(4, "Telefon No", "05555555555", "phone", $row['phone'], false, false);
                     getTextInput(4, "T.C. Kimlik No", "11111111110", "identityNo", $row['identityNo'], false, false);

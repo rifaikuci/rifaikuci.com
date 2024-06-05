@@ -14,7 +14,7 @@ if (isset($_POST['learnerDriverUserInsert'])) {
     $data = array();
 
 
-    $arrayKey = ["shortName", "phone", "identityNo", "birthDate", "registerDate","debit"];
+    $arrayKey = ["shortName", "phone", "identityNo", "birthDate", "registerDate","debit", "groupId"];
     $data = getDataForm($arrayKey);
 
     $sql = insert($data, "learnerDriver");
@@ -23,9 +23,6 @@ if (isset($_POST['learnerDriverUserInsert'])) {
         header("Location:" . $path . "/?insert=ok");
         exit();
     } else {
-        if (file_exists("../" . $file)) {
-            unlink("../" . $file);
-        }
         header("Location:" . $path . "/?insert=no");
         exit();
     }
@@ -40,7 +37,7 @@ if (isset($_POST['learnerDriverUserUpdate'])) {
 
     $id = $_POST['learnerDriverUserUpdate'];
     $data = array();
-    $arrayKey = ["shortName", "phone", "identityNo", "birthDate", "registerDate","debit"];
+    $arrayKey = ["shortName", "phone", "identityNo", "birthDate", "registerDate","debit", "groupId"];
     $data = getDataForm($arrayKey);
 
 
