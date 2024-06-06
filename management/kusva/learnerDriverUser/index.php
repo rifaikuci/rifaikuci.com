@@ -14,7 +14,7 @@ if (isset($_POST['learnerDriverUserInsert'])) {
     $data = array();
 
 
-    $arrayKey = ["shortName", "phone", "identityNo", "birthDate", "registerDate","debit", "groupId"];
+    $arrayKey = ["shortName", "phone", "identityNo", "registerDate","debit", "groupId"];
     $data = getDataForm($arrayKey);
 
     $sql = insert($data, "learnerDriver");
@@ -37,7 +37,7 @@ if (isset($_POST['learnerDriverUserUpdate'])) {
 
     $id = $_POST['learnerDriverUserUpdate'];
     $data = array();
-    $arrayKey = ["shortName", "phone", "identityNo", "birthDate", "registerDate","debit", "groupId"];
+    $arrayKey = ["shortName", "phone", "identityNo", "registerDate","debit", "groupId"];
     $data = getDataForm($arrayKey);
 
 
