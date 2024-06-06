@@ -35,7 +35,6 @@ if (isset($_GET['id'])) {
                     getTextHidden("learnerDriverPayment", $id);
                     getTextInput(4, "Ad Soyad", "", "shortName", $row['shortName'], false, false);
                     getSelect(8,$groupData, "Grup Listesi","groupId","blue",false,$row['groupId'],true,false);
-                    getDatetime(3, "Doğum Tarihi", "birthDate", $row['birthDate'], false, false);
                     getTextInput(4, "Telefon No", "05555555555", "phone", $row['phone'], false, false);
                     getTextInput(4, "T.C. Kimlik No", "11111111110", "identityNo", $row['identityNo'], false, false);
                     getDatetime(3, "Kayıt Tarihi", "registerDate", $row['registerDate'], false, false);
