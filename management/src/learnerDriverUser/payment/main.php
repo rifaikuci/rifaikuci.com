@@ -37,7 +37,7 @@ if (isset($_GET['id'])) {
                     getSelect(5, $PAYMENT_TYPE, "Ödeme Türü", "paymentType", '', false, false,true,false);
 
                     getDatetime(5, "Ödeme Tarihi", "transactionDate", "", true, false);
-                    getNumberInput(5, "Ödenecek Tutar", "", "paymentPrice", $kalan , 1, 0, $kalan + 5000, true, false);
+                    getNumberInput(5, "Ödenecek Tutar", "", "paymentPrice", $kalan , 1, 0, "", true, false);
                     getTextInput(10, "Açıklama", "", "description", "", false, false);
 
 
