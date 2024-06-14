@@ -40,6 +40,9 @@ $group = getDataRow($groupId, 'learnerDriverGroup', $db);
             <label style="color: #0b2e13">Grup Adı : <?php echo $group['groupName']?> </label>
         </div>
     </div>
+
+
+    </div>
 </div>
 
 <div class="row">
@@ -47,6 +50,13 @@ $group = getDataRow($groupId, 'learnerDriverGroup', $db);
         <div class="form-group">
             <label style="color: #0b2e13">Kayıtlı Aday Sayısı : <?php echo $countUser; ?>  </label>
         </div>
+    </div>
+
+    <div class="col-sm-6" style="text-align: right" >
+        <a href="<?php echo base_url_back() . "kusva/learnerDriverPdf/?group_detail=$groupId"?>" target="_blank" class="btn btn-outline-success" >Grup Bilgisi Yazdır
+        </a>
+        <a href="<?php echo base_url_back() . "kusva/learnerDriverPdf/?group_payment_detail=$groupId"?>" target="_blank" class="btn btn-outline-primary" >Grup Detayı Yazdır
+        </a>
     </div>
 </div>
 
