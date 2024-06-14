@@ -43,7 +43,7 @@ if (isset($_SESSION['management'])) {
     require_once "learnerDriverGroup/index.php";
 } else{
     session_destroy();
-    header("Location:" . "http://localhost/rifaikuci.com/management/src/login/?session=no");
+    header("Location:" . base_url_back()."/src/login/?session=no");
 }
 
 ?>
