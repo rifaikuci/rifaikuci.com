@@ -69,8 +69,9 @@ $group = getDataRow($groupId, 'learnerDriverGroup', $db);
         <tr>
             <th>Sürücü Adı</th>
             <th>Kayıt Tarihi</th>
-            <th>Kalan Borç</th>
-            <th>Ödenen Borç</th>
+            <th>Kayıt Ücreti</th>
+            <th>Ödenen Ücret</th>
+            <th>Kalan Ücret</th>
         </tr>
         </thead>
         <tbody>
@@ -85,8 +86,9 @@ $group = getDataRow($groupId, 'learnerDriverGroup', $db);
             <tr>
                 <td><?php echo $row['shortName']; ?></td>
                 <td><?php echo onlyDate($row['registerDate']); ?></td>
-                <td><?php echo sayiFormatla($kalan,0) . " ₺"; ?></td>
+                <td><?php echo sayiFormatla($row['debit'],0) . " ₺"; ?></td>
                 <td><?php echo sayiFormatla($odenen,0) . " ₺"; ?></td>
+                <td><?php echo sayiFormatla($kalan,0) . " ₺"; ?></td>
 
             </tr>
         <?php } ?>
