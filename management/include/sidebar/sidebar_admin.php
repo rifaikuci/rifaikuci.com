@@ -74,7 +74,7 @@
             "", "");
 
         menuTreeSubTitle("Api Key",
-            "far fas fa-solid fa-newspaper nav-icon",
+            "far fas fa-solid fa-key nav-icon",
             "src/collectionApi",
             "", "");
 
