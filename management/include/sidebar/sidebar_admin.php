@@ -68,6 +68,16 @@
             "src/projects",
             "", "");
 
+        menuTreeSubTitle("Yazılar",
+            "far fas fa-solid fa-newspaper nav-icon",
+            "src/articles",
+            "", "");
+
+        menuTreeSubTitle("Api Key",
+            "far fas fa-solid fa-newspaper nav-icon",
+            "src/collectionApi",
+            "", "");
+
         $isInfoOpen2 = isTreeOpen(array('calculate/plus', 'calculate/percent', 'stockItem/', 'myStockList/', 'stockListHistory/'));
         ?>
         <li class="nav-item <?php echo $isInfoOpen2 ? 'menu-open' : ''; ?>">

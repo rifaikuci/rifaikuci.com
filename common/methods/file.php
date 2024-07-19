@@ -1,119 +1,103 @@
 <?php
 
+function getBasePath($baseFunc) {
+    $paths = [
+        $baseFunc(),
+        "../" . $baseFunc(),
+        "../../" . $baseFunc(),
+        "../../../" . $baseFunc()
+    ];
 
-function imageUpload( $folderName, $name, $fileName)
-{
-    $path = imageBaseUrl();
-    if(file_exists(imageBaseUrl())) {
-        $path =imageBaseUrl();
-    } else if(file_exists("../".imageBaseUrl())){
-        $path = "../".imageBaseUrl();
-    } else if(file_exists("../../".imageBaseUrl())){
-        $path = "../../".imageBaseUrl()."/";
-    } else if(file_exists("../../../".imageBaseUrl())){
-        $path = "../../../".imageBaseUrl()."/";
+    foreach ($paths as $path) {
+        if (file_exists($path)) {
+            return rtrim($path, '/') . '/';
+        }
     }
 
+    return null; // Return null if no valid path is found
+}
 
+function validateImage($name) {
+    if ($_FILES[$name]["size"] > 5000000) {
+        return "image_large";
+    }
 
+    $imageFileType = strtolower(pathinfo($_FILES[$name]["name"], PATHINFO_EXTENSION));
+    if (!in_array($imageFileType, ["jpg", "png", "jpeg", "gif"])) {
+        return "image_invalid_type";
+    }
+
+    return null; // Return null if valid
+}
+
+function imageUpload($folderName, $name, $fileName) {
+    $path = getBasePath('imageBaseUrl');
+    if (!$path) {
+        return "base_path_not_found";
+    }
+
+    // Ensure the folder exists
     if (!file_exists($path . $folderName)) {
         mkdir($path . $folderName, 0777, true);
     }
 
-    $target_dir = $path . $folderName;
-
-    $target_file = $target_dir . "/" . basename($_FILES[$name]["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-    if ($fileName) {
-        $target_file = imageBaseUrl() . $folderName . "/" . $fileName . "." . $imageFileType;
-    } else {
-        $uniq = uniqid();
-        $target_file = imageBaseUrl() . $folderName . "/" . $uniq. "." . $imageFileType;
+    // Validate the image
+    $validationError = validateImage($name);
+    if ($validationError) {
+        return $validationError;
     }
 
-    if ($_FILES[$name]["size"] > 5000000) { // 5 mb
-        return "image_large";
-        $uploadOk = 0;
-    }
+    // Prepare the target file path
+    $imageFileType = strtolower(pathinfo($_FILES[$name]["name"], PATHINFO_EXTENSION));
+    $uniq = $fileName ?: uniqid();
+    $target_file = $folderName . "/" . $uniq . "." . $imageFileType;
 
-    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-        && $imageFileType != "gif") {
-        return "image_invalid_type";
-        $uploadOk = 0;
-    }
-    if ($uploadOk == 0) {
-        return "image_not_upload";
-    } else {
-        if (move_uploaded_file($_FILES[$name]["tmp_name"], "../" . $target_file)) {
-            if ($fileName) {
-                return imageBaseUrl() . $folderName . "/" . $fileName . "." . $imageFileType;
-            } else {
-                return imageBaseUrl() . $folderName . "/" . $uniq . "." . $imageFileType;
-            }
-        } else {
-            return "image_not_upload";
-        }
-    }
+    // Attempt to move uploaded file
+    $uploadSuccess = move_uploaded_file($_FILES[$name]["tmp_name"], $path . $target_file);
+
+    return $uploadSuccess ? "assets/images/" . $target_file : "image_not_upload"; // Final return
 }
 
-function pdfUpload( $folderName, $name, $fileName)
-{
-    $path = pdfBaseUrl();
-    if(file_exists(pdfBaseUrl())) {
-        $path =pdfBaseUrl();
-    } else if(file_exists("../".pdfBaseUrl())){
-        $path = "../".pdfBaseUrl();
-    } else if(file_exists("../../".pdfBaseUrl())){
-        $path = "../../".pdfBaseUrl();
-    } else if(file_exists("../../../".pdfBaseUrl())){
-        $path = "../../../".pdfBaseUrl();
+
+function pdfUpload($folderName, $name, $fileName) {
+    $path = getBasePath('pdfBaseUrl');
+    if (!$path) {
+        return "base_path_not_found";
     }
 
-
-
+    // Ensure the folder exists
     if (!file_exists($path . $folderName)) {
-        mkdir($path . $folderName, 777, true);
+        mkdir($path . $folderName, 0777, true);
     }
 
-    $target_dir = $path . $folderName;
-
-    $target_file = $target_dir . "/" . basename($_FILES[$name]["name"]);
-    $uploadOk = 1;
-
-
-    $imageFileType = "pdf";
-
-    if ($fileName) {
-        $target_file = pdfBaseUrl() . $folderName . "/" . $fileName . "." . $imageFileType;
-    } else {
-        $uniq = uniqid();
-        $target_file = pdfBaseUrl() . $folderName . "/" . $uniq. "." . $imageFileType;
+    // Validate the PDF
+    $validationError = validatePdf($name);
+    if ($validationError) {
+        return $validationError;
     }
 
-    if ($_FILES[$name]["size"] > 9000000) { // 9 mb
-        return "pdf_large";
-        $uploadOk = 0;
-    }
+    // Prepare the target file path
+    $uniq = $fileName ?: uniqid();
+    $target_file = $folderName . "/" . $uniq . ".pdf";
 
-    if ($imageFileType != "pdf") {
-        return "pdf_invalid_type";
-        $uploadOk = 0;
-    }
+    // Attempt to move uploaded file
+    $uploadSuccess = move_uploaded_file($_FILES[$name]["tmp_name"], $path . $target_file);
 
-    if ($uploadOk == 0) {
-        return "pdf_not_upload";
-    } else {
-        if (move_uploaded_file($_FILES[$name]["tmp_name"], "../" . $target_file)) {
-            if ($fileName) {
-                return pdfBaseUrl() . $folderName . "/" . $fileName . "." . $imageFileType;
-            } else {
-                return pdfBaseUrl() . $folderName . "/" . $uniq . "." . $imageFileType;
-            }
-        } else {
-            return "pdf_not_upload";
-        }
-    }
+    return $uploadSuccess ? "assets/pdf/" . $target_file : "pdf_not_upload"; // Final return
 }
+
+function validatePdf($name) {
+    if ($_FILES[$name]["size"] > 9000000) { // 9 MB
+        return "pdf_large";
+    }
+
+    if (strtolower(pathinfo($_FILES[$name]["name"], PATHINFO_EXTENSION)) !== "pdf") {
+        return "pdf_invalid_type";
+    }
+
+    return null; // Return null if valid
+}
+
+
 
 ?>

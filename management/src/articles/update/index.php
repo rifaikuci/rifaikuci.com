@@ -64,7 +64,7 @@ else if (file_exists("../../../utils/index.php"))
     ?>
 
     <div class="content-wrapper">
-        <?php getBreadcrumb("Projeler", 'Görüntüleme '); ?>
+        <?php getBreadcrumb("Projeler", 'Güncelle '); ?>
         <?php require_once "main.php" ?>
     </div>
 

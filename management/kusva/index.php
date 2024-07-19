@@ -41,6 +41,8 @@ if (isset($_SESSION['management'])) {
     require_once "learnerDriverUser/index.php";
     require_once "learnerDriverPayment/index.php";
     require_once "learnerDriverGroup/index.php";
+    require_once "articles/index.php";
+    require_once "collectionApi/index.php";
 } else{
     session_destroy();
     header("Location:" . base_url_back()."/src/login/?session=no");
