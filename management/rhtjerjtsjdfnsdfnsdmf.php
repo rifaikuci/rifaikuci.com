@@ -12,16 +12,15 @@ if (file_exists("utils/index.php")) {
 
 ?>
 
-
 <?php
 
 $activeCurrency = getActiveCurrencies($db);
 
 function isHoliday($date, $db) {
-    $sql = "SELECT COUNT(*) FROM holidays WHERE date = :date";
-    $stmt = $db->prepare($sql);
-    $stmt->execute([':date' => $date]);
-    return $stmt->fetchColumn() > 0;
+    $sql = "SELECT COUNT(*) FROM holidays WHERE date = '$date'";
+    $result = mysqli_query($db, $sql);
+    $row = mysqli_fetch_array($result);
+    return $row[0] > 0;
 }
 
 function shouldRunScript($hour, $day, $isHoliday) {
@@ -57,11 +56,10 @@ function getSleepDuration($hour, $day, $isHoliday) {
 function getActiveCurrencies($db)
 {
     $sql = "SELECT * FROM currency WHERE isActive = 1";
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
+    $result = mysqli_query($db, $sql);
 
     $activeCurrency = [];
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    while ($row = mysqli_fetch_assoc($result)) {
         if (strlen($row['code']) == 3) {
             $activeCurrency[] = [
                 'code' => $row['code'],
@@ -111,18 +109,12 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
     $filteredCurrencies = array_filter($filteredCurrencies);
 
     $sql = "INSERT INTO currencyReponse (currencyCode, selling, buying, transactionDate, rate, apiKey)
-            VALUES (:currencyCode, :selling, :buying, :transactionDate, :rate, :apiKey)";
-    $stmt = $db->prepare($sql);
+            VALUES (?, ?, ?, ?, ?, ?)";
+    $stmt = mysqli_prepare($db, $sql);
 
     foreach ($filteredCurrencies as $row) {
-        $stmt->execute([
-            ':currencyCode' => $row['id'],
-            ':selling' => $row['selling'],
-            ':buying' => $row['buying'],
-            ':transactionDate' => $row['datetime'],
-            ':rate' => $row['rate'],
-            ':apiKey' => $dollarApiKey
-        ]);
+        mysqli_stmt_bind_param($stmt, 'ssssss', $row['id'], $row['selling'], $row['buying'], $row['datetime'], $row['rate'], $dollarApiKey);
+        mysqli_stmt_execute($stmt);
     }
 }
 
@@ -131,7 +123,6 @@ while (true) {
     $currentHour = (int)date('G'); // Şu anki saat (0-23)
     $currentDay = (int)date('N'); // Şu anki gün (1=Monday, 7=Sunday)
     $currentDate = date('Y-m-d'); // Şu anki tarih
-
 
     $isHoliday = isHoliday($currentDate, $db);
 
