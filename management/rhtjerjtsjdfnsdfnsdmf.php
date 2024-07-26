@@ -13,9 +13,6 @@ if (file_exists("utils/index.php")) {
 ?>
 
 <?php
-echo "durd";
-
-exit();
 
 $activeCurrency = getActiveCurrencies($db);
 
