@@ -13,6 +13,9 @@ if (file_exists("utils/index.php")) {
 ?>
 
 <?php
+echo "durd";
+
+exit();
 
 $activeCurrency = getActiveCurrencies($db);
 
@@ -31,7 +34,7 @@ function shouldRunScript($hour, $day, $isHoliday) {
         return ($hour >= 9 && $hour <= 19);
     } elseif ($day == 6) { // Cumartesi
         return ($hour >= 9 && $hour <= 14);
-    } else { // Pazar
+    } else {
         return true;
     }
 }
@@ -56,10 +59,10 @@ function getSleepDuration($hour, $day, $isHoliday) {
 function getActiveCurrencies($db)
 {
     $sql = "SELECT * FROM currency WHERE isActive = 1";
-    $result = mysqli_query($db, $sql);
+    $result = $db->query($sql);
 
     $activeCurrency = [];
-    while ($row = mysqli_fetch_assoc($result)) {
+    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
         if (strlen($row['code']) == 3) {
             $activeCurrency[] = [
                 'code' => $row['code'],
@@ -126,7 +129,11 @@ while (true) {
 
     $isHoliday = isHoliday($currentDate, $db);
 
+
+
     if (shouldRunScript($currentHour, $currentDay, $isHoliday)) {
+        echo "asdasd";
+        exit();
         $dollarRow = getDataRow($dollarApiKey, 'collectionApi', $db);
         $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
 
@@ -150,8 +157,30 @@ while (true) {
             }
         }
     } else {
-        echo "Bu zaman aralığında script çalıştırılmamalıdır.\n";
+        $dollarRow = getDataRow($dollarApiKey, 'collectionApi', $db);
+        $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
+
+        $apiResponse = fetchCurrencyDataFromApi($apiKey);
+        $response = json_decode($apiResponse, true);
+
+        if ($response['success']) {
+            processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
+        } else {
+            $dollarApiKey += 1;
+            $dollarRow = getDataRow($dollarApiKey, 'collectionApi', $db);
+            $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
+
+            $apiResponse = fetchCurrencyDataFromApi($apiKey);
+            $response = json_decode($apiResponse, true);
+
+            if ($response['success']) {
+                processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
+            } else {
+                echo "API'den veri alınamadı.";
+            }
+        }
     }
+
 
     $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
     sleep($sleepDuration);
