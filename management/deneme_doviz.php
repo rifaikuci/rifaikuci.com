@@ -128,13 +128,19 @@ function getDataRow2($id, $table, $db) {
     $stmt = mysqli_prepare($db, $sql);
     mysqli_stmt_bind_param($stmt, 'i', $id);
     mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
 
-    if ($result && mysqli_num_rows($result) > 0) {
-        return mysqli_fetch_assoc($result);
-    } else {
-        return null;
+    $result = [];
+    $meta = $stmt->result_metadata();
+    $fields = $meta->fetch_fields();
+    $params = [];
+    foreach ($fields as $field) {
+        $params[] = &$result[$field->name];
     }
+
+    call_user_func_array([$stmt, 'bind_result'], $params);
+    mysqli_stmt_fetch($stmt);
+
+    return $result;
 }
 
 $dollarApiKey = 1;
