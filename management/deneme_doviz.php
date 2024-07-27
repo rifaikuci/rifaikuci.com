@@ -123,7 +123,7 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
     }
 }
 
-function getDataRow($id, $table, $db) {
+function getDataRow2($id, $table, $db) {
     $sql = "SELECT * FROM $table WHERE id = ?";
     $stmt = mysqli_prepare($db, $sql);
     mysqli_stmt_bind_param($stmt, 'i', $id);
@@ -147,7 +147,7 @@ while (true) {
     $currentDate = date('Y-m-d'); // Şu anki tarih
 
     if (shouldRunScript($currentHour, $currentDay)) {
-        $dollarRow = getDataRow($dollarApiKey, 'collectionApi', $db);
+        $dollarRow = getDataRow2($dollarApiKey, 'collectionApi', $db);
         $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
 
         $apiResponse = fetchCurrencyDataFromApi($apiKey);
@@ -157,7 +157,7 @@ while (true) {
             processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
         } else {
             $dollarApiKey += 1;
-            $dollarRow = getDataRow($dollarApiKey, 'collectionApi', $db);
+            $dollarRow = getDataRow2($dollarApiKey, 'collectionApi', $db);
             $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
 
             $apiResponse = fetchCurrencyDataFromApi($apiKey);
