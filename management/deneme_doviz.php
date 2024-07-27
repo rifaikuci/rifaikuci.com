@@ -39,18 +39,18 @@ function shouldRunScript($hour, $day, $isHoliday) {
 // Scriptin bekleme süresini belirleyen fonksiyon
 function getSleepDuration($hour, $day, $isHoliday) {
     if ($isHoliday) {
-        return 60*60*4; // 1 saat (3600 saniye)
+        return 60; // 1 saat (3600 saniye)
     }
     if ($day >= 1 && $day <= 5) { // Pazartesi-Cuma
         if ($hour >= 9 && $hour <= 19) {
-            return 60*60*3; // 1 saat (3600 saniye)
+            return 60; // 1 saat (3600 saniye)
         }
     } elseif ($day == 6) { // Cumartesi
         if ($hour >= 9 && $hour <= 14) {
-            return 60*60*3; // 1 saat (3600 saniye)
+            return 60; // 1 saat (3600 saniye)
         }
     }
-    return 60*60*4; // 1 saat (3600 saniye)
+    return 60; // 1 saat (3600 saniye)
 }
 
 function getActiveCurrencies($db)
