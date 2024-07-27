@@ -1,21 +1,5 @@
 <?php
-// Database connection function
-function getDbConnection() {
-    $host = '89.252.183.195';
-    $user = 'rifaikuc';
-    $password = 'Gt36wwY2x7';
-    $dbname = 'rifaikuc_rifaikuci';
 
-    $db = new mysqli($host, $user, $password, $dbname);
-
-    if ($db->connect_error) {
-        die("Connection failed: " . $db->connect_error);
-    }
-
-    return $db;
-}
-
-// Reconnect to the database if the connection is lost
 function ensureDbConnection($db) {
     if (!$db->ping()) {
         $db = getDbConnection();
@@ -113,7 +97,7 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
 
     $filteredCurrencies = array_filter($filteredCurrencies);
 
-    $sql = "INSERT INTO currencyReponse2 (currencyCode, selling, buying, transactionDate, rate, apiKey)
+    $sql = "INSERT INTO currencyReponse3 (currencyCode, selling, buying, transactionDate, rate, apiKey)
             VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($db, $sql);
 
