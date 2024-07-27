@@ -1,5 +1,14 @@
 <?php
 
+if (file_exists("utils/index.php")) {
+    require_once "utils/index.php";
+} elseif (file_exists("../utils/index.php")) {
+    require_once "../utils/index.php";
+} elseif (file_exists("../../utils/index.php")) {
+    require_once "../../utils/index.php";
+} elseif (file_exists("../../../utils/index.php")) {
+    require_once "../../../utils/index.php";
+}
 function ensureDbConnection($db) {
     if (!$db->ping()) {
         $db = getDbConnection();
@@ -10,15 +19,7 @@ function ensureDbConnection($db) {
 
 $db = getDbConnection();
 
-if (file_exists("utils/index.php")) {
-    require_once "utils/index.php";
-} elseif (file_exists("../utils/index.php")) {
-    require_once "../utils/index.php";
-} elseif (file_exists("../../utils/index.php")) {
-    require_once "../../utils/index.php";
-} elseif (file_exists("../../../utils/index.php")) {
-    require_once "../../../utils/index.php";
-}
+
 
 $activeCurrency = getActiveCurrencies($db);
 
