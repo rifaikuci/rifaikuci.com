@@ -16,7 +16,8 @@ function getDbConnection()
     return $db;
 }
 
-function ensureDbConnection($db) {
+function ensureDbConnection($db)
+{
     if (!$db->ping()) {
         $db = getDbConnection();
     }
@@ -28,46 +29,35 @@ $db = getDbConnection();
 
 $activeCurrency = getActiveCurrencies($db);
 
-function isHoliday($date, $db) {
+function isHoliday($date, $db)
+{
     $sql = "SELECT COUNT(*) FROM holidays WHERE date = '$date'";
     $result = mysqli_query($db, $sql);
     $row = mysqli_fetch_array($result);
     return $row[0] > 0;
 }
 
-function shouldRunScript($hour, $day, $isHoliday) {
-    if ($isHoliday) {
-        return true; // Tatil günlerinde 3 saatte bir çalışacak
-    }
-
-    if ($day >= 1 && $day <= 5) { // Pazartesi-Cuma
-        return ($hour >= 9 && $hour <= 19);
-    } elseif ($day == 6) { // Cumartesi
-        return ($hour >= 9 && $hour <= 14);
-    } else {
-        return true;
-    }
-}
-
-function getSleepDuration($hour, $day, $isHoliday) {
+function getSleepDuration($hour, $day, $isHoliday)
+{
 
     if ($isHoliday) {
-        return 60*15; // 1 saat
+        return 60 * 15; // 1 saat
     }
 
     if ($day >= 1 && $day <= 5) { // Pazartesi-Cuma
         if ($hour >= 9 && $hour <= 19) {
-            return 60*5; // 1 saat
+            return 60 * 5; // 1 saat
         }
     } elseif ($day == 6) { // Cumartesi
         if ($hour >= 9 && $hour <= 14) {
-            return 60*5; // 1 saat
+            return 60 * 5; // 1 saat
         }
     }
-    return 60*15; // 1 saat
+    return 60 * 15; // 1 saat
 }
 
-function getActiveCurrencies($db) {
+function getActiveCurrencies($db)
+{
     $sql = "SELECT * FROM currency WHERE isActive = 1";
     $result = $db->query($sql);
 
@@ -83,7 +73,8 @@ function getActiveCurrencies($db) {
     return $activeCurrency;
 }
 
-function fetchCurrencyDataFromApi($apiKey) {
+function fetchCurrencyDataFromApi($apiKey)
+{
     $curl = curl_init();
     curl_setopt_array($curl, [
         CURLOPT_URL => "https://api.collectapi.com/economy/allCurrency",
@@ -104,7 +95,8 @@ function fetchCurrencyDataFromApi($apiKey) {
     return $response;
 }
 
-function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarApiKey) {
+function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarApiKey)
+{
     $filteredCurrencies = array_map(function ($currency) use ($activeCurrency) {
         $activeCodes = array_column($activeCurrency, 'code');
         $activeIds = array_column($activeCurrency, 'id', 'code');
@@ -119,7 +111,7 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
 
     $filteredCurrencies = array_filter($filteredCurrencies);
 
-    $sql = "INSERT INTO currencyReponse3 (currencyCode, selling, buying, transactionDate, rate, apiKey)
+    $sql = "INSERT INTO currencyReponse4 (currencyCode, selling, buying, transactionDate, rate, apiKey)
             VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($db, $sql);
 
@@ -129,7 +121,8 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
     }
 }
 
-function getDataRow2($id, $table, $db) {
+function getDataRow2($id, $table, $db)
+{
     $sql = "SELECT * FROM $table WHERE id = ?";
     $stmt = mysqli_prepare($db, $sql);
     mysqli_stmt_bind_param($stmt, 'i', $id);
@@ -159,52 +152,32 @@ while (true) {
     $currentDate = date('Y-m-d'); // Şu anki tarih
 
     $isHoliday = isHoliday($currentDate, $db);
+    $dataFetched = false;
 
-
-    if (shouldRunScript($currentHour, $currentDay, $isHoliday)) {
+    while (!$dataFetched) {
         $dollarRow = getDataRow2($dollarApiKey, 'collectionApi', $db);
-        $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
-
-        $apiResponse = fetchCurrencyDataFromApi($apiKey);
-        $response = json_decode($apiResponse, true);
-
-        if ($response['success']) {
-            processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
-        } else {
-            $dollarApiKey += 1;
-            $dollarRow = getDataRow2($dollarApiKey, 'collectionApi', $db);
-            $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
-
+        if ($dollarRow) {
+            $apiKey = $dollarRow['apiKey'];
             $apiResponse = fetchCurrencyDataFromApi($apiKey);
             $response = json_decode($apiResponse, true);
 
             if ($response['success']) {
                 processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
+                $dataFetched = true; // Veri başarıyla alındı, döngüyü kır
             } else {
-                echo "API'den veri alınamadı.";
+                $dollarApiKey += 1; // API anahtarını arttır
             }
-        }
-    } else {
-        $dollarRow = getDataRow2($dollarApiKey, 'collectionApi', $db);
-        $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
-
-        $apiResponse = fetchCurrencyDataFromApi($apiKey);
-        $response = json_decode($apiResponse, true);
-
-        if ($response['success']) {
-            processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
         } else {
-            $dollarApiKey += 1;
-            $dollarRow = getDataRow2($dollarApiKey, 'collectionApi', $db);
-            $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
-
+            $dollarApiKey = 1;
+            $apiKey = $dollarRow['apiKey'];
             $apiResponse = fetchCurrencyDataFromApi($apiKey);
             $response = json_decode($apiResponse, true);
 
             if ($response['success']) {
                 processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
+                $dataFetched = true; // Veri başarıyla alındı, döngüyü kır
             } else {
-                echo "API'den veri alınamadı.";
+                break;
             }
         }
     }
