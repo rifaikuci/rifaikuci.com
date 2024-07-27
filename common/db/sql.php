@@ -49,21 +49,30 @@ function delete($id, $table) {
     return $sql;
 }
 
-function getDataRow ($id, $table, $db) {
-
+function getDataRow($id, $table, $db) {
     $sql = "SELECT * FROM $table WHERE id = ?";
     $stmt = mysqli_prepare($db, $sql);
+
+    if (!$stmt) {
+        die("MySQL prepare statement error: " . mysqli_error($db));
+    }
+
     mysqli_stmt_bind_param($stmt, 'i', $id);
     mysqli_stmt_execute($stmt);
+
     $result = mysqli_stmt_get_result($stmt);
+
+    if (!$result) {
+        die("MySQL execute statement error: " . mysqli_error($db));
+    }
 
     if ($result && mysqli_num_rows($result) > 0) {
         return mysqli_fetch_assoc($result);
     } else {
         return null; // Or handle the case where no row is found
     }
-
 }
+
 function getTableColumns($table, $db)
 {
     $sql = "SHOW COLUMNS FROM $table";
