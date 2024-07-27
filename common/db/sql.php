@@ -50,10 +50,18 @@ function delete($id, $table) {
 }
 
 function getDataRow ($id, $table, $db) {
-    $sql = "SELECT * FROM $table where id = '$id'";
-    $result = mysqli_query($db, $sql)->fetch_assoc();
 
-    return $result;
+    $sql = "SELECT * FROM $table WHERE id = ?";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, 'i', $id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        return mysqli_fetch_assoc($result);
+    } else {
+        return null; // Or handle the case where no row is found
+    }
 
 }
 function getTableColumns($table, $db)
