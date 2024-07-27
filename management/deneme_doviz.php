@@ -1,4 +1,30 @@
 <?php
+// Database connection function
+function getDbConnection() {
+    $host = '89.252.183.195';
+    $user = 'rifaikuc';
+    $password = 'Gt36wwY2x7';
+    $dbname = 'rifaikuc_rifaikuci';
+
+    $db = new mysqli($host, $user, $password, $dbname);
+
+    if ($db->connect_error) {
+        die("Connection failed: " . $db->connect_error);
+    }
+
+    return $db;
+}
+
+// Reconnect to the database if the connection is lost
+function ensureDbConnection($db) {
+    if (!$db->ping()) {
+        $db = getDbConnection();
+    }
+
+    return $db;
+}
+
+$db = getDbConnection();
 
 if (file_exists("utils/index.php")) {
     require_once "utils/index.php";
@@ -10,13 +36,7 @@ if (file_exists("utils/index.php")) {
     require_once "../../../utils/index.php";
 }
 
-?>
-
-<?php
-
 $activeCurrency = getActiveCurrencies($db);
-
-
 
 function shouldRunScript($hour, $day) {
     if ($day >= 1 && $day <= 5) { // Pazartesi-Cuma
@@ -24,27 +44,24 @@ function shouldRunScript($hour, $day) {
     } elseif ($day == 6) { // Cumartesi
         return ($hour >= 9 && $hour <= 14);
     } else {
-        return true;
+        return false;
     }
 }
 
-// Scriptin bekleme süresini belirleyen fonksiyon
 function getSleepDuration($hour, $day) {
-
     if ($day >= 1 && $day <= 5) { // Pazartesi-Cuma
         if ($hour >= 9 && $hour <= 19) {
-            return 60; // 1 saat (3600 saniye)
+            return 3600; // 1 saat
         }
     } elseif ($day == 6) { // Cumartesi
         if ($hour >= 9 && $hour <= 14) {
-            return 60; // 1 saat (3600 saniye)
+            return 3600; // 1 saat
         }
     }
-    return 60; // 1 saat (3600 saniye)
+    return 3600; // 1 saat
 }
 
-function getActiveCurrencies($db)
-{
+function getActiveCurrencies($db) {
     $sql = "SELECT * FROM currency WHERE isActive = 1";
     $result = $db->query($sql);
 
@@ -60,8 +77,7 @@ function getActiveCurrencies($db)
     return $activeCurrency;
 }
 
-function fetchCurrencyDataFromApi($apiKey)
-{
+function fetchCurrencyDataFromApi($apiKey) {
     $curl = curl_init();
     curl_setopt_array($curl, [
         CURLOPT_URL => "https://api.collectapi.com/economy/allCurrency",
@@ -82,8 +98,7 @@ function fetchCurrencyDataFromApi($apiKey)
     return $response;
 }
 
-function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarApiKey)
-{
+function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarApiKey) {
     $filteredCurrencies = array_map(function ($currency) use ($activeCurrency) {
         $activeCodes = array_column($activeCurrency, 'code');
         $activeIds = array_column($activeCurrency, 'id', 'code');
@@ -108,14 +123,28 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
     }
 }
 
+function getDataRow($id, $table, $db) {
+    $sql = "SELECT * FROM $table WHERE id = ?";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, 'i', $id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        return mysqli_fetch_assoc($result);
+    } else {
+        return null;
+    }
+}
+
 $dollarApiKey = 1;
 
-
 while (true) {
+    $db = ensureDbConnection($db);  // Ensure the connection is alive
+
     $currentHour = (int)date('G'); // Şu anki saat (0-23)
     $currentDay = (int)date('N'); // Şu anki gün (1=Monday, 7=Sunday)
     $currentDate = date('Y-m-d'); // Şu anki tarih
-
 
     if (shouldRunScript($currentHour, $currentDay)) {
         $dollarRow = getDataRow($dollarApiKey, 'collectionApi', $db);
@@ -147,5 +176,4 @@ while (true) {
     $sleepDuration = getSleepDuration($currentHour, $currentDay);
     sleep($sleepDuration);
 }
-
 ?>
