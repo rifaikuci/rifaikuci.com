@@ -45,7 +45,7 @@ function shouldRunScript($hour, $day, $isHoliday) {
     } elseif ($day == 6) { // Cumartesi
         return ($hour >= 9 && $hour <= 14);
     } else {
-        return false;
+        return true;
     }
 }
 
