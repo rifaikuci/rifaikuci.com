@@ -51,14 +51,14 @@ function shouldRunScript($hour, $day) {
 function getSleepDuration($hour, $day) {
     if ($day >= 1 && $day <= 5) { // Pazartesi-Cuma
         if ($hour >= 9 && $hour <= 19) {
-            return 3600; // 1 saat
+            return 30; // 1 saat
         }
     } elseif ($day == 6) { // Cumartesi
         if ($hour >= 9 && $hour <= 14) {
-            return 3600; // 1 saat
+            return 30; // 1 saat
         }
     }
-    return 3600; // 1 saat
+    return 30; // 1 saat
 }
 
 function getActiveCurrencies($db) {
