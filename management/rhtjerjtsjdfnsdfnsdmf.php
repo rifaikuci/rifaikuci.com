@@ -39,18 +39,18 @@ function shouldRunScript($hour, $day, $isHoliday) {
 // Scriptin bekleme süresini belirleyen fonksiyon
 function getSleepDuration($hour, $day, $isHoliday) {
     if ($isHoliday) {
-        return 10800; // Tatil günlerinde 3 saatte bir
+        return 60*60*4; // 1 saat (3600 saniye)
     }
     if ($day >= 1 && $day <= 5) { // Pazartesi-Cuma
         if ($hour >= 9 && $hour <= 19) {
-            return 3600; // 1 saat
+            return 60*60*3; // 1 saat (3600 saniye)
         }
     } elseif ($day == 6) { // Cumartesi
         if ($hour >= 9 && $hour <= 14) {
-            return 3600; // 1 saat
+            return 60*60*3; // 1 saat (3600 saniye)
         }
     }
-    return 10800; // Diğer zaman dilimlerinde: 3 saat
+    return 60*60*4; // 1 saat (3600 saniye)
 }
 
 function getActiveCurrencies($db)
@@ -119,6 +119,8 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
 }
 
 $dollarApiKey = 1;
+
+
 while (true) {
     $currentHour = (int)date('G'); // Şu anki saat (0-23)
     $currentDay = (int)date('N'); // Şu anki gün (1=Monday, 7=Sunday)
@@ -126,11 +128,7 @@ while (true) {
 
     $isHoliday = isHoliday($currentDate, $db);
 
-
-
     if (shouldRunScript($currentHour, $currentDay, $isHoliday)) {
-        echo "asdasd";
-        exit();
         $dollarRow = getDataRow($dollarApiKey, 'collectionApi', $db);
         $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
 
@@ -154,30 +152,8 @@ while (true) {
             }
         }
     } else {
-        $dollarRow = getDataRow($dollarApiKey, 'collectionApi', $db);
-        $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
-
-        $apiResponse = fetchCurrencyDataFromApi($apiKey);
-        $response = json_decode($apiResponse, true);
-
-        if ($response['success']) {
-            processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
-        } else {
-            $dollarApiKey += 1;
-            $dollarRow = getDataRow($dollarApiKey, 'collectionApi', $db);
-            $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
-
-            $apiResponse = fetchCurrencyDataFromApi($apiKey);
-            $response = json_decode($apiResponse, true);
-
-            if ($response['success']) {
-                processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
-            } else {
-                echo "API'den veri alınamadı.";
-            }
-        }
+        echo "Script bu zaman aralığında çalışmayacak.";
     }
-
 
     $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
     sleep($sleepDuration);
