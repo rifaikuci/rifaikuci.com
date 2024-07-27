@@ -185,7 +185,28 @@ while (true) {
             }
         }
     } else {
-        echo "Script bu zaman aralığında çalışmayacak.";
+        $dollarRow = getDataRow2($dollarApiKey, 'collectionApi', $db);
+        $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
+
+        $apiResponse = fetchCurrencyDataFromApi($apiKey);
+        $response = json_decode($apiResponse, true);
+
+        if ($response['success']) {
+            processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
+        } else {
+            $dollarApiKey += 1;
+            $dollarRow = getDataRow2($dollarApiKey, 'collectionApi', $db);
+            $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
+
+            $apiResponse = fetchCurrencyDataFromApi($apiKey);
+            $response = json_decode($apiResponse, true);
+
+            if ($response['success']) {
+                processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
+            } else {
+                echo "API'den veri alınamadı.";
+            }
+        }
     }
 
     $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
