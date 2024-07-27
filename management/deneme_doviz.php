@@ -22,7 +22,18 @@ if (file_exists("utils/index.php")) {
 
 $activeCurrency = getActiveCurrencies($db);
 
-function shouldRunScript($hour, $day) {
+function isHoliday($date, $db) {
+    $sql = "SELECT COUNT(*) FROM holidays WHERE date = '$date'";
+    $result = mysqli_query($db, $sql);
+    $row = mysqli_fetch_array($result);
+    return $row[0] > 0;
+}
+
+function shouldRunScript($hour, $day, $isHoliday) {
+    if ($isHoliday) {
+        return true; // Tatil günlerinde 3 saatte bir çalışacak
+    }
+
     if ($day >= 1 && $day <= 5) { // Pazartesi-Cuma
         return ($hour >= 9 && $hour <= 19);
     } elseif ($day == 6) { // Cumartesi
@@ -32,17 +43,22 @@ function shouldRunScript($hour, $day) {
     }
 }
 
-function getSleepDuration($hour, $day) {
+function getSleepDuration($hour, $day, $isHoliday) {
+
+    if ($isHoliday) {
+        return 60*60*4; // 1 saat
+    }
+
     if ($day >= 1 && $day <= 5) { // Pazartesi-Cuma
         if ($hour >= 9 && $hour <= 19) {
-            return 30; // 1 saat
+            return 60*60*2; // 1 saat
         }
     } elseif ($day == 6) { // Cumartesi
         if ($hour >= 9 && $hour <= 14) {
-            return 30; // 1 saat
+            return 60*60*2; // 1 saat
         }
     }
-    return 30; // 1 saat
+    return 60*60*4; // 1 saat
 }
 
 function getActiveCurrencies($db) {
@@ -136,6 +152,9 @@ while (true) {
     $currentDay = (int)date('N'); // Şu anki gün (1=Monday, 7=Sunday)
     $currentDate = date('Y-m-d'); // Şu anki tarih
 
+    $isHoliday = isHoliday($currentDate, $db);
+
+
     if (shouldRunScript($currentHour, $currentDay)) {
         $dollarRow = getDataRow2($dollarApiKey, 'collectionApi', $db);
         $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
@@ -163,7 +182,7 @@ while (true) {
         echo "Script bu zaman aralığında çalışmayacak.";
     }
 
-    $sleepDuration = getSleepDuration($currentHour, $currentDay);
+    $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
     sleep($sleepDuration);
 }
 ?>
