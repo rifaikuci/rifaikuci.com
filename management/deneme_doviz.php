@@ -1,14 +1,21 @@
 <?php
 
-if (file_exists("utils/index.php")) {
-    require_once "utils/index.php";
-} elseif (file_exists("../utils/index.php")) {
-    require_once "../utils/index.php";
-} elseif (file_exists("../../utils/index.php")) {
-    require_once "../../utils/index.php";
-} elseif (file_exists("../../../utils/index.php")) {
-    require_once "../../../utils/index.php";
+function getDbConnection()
+{
+    $host = 'localhost';
+    $user = 'rifaikuc';
+    $password = 'Gt36wwY2x7';
+    $dbname = 'rifaikuc_rifaikuci';
+
+    $db = new mysqli($host, $user, $password, $dbname);
+
+    if ($db->connect_error) {
+        die("Bağlantı başarısız: " . $db->connect_error);
+    }
+
+    return $db;
 }
+
 function ensureDbConnection($db) {
     if (!$db->ping()) {
         $db = getDbConnection();
