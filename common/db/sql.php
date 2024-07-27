@@ -49,11 +49,18 @@ function delete($id, $table) {
     return $sql;
 }
 
-function getDataRow ($id, $table, $db) {
-    $sql = "SELECT * FROM $table where id = '$id'";
+function getDataRow($id, $table, $db) {
+    // Escaping table name is generally a bad practice but for now, let’s debug your code
+    // and ensure everything is okay. Once it's confirmed working, consider using prepared statements.
+    $sql = "SELECT * FROM `$table` WHERE id = '$id'";
 
-    return  mysqli_query($db, $sql)->fetch_assoc();;
+    $result = mysqli_query($db, $sql);
 
+    if (!$result) {
+        die("MySQL query error: " . mysqli_error($db));
+    }
+
+    return mysqli_fetch_assoc($result);
 }
 function getTableColumns($table, $db)
 {
