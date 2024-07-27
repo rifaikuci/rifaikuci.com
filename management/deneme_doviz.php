@@ -161,7 +161,7 @@ while (true) {
     $isHoliday = isHoliday($currentDate, $db);
 
 
-    if (shouldRunScript($currentHour, $currentDay)) {
+    if (shouldRunScript($currentHour, $currentDay, $isHoliday)) {
         $dollarRow = getDataRow2($dollarApiKey, 'collectionApi', $db);
         $apiKey = $dollarRow ? $dollarRow['apiKey'] : "";
 
