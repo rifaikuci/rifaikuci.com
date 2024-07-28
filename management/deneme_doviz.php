@@ -4,7 +4,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-exit();
 function getDbConnection()
 {
     $host = 'localhost';
@@ -46,19 +45,19 @@ function getSleepDuration($hour, $day, $isHoliday)
 {
 
     if ($isHoliday) {
-        return 60 ; // 1 saat
+        return 60 * 30 ; // 1 saat
     }
 
     if ($day >= 1 && $day <= 5) { // Pazartesi-Cuma
         if ($hour >= 9 && $hour <= 19) {
-            return 60; // 1 saat
+            return 60 * 10; // 1 saat
         }
     } elseif ($day == 6) { // Cumartesi
         if ($hour >= 9 && $hour <= 14) {
-            return 60; // 1 saat
+            return 60 * 10; // 1 saat
         }
     } else {
-        return 60; // 1 saat
+        return 60 * 30; // 1 saat
     }
 
 }
@@ -118,7 +117,7 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
 
     $filteredCurrencies = array_filter($filteredCurrencies);
 
-    $sql = "INSERT INTO currencyReponse5 (currencyCode, selling, buying, transactionDate, rate, apiKey)
+    $sql = "INSERT INTO currencyReponse6 (currencyCode, selling, buying, transactionDate, rate, apiKey)
             VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($db, $sql);
 
