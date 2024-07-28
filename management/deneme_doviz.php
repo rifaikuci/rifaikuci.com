@@ -3,6 +3,13 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+ini_set('max_execution_time', 36000); // 1 saat
+ini_set('memory_limit', '512M'); // 512 MB
+
+function logError($message)
+{
+    error_log($message, 3, './php_script_errors.log');
+}
 
 function getDbConnection()
 {
@@ -43,23 +50,21 @@ function isHoliday($date, $db)
 
 function getSleepDuration($hour, $day, $isHoliday)
 {
-
     if ($isHoliday) {
-        return 60 * 30 ; // 1 saat
+        return 60 * 30 ; // 30 dakika
     }
 
     if ($day >= 1 && $day <= 5) { // Pazartesi-Cuma
         if ($hour >= 9 && $hour <= 19) {
-            return 60 * 10; // 1 saat
+            return 60 * 10; // 10 dakika
         }
     } elseif ($day == 6) { // Cumartesi
         if ($hour >= 9 && $hour <= 14) {
-            return 60 * 10; // 1 saat
+            return 60 * 10; // 10 dakika
         }
     } else {
-        return 60 * 30; // 1 saat
+        return 60 * 30; // 30 dakika
     }
-
 }
 
 function getActiveCurrencies($db)
@@ -125,6 +130,8 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
         mysqli_stmt_bind_param($stmt, 'ssssss', $row['id'], $row['selling'], $row['buying'], $row['datetime'], $row['rate'], $dollarApiKey);
         mysqli_stmt_execute($stmt);
     }
+
+    mysqli_stmt_close($stmt); // Kaynakları serbest bırakın
 }
 
 function getDataRow2($id, $table, $db)
@@ -151,44 +158,38 @@ function getDataRow2($id, $table, $db)
 $dollarApiKey = 1;
 
 while (true) {
-    $db = ensureDbConnection($db);  // Ensure the connection is alive
+    try {
+        $db = ensureDbConnection($db);  // Bağlantının aktif olduğundan emin olun
 
-    $currentHour = (int)date('G'); // Şu anki saat (0-23)
-    $currentDay = (int)date('N'); // Şu anki gün (1=Monday, 7=Sunday)
-    $currentDate = date('Y-m-d'); // Şu anki tarih
+        $currentHour = (int)date('G'); // Şu anki saat (0-23)
+        $currentDay = (int)date('N'); // Şu anki gün (1=Monday, 7=Sunday)
+        $currentDate = date('Y-m-d'); // Şu anki tarih
 
-    $isHoliday = isHoliday($currentDate, $db);
-    $dataFetched = false;
+        $isHoliday = isHoliday($currentDate, $db);
+        $dataFetched = false;
 
-    while (!$dataFetched) {
-        $dollarRow = getDataRow2($dollarApiKey, 'collectionApi', $db);
-        if ($dollarRow) {
-            $apiKey = $dollarRow['apiKey'];
-            $apiResponse = fetchCurrencyDataFromApi($apiKey);
-            $response = json_decode($apiResponse, true);
+        while (!$dataFetched) {
+            $dollarRow = getDataRow2($dollarApiKey, 'collectionApi', $db);
+            if ($dollarRow) {
+                $apiKey = $dollarRow['apiKey'];
+                $apiResponse = fetchCurrencyDataFromApi($apiKey);
+                $response = json_decode($apiResponse, true);
 
-            if ($response['success']) {
-                processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
-                $dataFetched = true; // Veri başarıyla alındı, döngüyü kır
+                if ($response['success']) {
+                    processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
+                    $dataFetched = true; // Veri başarıyla alındı, döngüyü kır
+                } else {
+                    $dollarApiKey += 1; // API anahtarını arttır
+                }
             } else {
-                $dollarApiKey += 1; // API anahtarını arttır
-            }
-        } else {
-            $dollarApiKey = 1;
-            $apiKey = $dollarRow['apiKey'];
-            $apiResponse = fetchCurrencyDataFromApi($apiKey);
-            $response = json_decode($apiResponse, true);
-
-            if ($response['success']) {
-                processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
-                $dataFetched = true; // Veri başarıyla alındı, döngüyü kır
-            } else {
-                break;
+                $dollarApiKey = 1;
             }
         }
-    }
 
-    $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
-    sleep($sleepDuration);
+        $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
+        sleep($sleepDuration);
+    } catch (Exception $e) {
+        logError($e->getMessage());
+    }
 }
 ?>
