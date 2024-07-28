@@ -3,7 +3,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-ini_set('max_execution_time', 36000); // 1 saat
+ini_set('max_execution_time', 60 * 60 * 60 * 60 * 60); // 1 saat
 ini_set('memory_limit', '512M'); // 512 MB
 
 function logError($message)
