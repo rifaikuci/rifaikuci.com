@@ -45,19 +45,19 @@ function getSleepDuration($hour, $day, $isHoliday)
 {
 
     if ($isHoliday) {
-        return 60 * 20; // 1 saat
+        return 60 ; // 1 saat
     }
 
     if ($day >= 1 && $day <= 5) { // Pazartesi-Cuma
         if ($hour >= 9 && $hour <= 19) {
-            return 60 * 5; // 1 saat
+            return 60; // 1 saat
         }
     } elseif ($day == 6) { // Cumartesi
         if ($hour >= 9 && $hour <= 14) {
-            return 60 * 5; // 1 saat
+            return 60; // 1 saat
         }
     } else {
-        return 60 * 20; // 1 saat
+        return 60; // 1 saat
     }
 
 }
