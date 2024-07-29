@@ -4,7 +4,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
+function logError($message)
+{
+    error_log($message, 3, './php_script_errors.log');
+}
 
 function getDbConnection()
 {
@@ -18,6 +21,7 @@ function getDbConnection()
     if ($db->connect_error) {
         $hata = $db->connect_error;
         $sql = "INSERT INTO hata_tablo (message) VALUES ('$hata')";
+        error_log($sql);
         mysqli_query($db, $sql);
         die("Bağlantı başarısız: " . $db->connect_error);
     }
@@ -44,6 +48,7 @@ function isHoliday($date, $db)
     $sql = "SELECT COUNT(*) FROM holidays WHERE date = '$date'";
     $result = mysqli_query($db, $sql);
     if (!$result) {
+        logError("isHoliday error: " . mysqli_error($db));
         return false;
     }
     $row = mysqli_fetch_array($result);
@@ -104,6 +109,7 @@ function fetchCurrencyDataFromApi($apiKey)
     ]);
     $response = curl_exec($curl);
     if (curl_errno($curl)) {
+        logError('Curl error: ' . curl_error($curl));
     }
     curl_close($curl);
 
@@ -133,6 +139,7 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
     foreach ($filteredCurrencies as $row) {
         mysqli_stmt_bind_param($stmt, 'ssssss', $row['id'], $row['selling'], $row['buying'], $row['datetime'], $row['rate'], $dollarApiKey);
         if (!mysqli_stmt_execute($stmt)) {
+            logError("Insert error: " . mysqli_stmt_error($stmt));
         }
     }
 
@@ -145,6 +152,7 @@ function getDataRow2($id, $table, $db)
     $stmt = mysqli_prepare($db, $sql);
     mysqli_stmt_bind_param($stmt, 'i', $id);
     if (!mysqli_stmt_execute($stmt)) {
+        logError("Select error: " . mysqli_stmt_error($stmt));
         return null;
     }
 
@@ -164,9 +172,15 @@ function getDataRow2($id, $table, $db)
 
 $dollarApiKey = 1;
 
-
+while (true) {
     try {
-        $db = ensureDbConnection($db);  // Bağlantının aktif olduğundan emin olun
+
+        $host = 'localhost';
+        $user = 'rifaikuc';
+        $password = 'Gt36wwY2x7';
+        $dbname = 'rifaikuc_rifaikuci';
+
+        $db = new mysqli($host, $user, $password, $dbname);
 
         $currentHour = (int)date('G'); // Şu anki saat (0-23)
         $currentDay = (int)date('N'); // Şu anki gün (1=Monday, 7=Sunday)
@@ -193,10 +207,13 @@ $dollarApiKey = 1;
             }
         }
 
-
+        $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
+        sleep($sleepDuration);
     } catch (Exception $e) {
         $hata = $e->getMessage();
         $sql = "INSERT INTO hata_tablo (message) VALUES ('$hata')";
         mysqli_query($db, $sql);
+        logError($e->getMessage());
     }
+}
 ?>
