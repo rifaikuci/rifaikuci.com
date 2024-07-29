@@ -209,11 +209,13 @@ while (true) {
 
         $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
         sleep($sleepDuration);
+        $db->close();
     } catch (Exception $e) {
         $hata = $e->getMessage();
         $sql = "INSERT INTO hata_tablo (message) VALUES ('$hata')";
         mysqli_query($db, $sql);
         logError($e->getMessage());
+        $db->close();
     }
 }
 ?>
