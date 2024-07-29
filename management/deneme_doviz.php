@@ -9,6 +9,11 @@ function logError($message)
     error_log($message, 3, './php_script_errors.log');
 }
 
+function logInfo($message)
+{
+    error_log($message, 3, './php_script_info.log');
+}
+
 function getDbConnection()
 {
     $host = 'localhost';
@@ -23,9 +28,6 @@ function getDbConnection()
         logError("Bağlantı hatası: " . $hata);
         die("Bağlantı başarısız: " . $db->connect_error);
     }
-
-    // MySQL bağlantı zaman aşımını uzatma
-    $db->query("SET SESSION wait_timeout=28800"); // 8 saat
 
     return $db;
 }
@@ -52,6 +54,8 @@ function isHoliday($date, $db)
 
 function getSleepDuration($hour, $day, $isHoliday)
 {
+    logInfo("Calculating sleep duration: hour=$hour, day=$day, isHoliday=$isHoliday");
+
     if ($isHoliday) {
         return 60 * 30; // 30 dakika
     }
@@ -67,6 +71,9 @@ function getSleepDuration($hour, $day, $isHoliday)
     } else {
         return 60 * 30; // 30 dakika
     }
+
+    // Default sleep duration if none of the conditions are met
+    return 60 * 30; // 30 dakika
 }
 
 function getActiveCurrencies($db)
@@ -127,7 +134,7 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
 
     $filteredCurrencies = array_filter($filteredCurrencies);
 
-    $sql = "INSERT INTO currencyReponse14 (currencyCode, selling, buying, transactionDate, rate, apiKey)
+    $sql = "INSERT INTO currencyReponse17 (currencyCode, selling, buying, transactionDate, rate, apiKey)
             VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($db, $sql);
 
@@ -167,7 +174,7 @@ function getDataRow2($id, $table, $db)
 
 $dollarApiKey = 1;
 $iterationCount = 0;
-$maxIterationsBeforeReconnect = 3; // Her 100 iterasyonda bir bağlantıyı yeniden başlat
+$maxIterationsBeforeReconnect = 3; // Her 3 iterasyonda bir bağlantıyı yeniden başlat
 
 $db = getDbConnection(); // Bağlantıyı başta aç
 
@@ -184,12 +191,15 @@ while (true) {
 
         while (!$dataFetched) {
             $dollarRow = getDataRow2($dollarApiKey, 'collectionApi', $db);
+
             if ($dollarRow) {
                 $apiKey = $dollarRow['apiKey'];
+
                 $apiResponse = fetchCurrencyDataFromApi($apiKey);
+
                 $response = json_decode($apiResponse, true);
 
-                if ($response['success']) {
+                if ($response && $response['success']) {
                     processAndInsertCurrencies($response['result'], getActiveCurrencies($db), $db, $dollarApiKey);
                     $dataFetched = true; // Veri başarıyla alındı, döngüyü kır
                 } else {
@@ -208,6 +218,7 @@ while (true) {
         }
 
         $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
+        logInfo("Sleeping for $sleepDuration seconds");
         sleep($sleepDuration);
     } catch (Exception $e) {
         $hata = $e->getMessage();
