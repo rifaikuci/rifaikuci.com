@@ -132,7 +132,7 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
 
     $filteredCurrencies = array_filter($filteredCurrencies);
 
-    $sql = "INSERT INTO currencyReponse11 (currencyCode, selling, buying, transactionDate, rate, apiKey)
+    $sql = "INSERT INTO currencyReponse12 (currencyCode, selling, buying, transactionDate, rate, apiKey)
             VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($db, $sql);
 
