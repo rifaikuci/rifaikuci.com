@@ -20,9 +20,7 @@ function getDbConnection()
 
     if ($db->connect_error) {
         $hata = $db->connect_error;
-        $sql = "INSERT INTO hata_tablo (message) VALUES ('$hata')";
-        error_log($sql);
-        mysqli_query($db, $sql);
+        logError("Bağlantı hatası: " . $hata);
         die("Bağlantı başarısız: " . $db->connect_error);
     }
 
@@ -39,9 +37,6 @@ function ensureDbConnection($db)
     }
     return $db;
 }
-
-$db = getDbConnection();
-$activeCurrency = getActiveCurrencies($db);
 
 function isHoliday($date, $db)
 {
@@ -132,7 +127,7 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
 
     $filteredCurrencies = array_filter($filteredCurrencies);
 
-    $sql = "INSERT INTO currencyReponse13 (currencyCode, selling, buying, transactionDate, rate, apiKey)
+    $sql = "INSERT INTO currencyReponse14 (currencyCode, selling, buying, transactionDate, rate, apiKey)
             VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($db, $sql);
 
@@ -171,20 +166,18 @@ function getDataRow2($id, $table, $db)
 }
 
 $dollarApiKey = 1;
+$iterationCount = 0;
+$maxIterationsBeforeReconnect = 3; // Her 100 iterasyonda bir bağlantıyı yeniden başlat
+
+$db = getDbConnection(); // Bağlantıyı başta aç
 
 while (true) {
     try {
-
-        $host = 'localhost';
-        $user = 'rifaikuc';
-        $password = 'Gt36wwY2x7';
-        $dbname = 'rifaikuc_rifaikuci';
-
-        $db = new mysqli($host, $user, $password, $dbname);
-
         $currentHour = (int)date('G'); // Şu anki saat (0-23)
         $currentDay = (int)date('N'); // Şu anki gün (1=Monday, 7=Sunday)
         $currentDate = date('Y-m-d'); // Şu anki tarih
+
+        $db = ensureDbConnection($db); // Bağlantıyı kontrol et ve gerekirse yeniden bağlan
 
         $isHoliday = isHoliday($currentDate, $db);
         $dataFetched = false;
@@ -197,7 +190,7 @@ while (true) {
                 $response = json_decode($apiResponse, true);
 
                 if ($response['success']) {
-                    processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
+                    processAndInsertCurrencies($response['result'], getActiveCurrencies($db), $db, $dollarApiKey);
                     $dataFetched = true; // Veri başarıyla alındı, döngüyü kır
                 } else {
                     $dollarApiKey += 1; // API anahtarını arttır
@@ -207,15 +200,23 @@ while (true) {
             }
         }
 
+        $iterationCount++;
+        if ($iterationCount >= $maxIterationsBeforeReconnect) {
+            $db->close();
+            $db = getDbConnection();
+            $iterationCount = 0; // Iterasyon sayısını sıfırla
+        }
+
         $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
         sleep($sleepDuration);
-        $db->close();
     } catch (Exception $e) {
         $hata = $e->getMessage();
         $sql = "INSERT INTO hata_tablo (message) VALUES ('$hata')";
         mysqli_query($db, $sql);
         logError($e->getMessage());
-        $db->close();
     }
 }
+
+// Betik sona ermeden önce bağlantıyı kapat
+$db->close();
 ?>
