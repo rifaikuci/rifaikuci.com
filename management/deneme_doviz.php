@@ -189,7 +189,46 @@ while (true) {
         $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
         sleep($sleepDuration);
     } catch (Exception $e) {
-        logError($e->getMessage());
+        $host = 'localhost';
+        $user = 'rifaikuc';
+        $password = 'Gt36wwY2x7';
+        $dbname = 'rifaikuc_rifaikuci';
+
+        $db = new mysqli($host, $user, $password, $dbname);
+
+        if ($db->connect_error) {
+            die("Bağlantı başarısız: " . $db->connect_error);
+        }
+
+        $db = ensureDbConnection($db);  // Bağlantının aktif olduğundan emin olun
+
+        $currentHour = (int)date('G'); // Şu anki saat (0-23)
+        $currentDay = (int)date('N'); // Şu anki gün (1=Monday, 7=Sunday)
+        $currentDate = date('Y-m-d'); // Şu anki tarih
+
+        $isHoliday = isHoliday($currentDate, $db);
+        $dataFetched = false;
+
+        while (!$dataFetched) {
+            $dollarRow = getDataRow2($dollarApiKey, 'collectionApi', $db);
+            if ($dollarRow) {
+                $apiKey = $dollarRow['apiKey'];
+                $apiResponse = fetchCurrencyDataFromApi($apiKey);
+                $response = json_decode($apiResponse, true);
+
+                if ($response['success']) {
+                    processAndInsertCurrencies($response['result'], $activeCurrency, $db, $dollarApiKey);
+                    $dataFetched = true; // Veri başarıyla alındı, döngüyü kır
+                } else {
+                    $dollarApiKey += 1; // API anahtarını arttır
+                }
+            } else {
+                $dollarApiKey = 1;
+            }
+        }
+
+        $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
+        sleep($sleepDuration);
     }
 }
 ?>
