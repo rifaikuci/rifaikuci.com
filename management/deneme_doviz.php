@@ -174,7 +174,7 @@ function getDataRow2($id, $table, $db)
 
 $dollarApiKey = 1;
 $iterationCount = 0;
-$maxIterationsBeforeReconnect = 3; // Her 3 iterasyonda bir bağlantıyı yeniden başlat
+$maxIterationsBeforeReconnect = 2; // Her 3 iterasyonda bir bağlantıyı yeniden başlat
 
 $db = getDbConnection(); // Bağlantıyı başta aç
 
