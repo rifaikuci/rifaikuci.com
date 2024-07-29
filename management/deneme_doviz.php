@@ -6,7 +6,6 @@ error_reporting(E_ALL);
 
 function logError($message)
 {
-
     error_log($message, 3, './php_script_errors.log');
 }
 
@@ -21,12 +20,14 @@ function getDbConnection()
 
     if ($db->connect_error) {
         $hata = $db->connect_error;
-        $sql = "INSERT INTO hata_tablo (message)
-             VALUES ('$hata')";
-
+        $sql = "INSERT INTO hata_tablo (message) VALUES ('$hata')";
+        error_log($sql);
         mysqli_query($db, $sql);
         die("Bağlantı başarısız: " . $db->connect_error);
     }
+
+    // MySQL bağlantı zaman aşımını uzatma
+    $db->query("SET SESSION wait_timeout=28800"); // 8 saat
 
     return $db;
 }
@@ -36,18 +37,20 @@ function ensureDbConnection($db)
     if (!$db->ping()) {
         $db = getDbConnection();
     }
-
     return $db;
 }
 
 $db = getDbConnection();
-
 $activeCurrency = getActiveCurrencies($db);
 
 function isHoliday($date, $db)
 {
     $sql = "SELECT COUNT(*) FROM holidays WHERE date = '$date'";
     $result = mysqli_query($db, $sql);
+    if (!$result) {
+        logError("isHoliday error: " . mysqli_error($db));
+        return false;
+    }
     $row = mysqli_fetch_array($result);
     return $row[0] > 0;
 }
@@ -55,7 +58,7 @@ function isHoliday($date, $db)
 function getSleepDuration($hour, $day, $isHoliday)
 {
     if ($isHoliday) {
-        return 60 * 30 ; // 30 dakika
+        return 60 * 30; // 30 dakika
     }
 
     if ($day >= 1 && $day <= 5) { // Pazartesi-Cuma
@@ -105,6 +108,9 @@ function fetchCurrencyDataFromApi($apiKey)
         ],
     ]);
     $response = curl_exec($curl);
+    if (curl_errno($curl)) {
+        logError('Curl error: ' . curl_error($curl));
+    }
     curl_close($curl);
 
     return $response;
@@ -126,16 +132,18 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
 
     $filteredCurrencies = array_filter($filteredCurrencies);
 
-    $sql = "INSERT INTO currencyReponse10 (currencyCode, selling, buying, transactionDate, rate, apiKey)
+    $sql = "INSERT INTO currencyReponse11 (currencyCode, selling, buying, transactionDate, rate, apiKey)
             VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($db, $sql);
 
     foreach ($filteredCurrencies as $row) {
         mysqli_stmt_bind_param($stmt, 'ssssss', $row['id'], $row['selling'], $row['buying'], $row['datetime'], $row['rate'], $dollarApiKey);
-        mysqli_stmt_execute($stmt);
+        if (!mysqli_stmt_execute($stmt)) {
+            logError("Insert error: " . mysqli_stmt_error($stmt));
+        }
     }
 
-    mysqli_stmt_close($stmt); // Kaynakları serbest bırakın
+    mysqli_stmt_close($stmt);
 }
 
 function getDataRow2($id, $table, $db)
@@ -143,7 +151,10 @@ function getDataRow2($id, $table, $db)
     $sql = "SELECT * FROM $table WHERE id = ?";
     $stmt = mysqli_prepare($db, $sql);
     mysqli_stmt_bind_param($stmt, 'i', $id);
-    mysqli_stmt_execute($stmt);
+    if (!mysqli_stmt_execute($stmt)) {
+        logError("Select error: " . mysqli_stmt_error($stmt));
+        return null;
+    }
 
     $result = [];
     $meta = $stmt->result_metadata();
@@ -193,11 +204,8 @@ while (true) {
         $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
         sleep($sleepDuration);
     } catch (Exception $e) {
-
         $hata = $e->getMessage();
-        $sql = "INSERT INTO hata_tablo (message)
-             VALUES ('$hata')";
-
+        $sql = "INSERT INTO hata_tablo (message) VALUES ('$hata')";
         mysqli_query($db, $sql);
         logError($e->getMessage());
     }
