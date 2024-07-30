@@ -34,7 +34,9 @@ function getDbConnection()
 
 function ensureDbConnection($db)
 {
-    if (!$db->ping()) {
+    // $db'nin geçerli bir mysqli nesnesi olup olmadığını ve bağlantısının aktif olup olmadığını kontrol ediyoruz
+    if (!($db instanceof mysqli) || !$db->ping()) {
+        // $db geçerli bir mysqli nesnesi değilse veya bağlantısı aktif değilse, yeni bir bağlantı oluşturuyoruz
         $db = getDbConnection();
     }
     return $db;
@@ -57,23 +59,23 @@ function getSleepDuration($hour, $day, $isHoliday)
     logInfo("Calculating sleep duration: hour=$hour, day=$day, isHoliday=$isHoliday");
 
     if ($isHoliday) {
-        return 60 * 5; // 30 dakika
+        return 60 * 30; // 30 dakika
     }
 
     if ($day >= 1 && $day <= 5) { // Pazartesi-Cuma
         if ($hour >= 9 && $hour <= 19) {
-            return 60 * 5; // 10 dakika
+            return 60 * 15; // 10 dakika
         }
     } elseif ($day == 6) { // Cumartesi
         if ($hour >= 9 && $hour <= 14) {
-            return 60 * 5; // 10 dakika
+            return 60 * 15; // 10 dakika
         }
     } else {
-        return 60 * 5; // 30 dakika
+        return 60 * 30; // 30 dakika
     }
 
     // Default sleep duration if none of the conditions are met
-    return 60 * 5; // 30 dakika
+    return 60 * 30; // 30 dakika
 }
 
 function getActiveCurrencies($db)
@@ -166,8 +168,6 @@ function getDataRow2($id, $table, $db)
 }
 
 $dollarApiKey = 1;
-$iterationCount = 0;
-$maxIterationsBeforeReconnect = 5; // Her 3 iterasyonda bir bağlantıyı yeniden başlat
 
 $db = getDbConnection(); // Bağlantıyı başta aç
 
@@ -203,12 +203,7 @@ while (true) {
             }
         }
 
-        $iterationCount++;
-        if ($iterationCount >= $maxIterationsBeforeReconnect) {
-            $db->close();
-            $db = getDbConnection();
-            $iterationCount = 0; // Iterasyon sayısını sıfırla
-        }
+
 
         $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
         logInfo("Sleeping for $sleepDuration seconds");
