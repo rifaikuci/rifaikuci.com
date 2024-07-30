@@ -34,11 +34,16 @@ function getDbConnection()
 
 function ensureDbConnection($db)
 {
-    // $db'nin geçerli bir mysqli nesnesi olup olmadığını ve bağlantısının aktif olup olmadığını kontrol ediyoruz
-    if (!($db instanceof mysqli) || !$db->ping()) {
-        // $db geçerli bir mysqli nesnesi değilse veya bağlantısı aktif değilse, yeni bir bağlantı oluşturuyoruz
-        $db = getDbConnection();
+    try {
+        if (!($db instanceof mysqli) || !$db->ping()) {
+            // $db geçerli bir mysqli nesnesi değilse veya bağlantısı aktif değilse, yeni bir bağlantı oluşturuyoruz
+            $db = getDbConnection();
+        }
+    } catch (Exception $ex) {
+        $hata  = $ex->getMessage();
+        logError("db coonnection kontrolü: " . $hata);
     }
+
     return $db;
 }
 
