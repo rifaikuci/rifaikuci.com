@@ -209,12 +209,9 @@ while (true) {
         logInfo("Sleeping for $sleepDuration seconds");
         sleep($sleepDuration);
     } catch (Exception $e) {
-       $db->close();
     } finally {
-        $db->close();
     }
 }
 
 // Betik sona ermeden önce bağlantıyı kapat
-$db->close();
 ?>
