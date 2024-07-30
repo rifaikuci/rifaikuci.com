@@ -57,23 +57,23 @@ function getSleepDuration($hour, $day, $isHoliday)
     logInfo("Calculating sleep duration: hour=$hour, day=$day, isHoliday=$isHoliday");
 
     if ($isHoliday) {
-        return 60 * 15; // 30 dakika
+        return 60 * 10; // 30 dakika
     }
 
     if ($day >= 1 && $day <= 5) { // Pazartesi-Cuma
         if ($hour >= 9 && $hour <= 19) {
-            return 60 * 15; // 10 dakika
+            return 60 * 10; // 10 dakika
         }
     } elseif ($day == 6) { // Cumartesi
         if ($hour >= 9 && $hour <= 14) {
-            return 60 * 15; // 10 dakika
+            return 60 * 10; // 10 dakika
         }
     } else {
-        return 60 * 15; // 30 dakika
+        return 60 * 10; // 30 dakika
     }
 
     // Default sleep duration if none of the conditions are met
-    return 60 * 15; // 30 dakika
+    return 60 * 10; // 30 dakika
 }
 
 function getActiveCurrencies($db)
@@ -221,10 +221,9 @@ while (true) {
         logInfo("Sleeping for $sleepDuration seconds");
         sleep($sleepDuration);
     } catch (Exception $e) {
-        $hata = $e->getMessage();
-        $sql = "INSERT INTO hata_tablo (message) VALUES ('$hata')";
-        mysqli_query($db, $sql);
-        logError($e->getMessage());
+       $db->close();
+    } finally {
+        $db->close();
     }
 }
 
