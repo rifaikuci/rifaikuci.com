@@ -134,42 +134,35 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
 
     $filteredCurrencies = array_filter($filteredCurrencies);
 
-    $sql = "INSERT INTO currencyReponse18 (currencyCode, selling, buying, transactionDate, rate, apiKey)
-            VALUES (?, ?, ?, ?, ?, ?)";
-    $stmt = mysqli_prepare($db, $sql);
-
     foreach ($filteredCurrencies as $row) {
-        mysqli_stmt_bind_param($stmt, 'ssssss', $row['id'], $row['selling'], $row['buying'], $row['datetime'], $row['rate'], $dollarApiKey);
-        if (!mysqli_stmt_execute($stmt)) {
-            logError("Insert error: " . mysqli_stmt_error($stmt));
+        $curCode = $row['id'];
+        $selling = $row['selling'];
+        $buying = $row['buying'];
+        $datetime = $row['datetime'];
+        $rate = $row['rate'];
+
+        try {
+            $sql = "INSERT INTO currencyReponse19 (currencyCode, selling, buying, transactionDate, rate, apiKey)
+            VALUES ('$curCode', '$selling', '$buying', '$datetime','$rate', '$dollarApiKey')";
+            $result = mysqli_query($db, $sql);
+        } catch (Exception $e) {
+            logError($e->getMessage());
         }
     }
 
-    mysqli_stmt_close($stmt);
 }
 
 function getDataRow2($id, $table, $db)
 {
-    $sql = "SELECT * FROM $table WHERE id = ?";
-    $stmt = mysqli_prepare($db, $sql);
-    mysqli_stmt_bind_param($stmt, 'i', $id);
-    if (!mysqli_stmt_execute($stmt)) {
-        logError("Select error: " . mysqli_stmt_error($stmt));
-        return null;
+    $sql = "SELECT * FROM $table WHERE id = '$id'";
+    try {
+        $result =  mysqli_query($db, $sql);
+    }catch (Exception $e) {
+        logError($e->getMessage());
     }
 
-    $result = [];
-    $meta = $stmt->result_metadata();
-    $fields = $meta->fetch_fields();
-    $params = [];
-    foreach ($fields as $field) {
-        $params[] = &$result[$field->name];
-    }
 
-    call_user_func_array([$stmt, 'bind_result'], $params);
-    mysqli_stmt_fetch($stmt);
-
-    return $result;
+    return mysqli_fetch_assoc($result);
 }
 
 $dollarApiKey = 1;
