@@ -6,12 +6,12 @@ error_reporting(E_ALL);
 
 function logError($message)
 {
-    error_log($message, 3, './php_script_errors.log');
+    error_log($message . "\n", 3, './php_script_errors.log');
 }
 
 function logInfo($message)
 {
-    error_log($message, 3, './php_script_info.log');
+    error_log($message. " \n", 3, './php_script_info.log');
 }
 
 function getDbConnection()
@@ -149,7 +149,7 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
         $rate = $row['rate'];
 
         try {
-            $sql = "INSERT INTO currencyReponse19 (currencyCode, selling, buying, transactionDate, rate, apiKey)
+            $sql = "INSERT INTO currencyReponse (currencyCode, selling, buying, transactionDate, rate, apiKey)
             VALUES ('$curCode', '$selling', '$buying', '$datetime','$rate', '$dollarApiKey')";
             $result = mysqli_query($db, $sql);
         } catch (Exception $e) {
@@ -176,8 +176,11 @@ $dollarApiKey = 1;
 
 $db = getDbConnection(); // Bağlantıyı başta aç
 
-while (true) {
+$sumSecond = 0;
+
+while ($sumSecond < 3600) {
     try {
+
         $currentHour = (int)date('G'); // Şu anki saat (0-23)
         $currentDay = (int)date('N'); // Şu anki gün (1=Monday, 7=Sunday)
         $currentDate = date('Y-m-d'); // Şu anki tarih
@@ -211,7 +214,8 @@ while (true) {
 
 
         $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
-        logInfo("Sleeping for $sleepDuration seconds");
+        $sumSecond = $sumSecond + $sleepDuration;
+        logInfo("Sleeping for $sleepDuration seconds, $sumSecond");
         sleep($sleepDuration);
     } catch (Exception $e) {
     } finally {
