@@ -17,9 +17,9 @@ function logInfo($message)
 function getDbConnection()
 {
     $host = 'localhost';
-    $user = 'rifaikuc';
-    $password = 'Gt36wwY2x7';
-    $dbname = 'rifaikuc_rifaikuci';
+    $user = 'root';
+    $password = '';
+    $dbname = 'rifaikuci';
 
     $db = new mysqli($host, $user, $password, $dbname);
 
@@ -223,7 +223,7 @@ function processAndInsertGold($currencies, $activeCurrency, $db, $dollarApiKey)
         $rate = $row['rate'];
 
         try {
-            $sql = "INSERT INTO currencyReponse2 (currencyCode, selling, buying, transactionDate, rate, apiKey)
+            $sql = "INSERT INTO currencyReponse (currencyCode, selling, buying, transactionDate, rate, apiKey)
             VALUES ('$curCode', '$selling', '$buying', '$datetime','$rate', '$dollarApiKey')";
             $result = mysqli_query($db, $sql);
         } catch (Exception $e) {
