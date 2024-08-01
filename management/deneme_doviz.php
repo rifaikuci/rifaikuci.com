@@ -17,9 +17,9 @@ function logInfo($message)
 function getDbConnection()
 {
     $host = 'localhost';
-    $user = 'root';
-    $password = '';
-    $dbname = 'rifaikuci';
+    $user = 'rifaikuc';
+    $password = 'Gt36wwY2x7';
+    $dbname = 'rifaikuc_rifaikuci';
 
     $db = new mysqli($host, $user, $password, $dbname);
 
