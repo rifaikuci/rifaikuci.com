@@ -199,6 +199,40 @@ function processAndInsertCurrencies($currencies, $activeCurrency, $db, $dollarAp
 
 }
 
+function processAndInsertGold($currencies, $activeCurrency, $db, $dollarApiKey)
+{
+    $filteredCurrencies = array_map(function ($currency) use ($activeCurrency) {
+        $activeCodes = array_column($activeCurrency, 'code');
+        $activeIds = array_column($activeCurrency, 'id', 'code');
+        if (in_array($currency['name'], $activeCodes)) {
+            $currency['id'] = $activeIds[$currency['name']];
+            $currency['datetime'] = $currency['date'] . ' ' . $currency['time'];
+            unset($currency['date'], $currency['time']);
+            return $currency;
+        }
+        return null;
+    }, $currencies);
+
+    $filteredCurrencies = array_filter($filteredCurrencies);
+
+    foreach ($filteredCurrencies as $row) {
+        $curCode = $row['id'];
+        $selling = $row['selling'];
+        $buying = $row['buying'];
+        $datetime = $row['datetime'];
+        $rate = $row['rate'];
+
+        try {
+            $sql = "INSERT INTO currencyReponse2 (currencyCode, selling, buying, transactionDate, rate, apiKey)
+            VALUES ('$curCode', '$selling', '$buying', '$datetime','$rate', '$dollarApiKey')";
+            $result = mysqli_query($db, $sql);
+        } catch (Exception $e) {
+            logError($e->getMessage());
+        }
+    }
+
+}
+
 function getDataRow2($id, $table, $db)
 {
     $sql = "SELECT * FROM $table WHERE id = '$id'";
@@ -257,17 +291,17 @@ while ($sumSecond < 3600) {
             $goldRow = getDataRow2($goldApiKey, 'collectionApi', $db);
 
             if ($goldRow) {
-                $goldApiKey = $goldRow['apiKey'];
+                $goldKey = $goldRow['apiKey'];
 
-                $apiGoldResponse = fetchGoldPricesDataFromApi($goldApiKey);
+                $apiResponseGold = fetchGoldPricesDataFromApi($goldKey);
 
-                $responseGold = json_decode($apiGoldResponse, true);
+                $responsegGold = json_decode($apiResponseGold, true);
 
-                if ($responseGold && $responseGold['success']) {
-                    processAndInsertCurrencies($responseGold['result'], getActiveGoldPrices($db), $db, $goldApiKey);
-                    $dataFetchedGold = true;
+                if ($responsegGold && $responsegGold['success']) {
+                    processAndInsertGold($responsegGold['result'], getActiveGoldPrices($db), $db, $goldApiKey);
+                    $dataFetched = true; // Veri başarıyla alındı, döngüyü kır
                 } else {
-                    $goldApiKey += 1;
+                    $dataFetchedGold += 1; // API anahtarını arttır
                 }
             } else {
                 $goldApiKey = 1;
