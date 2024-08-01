@@ -61,8 +61,6 @@ function isHoliday($date, $db)
 
 function getSleepDuration($hour, $day, $isHoliday)
 {
-    logInfo("Calculating sleep duration: hour=$hour, day=$day, isHoliday=$isHoliday");
-
     if ($isHoliday) {
         return 60 * 30; // 30 dakika
     }
@@ -100,11 +98,53 @@ function getActiveCurrencies($db)
     return $activeCurrency;
 }
 
+function getActiveGoldPrices($db)
+{
+    $sql = "SELECT * FROM currency WHERE isActive = 1";
+    $result = $db->query($sql);
+
+    $goldPrices = [];
+    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+        if (strlen($row['code']) != 3) {
+            $goldPrices[] = [
+                'code' => $row['code'],
+                'id' => $row['id']
+            ];
+        }
+    }
+    return $goldPrices;
+}
+
 function fetchCurrencyDataFromApi($apiKey)
 {
     $curl = curl_init();
     curl_setopt_array($curl, [
         CURLOPT_URL => "https://api.collectapi.com/economy/allCurrency",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => [
+            "authorization: apikey " . $apiKey,
+            "content-type: application/json"
+        ],
+    ]);
+    $response = curl_exec($curl);
+    if (curl_errno($curl)) {
+        logError('Curl error: ' . curl_error($curl));
+    }
+    curl_close($curl);
+
+    return $response;
+}
+
+function fetchGoldPricesDataFromApi($apiKey)
+{
+    $curl = curl_init();
+    curl_setopt_array($curl, [
+        CURLOPT_URL => "https://api.collectapi.com/economy/goldPrice",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
@@ -173,6 +213,7 @@ function getDataRow2($id, $table, $db)
 }
 
 $dollarApiKey = 1;
+$goldApiKey = 1;
 
 $db = getDbConnection(); // Bağlantıyı başta aç
 
@@ -189,6 +230,7 @@ while ($sumSecond < 3600) {
 
         $isHoliday = isHoliday($currentDate, $db);
         $dataFetched = false;
+        $dataFetchedGold = false;
 
         while (!$dataFetched) {
             $dollarRow = getDataRow2($dollarApiKey, 'collectionApi', $db);
@@ -211,11 +253,31 @@ while ($sumSecond < 3600) {
             }
         }
 
+        while (!$dataFetchedGold) {
+            $goldRow = getDataRow2($goldApiKey, 'collectionApi', $db);
+
+            if ($goldRow) {
+                $goldApiKey = $goldRow['apiKey'];
+
+                $apiGoldResponse = fetchGoldPricesDataFromApi($goldApiKey);
+
+                $responseGold = json_decode($apiGoldResponse, true);
+
+                if ($responseGold && $responseGold['success']) {
+                    processAndInsertCurrencies($responseGold['result'], getActiveGoldPrices($db), $db, $goldApiKey);
+                    $dataFetchedGold = true;
+                } else {
+                    $goldApiKey += 1;
+                }
+            } else {
+                $goldApiKey = 1;
+            }
+        }
+
 
 
         $sleepDuration = getSleepDuration($currentHour, $currentDay, $isHoliday);
         $sumSecond = $sumSecond + $sleepDuration;
-        logInfo("Sleeping for $sleepDuration seconds, $sumSecond");
         sleep($sleepDuration);
     } catch (Exception $e) {
     } finally {
