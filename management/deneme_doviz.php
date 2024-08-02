@@ -27,6 +27,8 @@ function getDbConnection()
         logError("Connection error: " . $db->connect_error);
         die("Connection failed: " . $db->connect_error);
     }
+    $db->set_charset("utf8");
+
 
     return $db;
 }
@@ -125,10 +127,12 @@ function fetchDataFromApi($url, $apiKey)
 function processAndInsertData($data, $activeItems, $db, $apiKey, $table)
 {
     $filteredItems = array_filter(array_map(function ($item) use ($activeItems) {
+
         $activeCodes = array_column($activeItems, 'code');
         $activeIds = array_column($activeItems, 'id', 'code');
-        if (in_array($item['code'], $activeCodes)) {
-            $item['id'] = $activeIds[$item['code']];
+
+        if (in_array(strlen($item['code']) == 3 ? $item['code'] : $item['name'] , $activeCodes)) {
+            $item['id'] = $activeIds[strlen($item['code']) == 3 ? $item['code'] : $item['name']];
             $item['datetime'] = $item['date'] . ' ' . $item['time'];
             unset($item['date'], $item['time']);
             return $item;
