@@ -131,7 +131,14 @@ function processAndInsertData($data, $activeItems, $db, $apiKey, $table)
         $activeCodes = array_column($activeItems, 'code');
         $activeIds = array_column($activeItems, 'id', 'code');
 
-        if (in_array(strlen($item['code']) == 3 ? $item['code'] : $item['name'] , $activeCodes)) {
+
+        if (isset($item['code'])) {
+            $codeOrName = strlen($item['code']) == 3 ? $item['code'] : $item['name'];
+        } else {
+            $codeOrName = $item['name'];
+        }
+
+        if (in_array($codeOrName, $activeCodes)) {
             $item['id'] = $activeIds[isset($item['code']) && strlen($item['code']) == 3 ? $item['code'] : $item['name']];
             $item['datetime'] = $item['date'] . ' ' . $item['time'];
             unset($item['date'], $item['time']);
