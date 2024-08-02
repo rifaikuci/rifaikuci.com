@@ -299,7 +299,7 @@ while ($sumSecond < 3600) {
 
                 if ($responsegGold && $responsegGold['success']) {
                     processAndInsertGold($responsegGold['result'], getActiveGoldPrices($db), $db, $goldApiKey);
-                    $dataFetched = true; // Veri başarıyla alındı, döngüyü kır
+                    $dataFetchedGold = true; // Veri başarıyla alındı, döngüyü kır
                 } else {
                     $dataFetchedGold += 1; // API anahtarını arttır
                 }
