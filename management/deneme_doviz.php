@@ -4,15 +4,30 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+
+function buyingYesilcam($sayi, $type, $value)
+{
+    $sayi =  ($sayi);
+    $sayi = $type == "TUTAR" ? $sayi + $value : $sayi + $sayi * $value;
+    return $sayi;
+}
+
+function searchArrayByCode($array, $code) {
+    foreach ($array as $subArray) {
+        if (is_array($subArray) && isset($subArray['code']) && $subArray['code'] == $code) {
+            return $subArray;
+        }
+    }
+    return null;
+}
+
+
+
 function logError($message)
 {
     error_log($message . "\n", 3, './php_script_errors.log');
 }
 
-function logInfo($message)
-{
-    error_log($message. " \n", 3, './php_script_info.log');
-}
 
 function getDbConnection()
 {
@@ -79,7 +94,9 @@ function getActiveCurrencies($db)
         if (strlen($row['code']) == 3) {
             $activeCurrency[] = [
                 'code' => $row['code'],
-                'id' => $row['id']
+                'id' => $row['id'],
+                'type' => $row['type'],
+                'value' => $row['value']
             ];
         }
     }
@@ -96,7 +113,9 @@ function getActiveGoldPrices($db)
         if (strlen($row['code']) != 3) {
             $goldPrices[] = [
                 'code' => $row['code'],
-                'id' => $row['id']
+                'id' => $row['id'],
+                'type' => $row['type'],
+                'value' => $row['value']
             ];
         }
     }
@@ -139,8 +158,14 @@ function processAndInsertData($data, $activeItems, $db, $apiKey, $table)
         }
 
         if (in_array($codeOrName, $activeCodes)) {
+
+            $selectedCurrency = searchArrayByCode($activeItems, $codeOrName);
             $item['id'] = $activeIds[isset($item['code']) && strlen($item['code']) == 3 ? $item['code'] : $item['name']];
             $item['datetime'] = $item['date'] . ' ' . $item['time'];
+            $item['selling'] = $item['selling'];
+            $item['buying'] = $item['buying'];
+            $item['sellingY'] = $item['selling'];
+            $item['buyingY'] = buyingYesilcam($item['selling'], $selectedCurrency['type'], $selectedCurrency['value']);
             unset($item['date'], $item['time']);
             return $item;
         }
@@ -149,8 +174,9 @@ function processAndInsertData($data, $activeItems, $db, $apiKey, $table)
 
     foreach ($filteredItems as $row) {
         try {
-            $sql = "INSERT INTO $table (currencyCode, selling, buying, transactionDate, rate, apiKey)
-                    VALUES ('{$row['id']}', '{$row['selling']}', '{$row['buying']}', '{$row['datetime']}', '{$row['rate']}', '$apiKey')";
+            $sql = "INSERT INTO $table (currencyCode, selling, buying, sellingY, buyingY, transactionDate, rate, apiKey)
+                    VALUES ('{$row['id']}', '{$row['selling']}', '{$row['buying']}', '{$row['sellingY']}', '{$row['buyingY']}','{$row['datetime']}', '{$row['rate']}', '$apiKey')";
+
             $db->query($sql);
         } catch (Exception $e) {
             logError($e->getMessage());
