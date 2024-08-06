@@ -7,12 +7,11 @@ error_reporting(E_ALL);
 
 function buyingYesilcam($sayi, $type, $value)
 {
-    $sayi =  ($sayi);
-    $sayi = $type == "TUTAR" ? $sayi + $value : $sayi + $sayi * $value;
-    return $sayi;
+    return $type == "TUTAR" ? $sayi + $value : $sayi + $sayi * $value;
 }
 
-function searchArrayByCode($array, $code) {
+function searchArrayByCode($array, $code)
+{
     foreach ($array as $subArray) {
         if (is_array($subArray) && isset($subArray['code']) && $subArray['code'] == $code) {
             return $subArray;
@@ -21,20 +20,17 @@ function searchArrayByCode($array, $code) {
     return null;
 }
 
-
-
 function logError($message)
 {
     error_log($message . "\n", 3, './php_script_errors.log');
 }
 
-
 function getDbConnection()
 {
     $host = 'localhost';
-    $user = 'rifaikuc';
-    $password = 'Gt36wwY2x7';
-    $dbname = 'rifaikuc_rifaikuci';
+    $user = 'root';
+    $password = '';
+    $dbname = 'rifaikuci';
 
     $db = new mysqli($host, $user, $password, $dbname);
 
@@ -43,7 +39,6 @@ function getDbConnection()
         die("Connection failed: " . $db->connect_error);
     }
     $db->set_charset("utf8");
-
 
     return $db;
 }
@@ -146,21 +141,14 @@ function fetchDataFromApi($url, $apiKey)
 function processAndInsertData($data, $activeItems, $db, $apiKey, $table)
 {
     $filteredItems = array_filter(array_map(function ($item) use ($activeItems) {
-
         $activeCodes = array_column($activeItems, 'code');
         $activeIds = array_column($activeItems, 'id', 'code');
 
-
-        if (isset($item['code'])) {
-            $codeOrName = strlen($item['code']) == 3 ? $item['code'] : $item['name'];
-        } else {
-            $codeOrName = $item['name'];
-        }
+        $codeOrName = isset($item['code']) ? (strlen($item['code']) == 3 ? $item['code'] : $item['name']) : $item['name'];
 
         if (in_array($codeOrName, $activeCodes)) {
-
             $selectedCurrency = searchArrayByCode($activeItems, $codeOrName);
-            $item['id'] = $activeIds[isset($item['code']) && strlen($item['code']) == 3 ? $item['code'] : $item['name']];
+            $item['id'] = $activeIds[$codeOrName];
             $item['datetime'] = $item['date'] . ' ' . $item['time'];
             $item['selling'] = $item['selling'];
             $item['buying'] = $item['buying'];
@@ -175,8 +163,7 @@ function processAndInsertData($data, $activeItems, $db, $apiKey, $table)
     foreach ($filteredItems as $row) {
         try {
             $sql = "INSERT INTO $table (currencyCode, selling, buying, sellingY, buyingY, transactionDate, rate, apiKey)
-                    VALUES ('{$row['id']}', '{$row['selling']}', '{$row['buying']}', '{$row['sellingY']}', '{$row['buyingY']}','{$row['datetime']}', '{$row['rate']}', '$apiKey')";
-
+                    VALUES ('{$row['id']}', '{$row['selling']}', '{$row['buying']}', '{$row['sellingY']}', '{$row['buyingY']}', '{$row['datetime']}', '{$row['rate']}', '$apiKey')";
             $db->query($sql);
         } catch (Exception $e) {
             logError($e->getMessage());
@@ -247,5 +234,4 @@ while ($sumSecond < 3600) {
 }
 
 $db->close();
-
 ?>
